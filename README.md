@@ -1,0 +1,1 @@
+Allegro Template for C++
