@@ -71,7 +71,7 @@ int main()
 		{
 			initResources[TTFADDON] = true;
 			if (font = al_load_ttf_font(FONTPATH, FONTSIZE, 0))
-				initResources[LASTI + FONT];
+				initResources[LASTI + FONT] = true;
 		}
 #else
 		initResources[TTFADDON] = true;
