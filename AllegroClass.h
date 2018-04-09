@@ -54,6 +54,12 @@ class AllegroClass
 public:
 	AllegroClass(float displayW_, float displayH_, float fps_);
 	~AllegroClass();
+#ifdef DISPLAY_C
+	void updateDisplay();
+#endif
+#ifdef EVENTS_C
+	ALLEGRO_EVENT_QUEUE * getEventQueue();
+#endif
 #ifdef AUDIO_C
 	ALLEGRO_SAMPLE * loadSong(char * file);
 	void playSong(ALLEGRO_SAMPLE * song, float volume, float songSpeed, ALLEGRO_PLAYMODE playMode);

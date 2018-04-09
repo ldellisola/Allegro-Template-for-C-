@@ -115,6 +115,17 @@ AllegroClass::~AllegroClass()
 
 }
 
+#ifdef DISPLAY_C
+void AllegroClass::updateDisplay()
+{
+	al_flip_display();
+}
+ALLEGRO_EVENT_QUEUE * AllegroClass::getEventQueue()
+{
+	return this->eventQueue;
+}
+#endif
+
 #ifdef AUDIO_C
 ALLEGRO_SAMPLE * AllegroClass::loadSong(char * file)
 {
