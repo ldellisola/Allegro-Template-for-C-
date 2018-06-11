@@ -9,6 +9,8 @@ AllegroClassV2::AllegroClassV2(Allegro::InitMode mode, float width, float height
 	switch (mode) {
 	case Allegro::InitMode::Full:
 		if (success)
+			initVideoAddon();
+		if (success)
 			initAudioAddon();
 		if (success)
 			initImageAddon();
@@ -124,6 +126,14 @@ void AllegroClassV2::initPrimitivesAddon()
 	}
 }
 
+void AllegroClassV2::initVideoAddon()
+{
+	if (videoAddon == nullptr) {
+		this->videoAddon = new VideoAddon();
+		this->success = videoAddon->getSuccess();
+	}
+}
+
 void AllegroClassV2::uninstallImageAddon()
 {
 	if (imageAddon != nullptr)
@@ -178,6 +188,12 @@ void AllegroClassV2::uninstallPrimitivesAddon()
 		delete primitivesAddon;
 }
 
+void AllegroClassV2::uninstallVideoAddon()
+{
+	if (videoAddon != nullptr)
+		delete videoAddon;
+}
+
 void AllegroClassV2::registerAllAvailableEventsSource()
 {
 	if (eventsAddon != nullptr) {
@@ -190,6 +206,11 @@ void AllegroClassV2::registerAllAvailableEventsSource()
 		if (this->displayAddon != nullptr)
 			eventsAddon->registerEventSource(displayAddon);
 	}
+}
+
+void AllegroClassV2::registerEventSource(ALLEGRO_VIDEO * video)
+{
+	this->eventsAddon->registerEventSource(video);
 }
 
 void AllegroClassV2::setDisplayColor(ALLEGRO_COLOR color)
@@ -219,4 +240,5 @@ AllegroClassV2::~AllegroClassV2()
 	this->uninstallEventsAddon();
 	this->uninstallTimerAddon();
 	this->uninstallPrimitivesAddon();
+	this->uninstallVideoAddon();
 }

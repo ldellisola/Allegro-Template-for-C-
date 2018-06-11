@@ -23,7 +23,7 @@ public:
 
 	// Funciones de Events
 	void registerAllAvailableEventsSource();						// Se fija los Addons instalados y registra las event sources de estos
-
+	void registerEventSource(ALLEGRO_VIDEO * video);
 
 	// Funciones de Display
 	void setDisplayColor(ALLEGRO_COLOR color);
@@ -42,6 +42,7 @@ public:
 	void initTimerAddon(float fps);									// Inicializa al timer con un timer de refreshrate para la pantalla
 	void initTimerAddon();											// Lo hace sin craer ningun timer
 	void initPrimitivesAddon();
+	void initVideoAddon();
 
 	// eliminadores
 	void uninstallImageAddon();
@@ -53,6 +54,7 @@ public:
 	void uninstallEventsAddon();
 	void uninstallTimerAddon();
 	void uninstallPrimitivesAddon();
+	void uninstallVideoAddon();
 private:
 	bool success = false;
 
@@ -66,4 +68,5 @@ private:
 	EventsAddon * eventsAddon = nullptr;
 	TimerAddon * timerAddon = nullptr;
 	PrimitivesAddon * primitivesAddon = nullptr;
+	VideoAddon * videoAddon = nullptr;
 };

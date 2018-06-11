@@ -7,7 +7,7 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
-
+#include <allegro5/allegro_video.h>
 
 namespace Allegro {
 	// Modos de inicializacion de allegro:
@@ -139,8 +139,16 @@ public:
 	void registerEventSource(KeyboardAddon * keyboard) { al_register_event_source(eventQueue, al_get_keyboard_event_source()); }
 	void registerEventSource(DisplayAddon * display) { al_register_event_source(eventQueue, al_get_display_event_source(display->getDisplay())); }
 	void registerEventSource(TimerAddon * timer) { al_register_event_source(eventQueue, al_get_timer_event_source(timer->getRefreshTimer())); }
+	void registerEventSource(ALLEGRO_VIDEO *video) { al_register_event_source(eventQueue, al_get_video_event_source(video)); }
 
 	~EventsAddon() { if (eventQueue != nullptr) al_destroy_event_queue(eventQueue); }
 private:
 	ALLEGRO_EVENT_QUEUE * eventQueue = nullptr;
+};
+
+class VideoAddon : public Addon {
+public:
+	VideoAddon() { if (al_init_video_addon()) this->initSuccess(); }
+
+	~VideoAddon() { al_shutdown_video_addon(); }
 };
