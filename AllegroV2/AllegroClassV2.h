@@ -1,14 +1,11 @@
 #pragma once
 #include "AllegroAddons.h"
+#include "AllegroFactory.h"
+
 
 /*
-IDEA :: Tengo un vector de una estructura llamada 'DATA'. DATA esta compuesta por un puntero a void y un int, que me indica que es.
-		De esta forma puedo tener todo tipo de infomacion de manera dinamica.
-
-IDEA :: Tengo generadores de Bitmaps, font, etc que se inicializan con shared pointers, cosa no hay que preocuparse por eliminarlos despues
+		Tengo que hacer un helper de eventos para desligar a la clase allegro de todo esto
 */
-
-
 
 class AllegroClassV2
 {
@@ -24,6 +21,14 @@ public:
 	// Funciones de Events
 	void registerAllAvailableEventsSource();						// Se fija los Addons instalados y registra las event sources de estos
 	void registerEventSource(ALLEGRO_VIDEO * video);
+	void registerEventSource(ALLEGRO_DISPLAY *disp);
+	void registerEventSource(ALLEGRO_TIMER * timer);
+
+	void unregisterEventSource(ALLEGRO_VIDEO * video);
+	void unregisterEventSource(ALLEGRO_DISPLAY *disp);
+	void unregisterEventSource(ALLEGRO_TIMER * timer);
+
+	ALLEGRO_EVENT_QUEUE * getEventQueue();
 
 	// Funciones de Display
 	void setDisplayColor(ALLEGRO_COLOR color);
