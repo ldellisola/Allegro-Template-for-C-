@@ -13,6 +13,16 @@
 
 using namespace std;
 
+/*
+	TO DO: 
+			- Implementar un helper de eventos
+			- Completar el de primitivas
+			- hacer uno de bitmaps
+			- mejorar el de displays
+			- posiblemente implementar un nuevo tipo de dato que sirva como wrapper de display, bitmap, etc
+			- hacer uno de fonts
+*/
+
 class AllegroDisplayFactory
 {
 public:
