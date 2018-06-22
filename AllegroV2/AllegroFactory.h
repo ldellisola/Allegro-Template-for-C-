@@ -41,6 +41,7 @@ public:
 			if (all[i] == display)
 				kill = true;
 		}
+		i--;
 		if (kill) {
 			all.erase(all.begin() + i);
 			al_destroy_display(display);
@@ -95,6 +96,7 @@ public:
 			if (all[i] == bitmap)
 				kill = true;
 		}
+		i--;
 		if (kill) {
 			all.erase(all.begin() + i);
 			al_destroy_bitmap(bitmap);
@@ -112,8 +114,10 @@ public:
 	AllegroEventFactory(ALLEGRO_EVENT_QUEUE* eventQueue) { this->eventQueue = eventQueue; }
 
 	~AllegroEventFactory() { for (ALLEGRO_EVENT_SOURCE* eventSource : sources) al_unregister_event_source(eventQueue, eventSource); }
+	void flushQueue() { al_flush_event_queue(this->eventQueue); }
 
-	ALLEGRO_EVENT_TYPE getEventType() { al_get_next_event(eventQueue, &ev); return ev.type; }
+	void getEvent() { al_get_next_event(eventQueue, &ev); }
+	ALLEGRO_EVENT_TYPE getEventType() { return ev.type; }
 	ALLEGRO_DISPLAY_EVENT getDisplayEvent() { return ev.display; }
 	ALLEGRO_KEYBOARD_EVENT getKeyboardEvent() { return ev.keyboard; }
 	ALLEGRO_TIMER_EVENT getTimerEvent() { return ev.timer; }
@@ -125,12 +129,13 @@ public:
 	void unregisterEventSource(ALLEGRO_EVENT_SOURCE* eventSource) {
 		int i;
 		bool kill = false;
-		for (i = 0; i < sources.size(); i++) {
+		for (i = 0; i < sources.size() && !kill; i++) {
 			if (sources[i] == eventSource)
 				kill = true;
 		}
+		i--;
 		if (kill) {
-			sources.erase(sources.begin() + i);
+			sources.erase(sources.begin() +i);
 			al_unregister_event_source(eventQueue, eventSource);
 		}
 	}
@@ -166,6 +171,7 @@ public:
 			if (all[i] == font)
 				kill = true;
 		}
+		i--;
 		if (kill) {
 			all.erase(all.begin() + i);
 			al_destroy_font(font);
@@ -198,6 +204,7 @@ public:
 			if (all[i] == timer)
 				kill = true;
 		}
+		i--;
 		if (kill) {
 			all.erase(all.begin() + i);
 			al_destroy_timer(timer);
@@ -295,6 +302,7 @@ public:
 			if (all[i] == bitmap)
 				kill = true;
 		}
+		i--;
 		if (kill) {
 			all.erase(all.begin() + i);
 			al_destroy_bitmap(bitmap);

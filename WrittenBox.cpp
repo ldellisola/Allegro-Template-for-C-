@@ -5,6 +5,24 @@
 
 
 
+WrittenBox::WrittenBox(float x_, float y_, float width_, float height_, string text_, ALLEGRO_FONT * font, const char * fontColor)
+{
+	this->x = x_;
+	this->y = y_;
+	this->width = width_;
+	this->height = height_;
+	this->text = text_;
+	this->bitmap = al_create_bitmap(width_, height_);
+	this->font =font;
+	this->fontColor = al_color_name(fontColor);
+	this->backgroundColor = al_map_rgba(0, 0, 0, 0);
+	this->borderColor = al_map_rgba(0, 0, 0, 0);
+	this->borderThickness = 0;
+	this->button = false;
+
+	this->setUp();
+}
+
 WrittenBox::WrittenBox(float x_, float y_, float width_, float height_, int fontSize_, string text_, const char * fontPath, const char * fontColor)
 {
 	this->x = x_;
@@ -25,8 +43,12 @@ WrittenBox::WrittenBox(float x_, float y_, float width_, float height_, int font
 
 void WrittenBox::setBackgroundColor(const char * color )
 {
-	if (color != nullptr)
+	if (color != nullptr) {
 		this->backgroundColor = al_color_name(color);
+		unsigned char r, g, b;
+		al_unmap_rgb(this->backgroundColor, &r, &g, &b);
+		this->pressedColor = al_map_rgb((r > 50) ? r - 50 : r, (g > 50) ? g - 50 : g, (b > 50) ? b - 50 : b);
+	}
 	else
 		this->backgroundColor = al_map_rgba(0, 0, 0, 0);
 	this->setUp();
@@ -65,13 +87,25 @@ void WrittenBox::TransformIntoText()
 
 bool WrittenBox::checkIfPressed(float x, float y)
 {
-	bool pressed = false;
 	if (button) {
 		if ((this->x <= x) && (x <= this->x + this->width))
-			if ((this->y <= y) && (y <= this->y + this->height))
-				pressed = true;
+			if ((this->y <= y) && (y <= (this->y + this->height)))
+				this->pressed = true;
+		
 	}
-	return pressed;
+	if (pressed) {
+		ALLEGRO_COLOR temp = backgroundColor;
+		backgroundColor = pressedColor;
+		pressedColor = temp;
+		this->setUp();
+	}
+
+	return this->pressed;
+}
+
+bool WrittenBox::isPressed()
+{
+	return this->pressed;
 }
 
 WrittenBox::~WrittenBox()
@@ -82,9 +116,41 @@ WrittenBox::~WrittenBox()
 		al_destroy_font(this->font);
 }
 
+bool WrittenBox::operator==(WrittenBox & box)
+{
+	if (box.bitmap == this->bitmap)
+		return true;
+	else
+		return false;
+}
+
+ALLEGRO_BITMAP * WrittenBox::getBitmap()
+{
+	return this->bitmap;
+}
+
+float WrittenBox::getX()
+{
+	return this->x;
+}
+
+float WrittenBox::getY()
+{
+	return this->y;
+}
+
 void WrittenBox::draw()
 {
 	al_draw_bitmap(this->bitmap,this->x,this->y,0);
+}
+
+void WrittenBox::unpressButton()
+{
+	this->pressed = false;
+	ALLEGRO_COLOR temp = pressedColor;
+	pressedColor = backgroundColor;
+	backgroundColor = temp;
+	setUp();
 }
 
 void WrittenBox::setUp()

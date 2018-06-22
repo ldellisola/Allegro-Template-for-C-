@@ -274,6 +274,11 @@ void AllegroClassV2::setDisplayName(const char * name)
 	al_set_window_title(displayAddon->getDisplay(), name);
 }
 
+void AllegroClassV2::setMainDisplay()
+{
+	al_set_target_backbuffer(this->displayAddon->getDisplay());
+}
+
 void AllegroClassV2::updateDisplay()
 {
 	displayAddon->updateDisplay();

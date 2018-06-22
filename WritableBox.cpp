@@ -31,13 +31,13 @@ void WritableBox::input(ALLEGRO_KEYBOARD_EVENT ev)
 	this->setUp();
 }
 
-bool WritableBox::operator==(WritableBox & box)
+void WritableBox::clearText()
 {
-	if (box.bitmap == this->bitmap)
-		return true;
-	else
-		return false;
+	this->text = "";
+	this->setUp();
 }
+
+
 
 void WritableBox::addNumber(int num)
 {

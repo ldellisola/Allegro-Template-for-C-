@@ -43,6 +43,7 @@ public:
 	void setDisplayColor(ALLEGRO_COLOR color);
 	void setDisplayColor(const char * color);
 	void setDisplayName(const char * name);
+	void setMainDisplay();
 	void updateDisplay();
 
 
