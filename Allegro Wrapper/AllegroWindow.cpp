@@ -65,6 +65,19 @@ void AllegroWindow::removeDrawing(ALLEGRO_BITMAP * bitmap)
 	}
 }
 
+void AllegroWindow::removeBox(AllegroBox & box)
+{
+	bool kill = false; int i = 0;
+	for (i = 0; i < boxes.size() && !kill; i++) {
+		if (*boxes[i] == box)
+			kill = true;
+	}
+	i--;
+	if (kill) {
+		boxes.erase(boxes.begin() + i);
+	}
+}
+
 void AllegroWindow::moveDrawing(ALLEGRO_BITMAP * bitmapToMove, float newX, float newY)
 {
 	bool move = false; int i = 0;
@@ -230,7 +243,15 @@ bool AllegroWindow::operator==(ALLEGRO_DISPLAY * disp)
 		return false;
 }
 
-void AllegroWindow::setCustomMouseCursor(string iconPath, float xFocus = 0, float yFocus = 0)
+bool AllegroWindow::operator==(AllegroWindow& window)
+{
+	if (this->display == window.display)
+		return true;
+	else
+		return false;
+}
+
+void AllegroWindow::setCustomMouseCursor(string iconPath, float xFocus , float yFocus )
 {
 	this->customCursorSprite = al_load_bitmap(iconPath.c_str());
 	this->customMouseCursor = al_create_mouse_cursor(customCursorSprite, xFocus, yFocus);
@@ -245,6 +266,12 @@ void AllegroWindow::useCustomMouseCursor()
 void AllegroWindow::useSystemMouseCursor()
 {
 	useCustomCursor = false;
+	this->setUp();
+}
+
+void AllegroWindow::setDifferentSystemMouseCursor(CursorSprite sprite)
+{
+	this->systemCursorSprite = sprite;
 	this->setUp();
 }
 

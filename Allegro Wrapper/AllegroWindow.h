@@ -16,9 +16,12 @@ struct Drawing
 
 };
 
+
 enum class CursorSprite
 {
-	Default
+	None, Default, Arrow, Busy, Question, Edit, ResizeUp, ResizeLeft, ResizeDown, ResizeRight,
+	ResizeUpLeft, ResizeDownLeft, ResizeDownRight, ResizeUpRight, Progress, Precision, Link,
+	AltSelect, Unavailable
 };
 
 enum class ScreenMode
@@ -51,10 +54,14 @@ public:
 	//		- float scaledWidth:		new width for the bitmap to be printed in.
 	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
 
+	// It adds an AllegroBox to the window. It will be printed everytime the window is updatesd by its own draw function
 	void addBoxes(AllegroBox* box);
 
-	// It removes a bitmap that was being drawn on the display.
+	// It removes a bitmap that was being drawn on the window.
 	void removeDrawing(ALLEGRO_BITMAP *bitmap);
+
+	// It removes an AllegroBox htat was being drawn on the window
+	void removeBox(AllegroBox& box);
 
 	// It moves a given draw to another place.
 	void moveDrawing(ALLEGRO_BITMAP *bitmapToMove, float newX, float newY);
@@ -67,14 +74,17 @@ public:
 
 	// It closes the window.
 	void close();
+
 	// It sets the color of the display.
 	void setBackground(ALLEGRO_COLOR color);
 
 	// It sets the image as the background of the display
 	void setImageBackground(string image);
 
+	// It sets a previusly loaded image as the background of the window
 	void setImageAsBackground();
 
+	// It sets a previusly selected color as the background of the window
 	void setColorAsBackground();
 
 	// It draws all the bitmaps of the display.
@@ -113,25 +123,41 @@ public:
 	// It returns the Height of the window
 	float getHeight();
 
-	// It returns the event Source of the window
+	// It returns the event Source of the window. That event source will change everytime
 	ALLEGRO_EVENT_SOURCE * getEventSource();
 
+	// Overloaded operator to check for equality with allegro displays ( for compatibility)
 	bool operator==(ALLEGRO_DISPLAY* disp);
 
-	void setCustomMouseCursor(string iconPath, float xFocus, float yFocus);
+	// Overloaded operator to check for equality with another allegroWindow
+	bool operator==(AllegroWindow& window);
 
+	// It allows the user to use a custom sprite instead of the regular mouse cursor;
+	//
+	//		- string iconPath: path to the sprite
+	//		- xFocus: X coordinate of the sprite where the mouse will click
+	//		- yFocus: Y coordinate of the sprite where the mouse will click
+	void setCustomMouseCursor(string iconPath, float xFocus = 0, float yFocus = 0);
+
+	// it sets a custom mouse cursor as the main cursor for this window
 	void useCustomMouseCursor();
 
+	// It sets the system mouse cursor as the main cursor for this window
 	void useSystemMouseCursor();
 
+	// It allows the user to select what kind of system mouse cursor will be used in this window
 	void setDifferentSystemMouseCursor(CursorSprite sprite);
 
+	// It hides the mouse cursor in this window
 	void hideMouseCursor();
 
+	// It unhides (Yes, it is an actual word) the mouse cursor in this window
 	void showMouseCursor();
 
+	// It forces the cursor to stay on this window
 	void catchMouseCursor();
 
+	//It allows the cursor to leave the window. THIS WILL RELEASE THE CURSOR FROM ANY OTHER WINDOW
 	void releaseMouseCursor();
 
 private:
