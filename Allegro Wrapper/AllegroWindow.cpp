@@ -80,10 +80,20 @@ void AllegroWindow::open()
 	if (!this->on) {
 		this->on = true;
 		this->display = al_create_display(width, height);
+
 		if (name.size() > 0)
 			al_set_window_title(display, name.c_str());
 		if (icon != nullptr)
 			al_set_display_icon(display, icon);
+
+		switch (this->screenMode) {
+		case ScreenMode::Frameless:
+			this->setFrameless(); break;
+		case ScreenMode::FullScreen:
+			this->setFullScreen(); break;
+		case ScreenMode::Maximized:
+			this->setMaximize(); break;
+		}
 	}
 }
 
@@ -122,6 +132,44 @@ void AllegroWindow::setIcon(string icon)
 	this->icon = al_load_bitmap(icon.c_str());
 }
 
+void AllegroWindow::setPosition(float x, float y)
+{
+	al_set_window_position(this->display, x, y);
+}
+
+void AllegroWindow::setFullScreen()
+{
+	this->screenMode = ScreenMode::FullScreen;
+	if (this->on) {
+		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, true);
+		this->update();
+	}
+}
+
+void AllegroWindow::setFrameless()
+{
+	this->screenMode = ScreenMode::Frameless;
+	if (this->on) {
+		al_set_display_flag(this->display, ALLEGRO_FRAMELESS, true);
+		this->update();
+	}
+}
+
+void AllegroWindow::setMaximize()
+{
+	this->screenMode = ScreenMode::Maximized;
+	if (this->on) {
+		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, true);
+		this->update();
+	}
+}
+
+void AllegroWindow::setRegular()
+{
+	this->clearScreenMode();
+	this->screenMode = ScreenMode::Regular;
+}
+
 void AllegroWindow::resize(float newW, float newH)
 {
 	this->width = newW;
@@ -155,4 +203,16 @@ bool AllegroWindow::operator==(ALLEGRO_DISPLAY * disp)
 		return true;
 	else
 		return false;
+}
+
+void AllegroWindow::clearScreenMode()
+{
+	if (on) {
+		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, false);
+		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, false);
+		al_set_display_flag(this->display, ALLEGRO_FRAMELESS, false);
+		this->update();
+	}
+
+	screenMode = ScreenMode::Regular;
 }

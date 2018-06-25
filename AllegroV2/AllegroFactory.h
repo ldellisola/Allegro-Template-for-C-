@@ -149,9 +149,7 @@ private:
 class AllegroFontFactory
 {
 public:
-	AllegroFontFactory()
-	{
-	}
+	AllegroFontFactory(){}
 
 	~AllegroFontFactory() { for (ALLEGRO_FONT * font : all) al_destroy_font(font); }
 

@@ -14,6 +14,11 @@ struct Drawing
 
 };
 
+enum class ScreenMode
+{
+	Regular, FullScreen, Maximized,Frameless
+};
+
 using namespace std;
 
 class AllegroWindow
@@ -33,6 +38,12 @@ public:
 	void setName(string name);
 	void setIcon(string icon);
 
+	void setPosition(float x, float y);
+	void setFullScreen();
+	void setFrameless();
+	void setMaximize();
+	void setRegular();
+
 	void resize(float newW, float newH);
 	bool isOpen();
 	float getWidth();
@@ -43,6 +54,9 @@ public:
 	bool operator==(ALLEGRO_DISPLAY* disp);
 
 private:
+	void clearScreenMode();
+
+	ScreenMode screenMode = ScreenMode::Regular;
 	ALLEGRO_COLOR color;
 	vector<Drawing>drawings;
 	ALLEGRO_DISPLAY * display = nullptr;
