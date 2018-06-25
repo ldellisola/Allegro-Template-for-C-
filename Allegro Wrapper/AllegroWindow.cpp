@@ -15,11 +15,15 @@ AllegroWindow::AllegroWindow(float w, float h, string name, string icon)
 
 AllegroWindow::~AllegroWindow()
 {
+
 	close();
 	if (icon != nullptr)
 		al_destroy_bitmap(icon);
 	if (image != nullptr)
 		al_destroy_bitmap(image);
+	if (customCursorSprite != nullptr)
+		al_destroy_bitmap(customCursorSprite);
+
 }
 
 void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight, float scaledWidth)
@@ -87,20 +91,7 @@ void AllegroWindow::open()
 	if (!this->on) {
 		this->on = true;
 		this->display = al_create_display(width, height);
-
-		if (name.size() > 0)
-			al_set_window_title(display, name.c_str());
-		if (icon != nullptr)
-			al_set_display_icon(display, icon);
-
-		switch (this->screenMode) {
-		case ScreenMode::Frameless:
-			this->setFrameless(); break;
-		case ScreenMode::FullScreen:
-			this->setFullScreen(); break;
-		case ScreenMode::Maximized:
-			this->setMaximize(); break;
-		}
+		this->setUp();
 	}
 }
 
@@ -108,6 +99,9 @@ void AllegroWindow::close()
 {
 	if (this->on) {
 		this->on = false;
+		if (customMouseCursor != nullptr)
+			al_destroy_mouse_cursor(customMouseCursor);
+		
 		al_destroy_display(this->display);
 		this->display = nullptr;
 	}
@@ -118,12 +112,12 @@ void AllegroWindow::setBackground(ALLEGRO_COLOR color)
 	this->color = color;
 }
 
-void AllegroWindow::disableImageBackground()
+void AllegroWindow::setImageAsBackground()
 {
 	this->backgroundImage = false;
 }
 
-void AllegroWindow::enableImageBackground()
+void AllegroWindow::setColorAsBackground()
 {
 	if (image != nullptr);
 		backgroundImage = true;
@@ -156,11 +150,13 @@ void AllegroWindow::update()
 void AllegroWindow::setName(string name)
 {
 	this->name = name;
+	this->setUp();
 }
 
 void AllegroWindow::setIcon(string icon)
 {
 	this->icon = al_load_bitmap(icon.c_str());
+	this->setUp();
 }
 
 void AllegroWindow::setPosition(float x, float y)
@@ -171,28 +167,25 @@ void AllegroWindow::setPosition(float x, float y)
 void AllegroWindow::setFullScreen()
 {
 	this->screenMode = ScreenMode::FullScreen;
-	if (this->on) {
+	if (this->on) 
 		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, true);
-		this->update();
-	}
+
 }
 
 void AllegroWindow::setFrameless()
 {
 	this->screenMode = ScreenMode::Frameless;
-	if (this->on) {
+	if (this->on) 
 		al_set_display_flag(this->display, ALLEGRO_FRAMELESS, true);
-		this->update();
-	}
+
 }
 
 void AllegroWindow::setMaximize()
 {
 	this->screenMode = ScreenMode::Maximized;
-	if (this->on) {
+	if (this->on)
 		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, true);
-		this->update();
-	}
+
 }
 
 void AllegroWindow::setRegular()
@@ -206,6 +199,7 @@ void AllegroWindow::resize(float newW, float newH)
 	this->width = newW;
 	this->height = newH;
 	al_resize_display(this->display, newW, newH);
+	this->setUp();
 }
 
 bool AllegroWindow::isOpen()
@@ -236,13 +230,91 @@ bool AllegroWindow::operator==(ALLEGRO_DISPLAY * disp)
 		return false;
 }
 
+void AllegroWindow::setCustomMouseCursor(string iconPath, float xFocus = 0, float yFocus = 0)
+{
+	this->customCursorSprite = al_load_bitmap(iconPath.c_str());
+	this->customMouseCursor = al_create_mouse_cursor(customCursorSprite, xFocus, yFocus);
+}
+
+void AllegroWindow::useCustomMouseCursor()
+{
+	useCustomCursor = true;
+	this->setUp();
+}
+
+void AllegroWindow::useSystemMouseCursor()
+{
+	useCustomCursor = false;
+	this->setUp();
+}
+
+void AllegroWindow::hideMouseCursor()
+{
+	cursorHidden = true;
+	this->setUp();
+}
+
+void AllegroWindow::showMouseCursor()
+{
+	cursorHidden = false;
+	this->setUp();
+}
+
+void AllegroWindow::catchMouseCursor()
+{
+	cursorCaught = true;
+	this->setUp();
+}
+
+void AllegroWindow::releaseMouseCursor()
+{
+	this->cursorCaught = false;
+	this->setUp();
+}
+
+void AllegroWindow::setUp()
+{
+	if (on) {
+		if (customMouseCursor != nullptr && useCustomCursor)
+			al_set_mouse_cursor(this->display, this->customMouseCursor);
+		else
+			al_set_system_mouse_cursor(this->display, (ALLEGRO_SYSTEM_MOUSE_CURSOR)systemCursorSprite);
+
+		if (cursorHidden)
+			al_hide_mouse_cursor(this->display);
+		else
+			al_show_mouse_cursor(this->display);
+
+		if (cursorCaught)
+			al_grab_mouse(this->display);
+		else
+			al_ungrab_mouse();
+
+		if (name.size() > 0)
+			al_set_window_title(display, name.c_str());
+		if (icon != nullptr)
+			al_set_display_icon(display, icon);
+
+		switch (this->screenMode) {
+		case ScreenMode::Frameless:
+			this->setFrameless(); break;
+		case ScreenMode::FullScreen:
+			this->setFullScreen(); break;
+		case ScreenMode::Maximized:
+			this->setMaximize(); break;
+		case ScreenMode::Regular:
+			this->setRegular(); break;
+		}
+		this->update();
+	}
+}
+
 void AllegroWindow::clearScreenMode()
 {
 	if (on) {
 		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, false);
 		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, false);
 		al_set_display_flag(this->display, ALLEGRO_FRAMELESS, false);
-		this->update();
 	}
 
 	screenMode = ScreenMode::Regular;

@@ -16,6 +16,11 @@ struct Drawing
 
 };
 
+enum class CursorSprite
+{
+	Default
+};
+
 enum class ScreenMode
 {
 	Regular, FullScreen, Maximized,Frameless
@@ -68,9 +73,9 @@ public:
 	// It sets the image as the background of the display
 	void setImageBackground(string image);
 
-	void disableImageBackground();
+	void setImageAsBackground();
 
-	void enableImageBackground();
+	void setColorAsBackground();
 
 	// It draws all the bitmaps of the display.
 	void update();
@@ -113,18 +118,49 @@ public:
 
 	bool operator==(ALLEGRO_DISPLAY* disp);
 
+	void setCustomMouseCursor(string iconPath, float xFocus, float yFocus);
+
+	void useCustomMouseCursor();
+
+	void useSystemMouseCursor();
+
+	void setDifferentSystemMouseCursor(CursorSprite sprite);
+
+	void hideMouseCursor();
+
+	void showMouseCursor();
+
+	void catchMouseCursor();
+
+	void releaseMouseCursor();
+
 private:
-	void clearScreenMode();
-	bool backgroundImage;
-	ALLEGRO_BITMAP * image = nullptr;
-	ScreenMode screenMode = ScreenMode::Regular;
-	ALLEGRO_COLOR color;
-	vector<Drawing>drawings;
-	vector<AllegroBox *> boxes;
+	// Display
 	ALLEGRO_DISPLAY * display = nullptr;
-	ALLEGRO_BITMAP * icon = nullptr;
-	string name;
 	float width, height;
 	bool on = false;
+	void setUp();
+
+	// Draw
+	vector<Drawing>drawings;
+	vector<AllegroBox *> boxes;
+	bool backgroundImage;
+	ALLEGRO_BITMAP * image = nullptr;
+	ALLEGRO_COLOR color;
+
+	// Screen
+	ALLEGRO_BITMAP * icon = nullptr;
+	string name;
+	ScreenMode screenMode = ScreenMode::Regular;
+	void clearScreenMode();
+	
+	// Cursor
+	bool useCustomCursor = false;
+	bool cursorHidden = false;
+	bool cursorCaught = false;
+	CursorSprite systemCursorSprite = CursorSprite::Default;
+
+	ALLEGRO_MOUSE_CURSOR *	customMouseCursor = nullptr;
+	ALLEGRO_BITMAP * customCursorSprite = nullptr;
 };
 
