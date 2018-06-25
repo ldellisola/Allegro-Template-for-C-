@@ -20,7 +20,7 @@ AllegroBox::~AllegroBox()
 
 void AllegroBox::draw()
 {
-	al_draw_bitmap(this->bitmap, this->x, this->y, 0);
+	al_draw_rotated_bitmap(this->bitmap, this->width / 2.0, this->height / 2.0, this->x+ this->width/2.0, this->y + this->height/2.0, this->rotationDegree, 0);
 }
 
 void AllegroBox::setBackgroundColor(ALLEGRO_COLOR color)
@@ -63,6 +63,11 @@ void AllegroBox::setColorAsBackground()
 {
 	this->drawImage = false;
 	this->setUp();
+}
+
+void AllegroBox::setRotationDegree(double degree)
+{
+	this->rotationDegree = degree * (ALLEGRO_PI / 180.0);
 }
 
 void AllegroBox::loadImageBackground(string imagePath)

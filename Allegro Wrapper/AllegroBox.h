@@ -37,6 +37,7 @@ public:
 	virtual void setY(float y);
 	virtual void setImageAsBackground();
 	virtual void setColorAsBackground();
+	virtual void setRotationDegree(double degree); // It does not support radians, because fuck radians
 	
 
 	// Getters: each function returns a given variable of the box
@@ -65,6 +66,7 @@ protected:
 	bool drawImage;
 	bool foreignImage = false;
 	float borderThickness;
+	double rotationDegree = 0;
 	float x;
 	float y;
 	float width;
