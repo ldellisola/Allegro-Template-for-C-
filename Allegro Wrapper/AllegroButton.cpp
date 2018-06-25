@@ -9,13 +9,19 @@ AllegroButton::~AllegroButton()
 {
 }
 
-void AllegroButton::click(float mouseX, float mouseY)
+void AllegroButton::click(float mouseX, float mouseY, double timeStamp)
 {
-	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY)))
-		if (pressed)
-			unpress();
-		else
-			press();
+	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY))) {
+		if (clickTimeStamp == 0) {
+			clickTimeStamp = timeStamp;
+			if (pressed)
+				unpress();
+			else
+				press();
+		}
+	}
+	if (clickTimeStamp >= MinClickThreshold)
+		clickTimeStamp = 0;
 
 }
 
@@ -23,9 +29,9 @@ bool AllegroButton::doubleClick(float mouseX, float mouseY, double timestamp)
 {
 	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY)))
 		if (pressed) {
-			if (MinDoubleClickThreshold < timestamp - lastClickTimeStamp) {
+			if (MinClickThreshold < timestamp - doubleClickTimeStamp) {
 				unpress();
-				if (timestamp - lastClickTimeStamp < MaxDoubleClickThreshold)
+				if (timestamp - doubleClickTimeStamp < MaxClickThreshold)
 					return true;
 				else
 					return false;
@@ -35,12 +41,12 @@ bool AllegroButton::doubleClick(float mouseX, float mouseY, double timestamp)
 		}
 		else {
 			press();
-			lastClickTimeStamp = timestamp;
+			doubleClickTimeStamp = timestamp;
 			return false;
 		}
 	else {
 		unpress();
-		lastClickTimeStamp = 0;
+		doubleClickTimeStamp = 0;
 		return false;
 	}
 
@@ -49,7 +55,7 @@ bool AllegroButton::doubleClick(float mouseX, float mouseY, double timestamp)
 
 bool AllegroButton::isPressed()
 {
-	if (lastClickTimeStamp == 0)
+	if (doubleClickTimeStamp == 0)
 		return pressed;
 	else
 		return false;
@@ -57,7 +63,7 @@ bool AllegroButton::isPressed()
 
 void AllegroButton::draw()
 {
-	if (lastClickTimeStamp == 0) {
+	if (doubleClickTimeStamp == 0) {
 		if (pressed) 
 			al_draw_tinted_bitmap(this->bitmap, this->pressedColor, this->x, this->y, 0);
 		else

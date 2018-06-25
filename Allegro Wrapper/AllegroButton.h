@@ -9,8 +9,8 @@
 
 #include "WrittenBox.h"
 
-#define MinDoubleClickThreshold (0.001)
-#define MaxDoubleClickThreshold (0.2)
+#define MinClickThreshold (0.001)
+#define MaxClickThreshold (0.2)
 
 typedef struct AllegroButtonData
 {
@@ -26,15 +26,30 @@ class AllegroButton :
 public:
 	// Constructor: It needs a pointer to a font.
 	//
-	//		- float x: initial X coordinate.
-	//		- float y: initial Y coordinate.
-	//		- float width: width of the button.
-	//		- float height: height of the button.
-	//		- string text: text of the button.
-	//		- ALLEGRO_FONT * font: pointer to the font
-	//		- ALLEGRO_COLOR fontColor: color of the font
+	//		- float x:					initial X coordinate.
+	//		- float y:					initial Y coordinate.
+	//		- float width:				width of the button.
+	//		- float height:				height of the button.
+	//		- string text:				text of the button.
+	//		- ALLEGRO_FONT * font:		pointer to the font
+	//		- ALLEGRO_COLOR fontColor:	color of the font
 	AllegroButton(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor)
 		: AllegroWrittenBox(x,y,width,height,text,font,fontColor){
+		pressedColor = al_map_rgb(100, 100, 100);
+	}
+
+	// Constructor: it will create a font
+	//
+	//		- float x:					initial X coordinate.
+	//		- float y:					initial Y coordinate.
+	//		- float width:				width of the button.
+	//		- float height:				height of the button.
+	//		- string text:				text of the button.
+	//		- int fontSize:				size of the font (int pixels)
+	//		- const char * font:		path to the font
+	//		- ALLEGRO_COLOR fontColor:	color of the font
+	AllegroButton(float x, float y, float width, float height, string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor)
+		:AllegroWrittenBox(x, y, width, height, fontSize, text, font, fontColor) {
 		pressedColor = al_map_rgb(100, 100, 100);
 	}
 
@@ -47,16 +62,35 @@ public:
 		pressedColor = al_map_rgb(100, 100, 100);
 	}
 
+	// Destructor
 	~AllegroButton();
-	void click(float mouseX, float mouseY);
-	bool doubleClick(float mouseX, float mouseY, double timestamp);
+
+	// This function will set the button as clicked if the mouse coordinates coincide with the button and the click was made a given number 
+	// of seconds after the last click
+	//
+	//		- float mouseX: X coordinate of the mouse.
+	//		- float mouseY: Y coordinate of the mouse.
+	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
+	void click(float mouseX, float mouseY, double timeStamp);
+
+	// This function will return true if there was a double click within the given time thresholds.The button will not be set as pressed.
+	//
+	//		- float mouseX: X coordinate of the mouse.
+	//		- float mouseY: Y coordinate of the mouse.
+	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
+	bool doubleClick(float mouseX, float mouseY, double timeStamp);
+
+	// this function will return true if the button is pressed. IT ONLY WORKS WITH A SINGLE CLICK
 	bool isPressed();
+
+	// It draws the button to the active display
 	void draw();
 private:
 	void press();
 	void unpress();
 	bool pressed = false;
-	double lastClickTimeStamp = 0;
+	double doubleClickTimeStamp = 0;
+	double clickTimeStamp = 0;
 	ALLEGRO_COLOR pressedColor;
 };
 
