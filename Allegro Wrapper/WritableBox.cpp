@@ -19,23 +19,27 @@ string AllegroWritableBox::getText()
 void AllegroWritableBox::input(ALLEGRO_KEYBOARD_EVENT ev)
 {
 	int character = ev.keycode;
-	if (text.length() < maxLenght) {
-		switch (mode) {
-		case KeyboardMode::Alphabetic:
-			addLowerCaseLetter(character);
-			break;
-		case KeyboardMode::Alphanumeric:
-			addLowerCaseLetter(character);
-			addNumber(character);
-			break;
-		case KeyboardMode::Numeric:
-			addNumber(character);
-			break;
+	if (timeStamp == 0) {
+		if (text.length() < maxLenght) {
+			switch (mode) {
+			case KeyboardMode::Alphabetic:
+				addLetter(character, ev.modifiers);
+				break;
+			case KeyboardMode::Alphanumeric:
+				addLetter(character, ev.modifiers);
+				addNumber(character);
+				break;
+			case KeyboardMode::Numeric:
+				addNumber(character);
+				break;
+			}
 		}
+		deleteLetter(character);
+		timeStamp = ev.timestamp;
+		this->setUp();
 	}
-	deleteLetter(character);
-
-	this->setUp();
+	else if (ev.timestamp - timeStamp >= KeyPressedTimeThreshold)
+		timeStamp = 0;
 }
 
 void AllegroWritableBox::clearText()
@@ -64,12 +68,20 @@ void AllegroWritableBox::addNumber(int num)
 		this->text += '0' + (num -ALLEGRO_KEY_0);
 }
 
-void AllegroWritableBox::addLowerCaseLetter(int let)
+void AllegroWritableBox::addLetter(int let, unsigned int modifiers)
 {
+	char initial;
+	if (modifiers & ALLEGRO_KEYMOD_CAPSLOCK || modifiers & ALLEGRO_KEYMOD_SHIFT)
+		initial = 'A';
+	else
+		initial = 'a';
+
 	if (ALLEGRO_KEY_A <= let && let <= ALLEGRO_KEY_Z)
-		this->text += 'a' + (let - ALLEGRO_KEY_A);
+		this->text += initial + (let - ALLEGRO_KEY_A);
 
 }
+
+
 
 
 void AllegroWritableBox::deleteLetter(int let)

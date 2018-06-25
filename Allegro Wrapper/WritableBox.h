@@ -11,6 +11,8 @@
 
 using namespace std;
 
+#define KeyPressedTimeThreshold (0.02)
+
 enum class KeyboardMode
 {
 	Numeric, Alphabetic, Alphanumeric 
@@ -92,9 +94,12 @@ private:
 	// If the key is a number, it will add it to the text.
 	void addNumber(int num);
 	// If the key is a letter, it will add it to the text.
-	void addLowerCaseLetter(int let);
+	void addLetter(int let, unsigned int modifiers);
+
 	// If the text is 'backspace' it will delete a key.
 	void deleteLetter(int let);
+
+	double timeStamp = 0;
 
 	string text = "";
 	KeyboardMode mode;
