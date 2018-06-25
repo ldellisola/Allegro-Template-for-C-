@@ -6,14 +6,20 @@
 
 
 
-WrittenBox::~WrittenBox()
+AllegroWrittenBox::~AllegroWrittenBox()
 {
-	if (this->font && foreignFont == true)
+	if (this->font && foreignFont == false)
 		al_destroy_font(this->font);
 }
 
+void AllegroWrittenBox::setText(string text)
+{
+	this->text = text;
+	setUp();
+}
 
-void WrittenBox::setUp()
+
+void AllegroWrittenBox::setUp()
 {
 	AllegroBox::setUp();
 
