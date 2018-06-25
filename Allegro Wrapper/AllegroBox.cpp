@@ -8,6 +8,7 @@ AllegroBox::AllegroBox(float x, float y, float width, float height)
 	this->width = width;
 	this->height = height;
 	this->bitmap = al_create_bitmap(width, height);
+	imageBackground = false;
 	
 	this->setUp();
 }
@@ -48,6 +49,32 @@ void AllegroBox::setX(float x)
 void AllegroBox::setY(float y)
 {
 	this->y = y;
+}
+
+void AllegroBox::setImageAsBackground()
+{
+	if (imageBackground != nullptr) {
+		this->drawImage = true;
+		this->setUp();
+	}
+}
+
+void AllegroBox::setColorAsBackground()
+{
+	this->drawImage = false;
+	this->setUp();
+}
+
+void AllegroBox::loadImageBackground(string imagePath)
+{
+	this->imageBackground = al_load_bitmap(imagePath.c_str());
+	this->foreignImage = false;
+}
+
+void AllegroBox::loadImageBackground(ALLEGRO_BITMAP * image)
+{
+	this->imageBackground = image;
+	this->foreignImage = true;
 }
 
 void AllegroBox::resize(float width, float height)
@@ -111,8 +138,10 @@ void AllegroBox::setUp()
 {
 	ALLEGRO_DISPLAY * main = al_get_current_display();
 	al_set_target_bitmap(this->bitmap);
-
-	al_clear_to_color(backgroundColor);
+	if (drawImage)
+		al_draw_scaled_bitmap(this->imageBackground, 0, 0, al_get_bitmap_width(imageBackground), al_get_bitmap_height(imageBackground), 0, 0, width, height, 0);
+	else
+		al_clear_to_color(backgroundColor);
 
 	if (borderThickness > 0) {
 		float x1 = borderThickness;

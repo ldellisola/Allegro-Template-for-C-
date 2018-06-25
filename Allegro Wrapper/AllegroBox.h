@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+using namespace std;
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_image.h>
@@ -21,6 +24,10 @@ public:
 	//
 	virtual void draw();
 
+	virtual void resize(float width, float height);
+	virtual void loadImageBackground(string imagePath);
+	virtual void loadImageBackground(ALLEGRO_BITMAP * image);
+
 	// Setters: each function set a given variable of the box
 	//
 	virtual void setBackgroundColor(ALLEGRO_COLOR color);
@@ -28,7 +35,9 @@ public:
 	virtual void setBorderThickness(float thickness);
 	virtual void setX(float x);
 	virtual void setY(float y);
-	virtual void resize(float width, float height);
+	virtual void setImageAsBackground();
+	virtual void setColorAsBackground();
+	
 
 	// Getters: each function returns a given variable of the box
 
@@ -49,9 +58,12 @@ protected:
 	// This function is called everytime a change is made in the box to reflect that change on the bitmap
 	// it should only be called from within the clases.
 	virtual void setUp();
-	ALLEGRO_BITMAP * bitmap;
+	ALLEGRO_BITMAP * bitmap = nullptr;
+	ALLEGRO_BITMAP * imageBackground = nullptr;
 	ALLEGRO_COLOR borderColor;
 	ALLEGRO_COLOR backgroundColor;
+	bool drawImage;
+	bool foreignImage = false;
 	float borderThickness;
 	float x;
 	float y;

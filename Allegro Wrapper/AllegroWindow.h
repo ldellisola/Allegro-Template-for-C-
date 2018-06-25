@@ -6,6 +6,8 @@
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_image.h>
 
+#include "AllegroBox.h"
+
 struct Drawing
 {
 	ALLEGRO_BITMAP * bitmap;
@@ -44,6 +46,8 @@ public:
 	//		- float scaledWidth:		new width for the bitmap to be printed in.
 	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
 
+	void addBoxes(AllegroBox* box);
+
 	// It removes a bitmap that was being drawn on the display.
 	void removeDrawing(ALLEGRO_BITMAP *bitmap);
 
@@ -60,6 +64,13 @@ public:
 	void close();
 	// It sets the color of the display.
 	void setBackground(ALLEGRO_COLOR color);
+
+	// It sets the image as the background of the display
+	void setImageBackground(string image);
+
+	void disableImageBackground();
+
+	void enableImageBackground();
 
 	// It draws all the bitmaps of the display.
 	void update();
@@ -104,10 +115,12 @@ public:
 
 private:
 	void clearScreenMode();
-
+	bool backgroundImage;
+	ALLEGRO_BITMAP * image = nullptr;
 	ScreenMode screenMode = ScreenMode::Regular;
 	ALLEGRO_COLOR color;
 	vector<Drawing>drawings;
+	vector<AllegroBox *> boxes;
 	ALLEGRO_DISPLAY * display = nullptr;
 	ALLEGRO_BITMAP * icon = nullptr;
 	string name;

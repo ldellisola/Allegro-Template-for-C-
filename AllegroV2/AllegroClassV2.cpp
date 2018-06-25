@@ -207,13 +207,13 @@ void AllegroClassV2::uninstallVideoAddon()
 void AllegroClassV2::registerAllAvailableEventsSource()
 {
 	if (eventsAddon != nullptr) {
-		if (this->timerAddon != nullptr)
+		if (this->timerAddon != nullptr && this->timerAddon->getRefreshTimer() !=nullptr)
 			eventsAddon->registerEventSourceAddon(timerAddon);
 		if (this->keyboardAddon != nullptr)
 			eventsAddon->registerEventSourceAddon(keyboardAddon);
 		if (this->mouseAddon != nullptr)
 			eventsAddon->registerEventSourceAddon(mouseAddon);
-		if (this->displayAddon != nullptr)
+		if (this->displayAddon != nullptr && this->displayAddon->getDisplay() != nullptr)
 			eventsAddon->registerEventSourceAddon(displayAddon);
 	}
 }

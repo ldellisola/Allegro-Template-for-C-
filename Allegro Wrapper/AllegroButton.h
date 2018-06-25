@@ -20,6 +20,10 @@ typedef struct AllegroButtonData
 	ALLEGRO_COLOR fontColor;
 };
 
+/*
+		This button has a single click and a double click option. This should not be used at the same time as they can cause issues drawing it.
+*/
+
 class AllegroButton :
 	public AllegroWrittenBox
 {
@@ -86,11 +90,17 @@ public:
 	// It draws the button to the active display
 	void draw();
 private:
-	void press();
-	void unpress();
-	bool pressed = false;
-	double doubleClickTimeStamp = 0;
+	// Single click
+	void pressC();
+	void unpressC();
+	bool pressedC = false;
 	double clickTimeStamp = 0;
 	ALLEGRO_COLOR pressedColor;
+
+	// Double Click
+	double doubleClickTimeStamp = 0;
+	bool pressedDC = false;
+	void pressDC();
+	void unpressDC();
 };
 

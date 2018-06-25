@@ -18,6 +18,8 @@ AllegroWindow::~AllegroWindow()
 	close();
 	if (icon != nullptr)
 		al_destroy_bitmap(icon);
+	if (image != nullptr)
+		al_destroy_bitmap(image);
 }
 
 void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight, float scaledWidth)
@@ -38,6 +40,11 @@ void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float 
 	else 
 		temp.scaledWidth = scaledWidth;
 	drawings.push_back(temp);
+}
+
+void AllegroWindow::addBoxes(AllegroBox * box)
+{
+	this->boxes.push_back(box);
 }
 
 
@@ -111,12 +118,36 @@ void AllegroWindow::setBackground(ALLEGRO_COLOR color)
 	this->color = color;
 }
 
+void AllegroWindow::disableImageBackground()
+{
+	this->backgroundImage = false;
+}
+
+void AllegroWindow::enableImageBackground()
+{
+	if (image != nullptr);
+		backgroundImage = true;
+}
+
+void AllegroWindow::setImageBackground(string image)
+{
+	this->image = al_load_bitmap(image.c_str());
+}
+
 void AllegroWindow::update()
 {
 	if (on) {
-		al_clear_to_color(color);
+		if (backgroundImage)
+			al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, this->width, this->height, 0);
+		else
+			al_clear_to_color(color);
+
 		for (Drawing& drawing : drawings)
-			al_draw_scaled_bitmap(drawing.bitmap, 0, 0,drawing.width, drawing.height , drawing.x, drawing.y, drawing.scaledWidth, drawing.scaledHeight, 0);		
+			al_draw_scaled_bitmap(drawing.bitmap, 0, 0,drawing.width, drawing.height , drawing.x, drawing.y, drawing.scaledWidth, drawing.scaledHeight, 0);	
+
+		for (AllegroBox* box : boxes)
+			box->draw();
+
 		al_flip_display();
 	}
 
