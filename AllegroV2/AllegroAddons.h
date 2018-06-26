@@ -8,6 +8,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_video.h>
+#include <allegro5/allegro_native_dialog.h>
 
 namespace Allegro {
 	// Modos de inicializacion de allegro:
@@ -47,7 +48,13 @@ public:
 };
 
 
-
+class NativeDialogAddon : public Addon {
+public:
+	NativeDialogAddon() {
+		if (al_init_native_dialog_addon())
+			this->initSuccess();
+	}
+};
 
 
 class AudioAddon : public Addon {

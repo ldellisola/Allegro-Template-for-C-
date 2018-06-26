@@ -134,6 +134,14 @@ void AllegroClassV2::initVideoAddon()
 	}
 }
 
+void AllegroClassV2::initNativeDialogAddon()
+{
+	if (nativeDialogAddon != nullptr) {
+		this->nativeDialogAddon = new NativeDialogAddon();
+		this->success - nativeDialogAddon->getSuccess();
+	}
+}
+
 void AllegroClassV2::uninstallImageAddon()
 {
 	if (imageAddon != nullptr)
@@ -202,6 +210,13 @@ void AllegroClassV2::uninstallVideoAddon()
 	if (videoAddon != nullptr)
 		delete videoAddon;
 	videoAddon = nullptr;
+}
+
+void AllegroClassV2::uninstallNativeDialogAddon()
+{
+	if (nativeDialogAddon != nullptr)
+		delete nativeDialogAddon;
+	nativeDialogAddon = nullptr;
 }
 
 void AllegroClassV2::registerAllAvailableEventsSource()

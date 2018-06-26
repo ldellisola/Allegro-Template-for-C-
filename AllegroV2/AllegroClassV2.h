@@ -10,6 +10,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_video.h>
+#include <allegro5/allegro_native_dialog.h>
 
 
 /*
@@ -59,6 +60,7 @@ public:
 	void initTimerAddon();											// Lo hace sin craer ningun timer
 	void initPrimitivesAddon();
 	void initVideoAddon();
+	void initNativeDialogAddon();
 
 	// eliminadores
 	void uninstallImageAddon();
@@ -71,6 +73,7 @@ public:
 	void uninstallTimerAddon();
 	void uninstallPrimitivesAddon();
 	void uninstallVideoAddon();
+	void uninstallNativeDialogAddon();
 private:
 	bool success = false;
 
@@ -85,4 +88,5 @@ private:
 	TimerAddon * timerAddon = nullptr;
 	PrimitivesAddon * primitivesAddon = nullptr;
 	VideoAddon * videoAddon = nullptr;
+	NativeDialogAddon * nativeDialogAddon = nullptr;
 };
