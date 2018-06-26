@@ -5,6 +5,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_native_dialog.h>
 
 #include "AllegroBox.h"
 
@@ -126,6 +127,8 @@ public:
 	// It returns the event Source of the window. That event source will change everytime
 	ALLEGRO_EVENT_SOURCE * getEventSource();
 
+	ALLEGRO_DISPLAY * getDisplay();
+
 	// Overloaded operator to check for equality with allegro displays ( for compatibility)
 	bool operator==(ALLEGRO_DISPLAY* disp);
 
@@ -160,6 +163,11 @@ public:
 	//It allows the cursor to leave the window. THIS WILL RELEASE THE CURSOR FROM ANY OTHER WINDOW
 	void releaseMouseCursor();
 
+
+	// Experimental
+	void setMenu(ALLEGRO_MENU * menu);
+
+	
 private:
 	// Display
 	ALLEGRO_DISPLAY * display = nullptr;

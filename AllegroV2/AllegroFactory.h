@@ -52,6 +52,30 @@ private:
 	vector<ALLEGRO_DISPLAY *> all;
 };
 
+enum class PopUpReturn
+{
+	Yes, No, Closed
+};
+enum class PopUpType
+{
+	Warn = 1, Error = 2, OkCancel = 4, YesNo = 8, Question = 16, 
+};
+
+class AllegroPopUpFactory
+{
+public:
+	AllegroPopUpFactory(){}
+	~AllegroPopUpFactory(){}
+
+	PopUpReturn create(string title, string heading, string text,PopUpType type ,ALLEGRO_DISPLAY * display = nullptr) {
+		return (PopUpReturn) al_show_native_message_box(display, title.c_str(), heading.c_str(), text.c_str(), nullptr, (int)type);
+	}
+
+private:
+
+};
+
+
 /*
 	Crea y decodifica colores de allegro
 */

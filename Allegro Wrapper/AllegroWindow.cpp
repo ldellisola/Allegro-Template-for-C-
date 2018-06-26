@@ -235,6 +235,11 @@ ALLEGRO_EVENT_SOURCE * AllegroWindow::getEventSource()
 	return al_get_display_event_source(display);
 }
 
+ALLEGRO_DISPLAY * AllegroWindow::getDisplay()
+{
+	return display;
+}
+
 bool AllegroWindow::operator==(ALLEGRO_DISPLAY * disp)
 {
 	if (this->display == disp)
@@ -297,6 +302,12 @@ void AllegroWindow::releaseMouseCursor()
 {
 	this->cursorCaught = false;
 	this->setUp();
+}
+
+void AllegroWindow::setMenu(ALLEGRO_MENU * menu)
+{
+	if (on)
+		al_set_display_menu(this->display, menu);
 }
 
 void AllegroWindow::setUp()

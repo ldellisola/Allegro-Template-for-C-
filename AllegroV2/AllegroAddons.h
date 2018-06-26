@@ -54,6 +54,7 @@ public:
 		if (al_init_native_dialog_addon())
 			this->initSuccess();
 	}
+	~NativeDialogAddon() { al_shutdown_native_dialog_addon(); }
 };
 
 
@@ -61,6 +62,7 @@ class AudioAddon : public Addon {
 public:
 	AudioAddon() { if (al_install_audio() && al_init_acodec_addon()) this->initSuccess(); }
 	~AudioAddon() { al_uninstall_audio(); }
+	
 };
 
 

@@ -9,6 +9,8 @@ AllegroClassV2::AllegroClassV2(Allegro::InitMode mode, float width, float height
 	switch (mode) {
 	case Allegro::InitMode::Full:
 		if (success)
+			initNativeDialogAddon();
+		if (success)
 			initVideoAddon();
 		if (success)
 			initAudioAddon();
@@ -136,7 +138,7 @@ void AllegroClassV2::initVideoAddon()
 
 void AllegroClassV2::initNativeDialogAddon()
 {
-	if (nativeDialogAddon != nullptr) {
+	if (nativeDialogAddon == nullptr) {
 		this->nativeDialogAddon = new NativeDialogAddon();
 		this->success - nativeDialogAddon->getSuccess();
 	}
@@ -297,6 +299,11 @@ void AllegroClassV2::setMainDisplay()
 void AllegroClassV2::updateDisplay()
 {
 	displayAddon->updateDisplay();
+}
+
+ALLEGRO_DISPLAY * AllegroClassV2::getDisplay()
+{
+	return displayAddon->getDisplay();
 }
 
 

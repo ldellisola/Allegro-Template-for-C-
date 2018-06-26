@@ -46,6 +46,7 @@ public:
 	void setDisplayName(const char * name);
 	void setMainDisplay();
 	void updateDisplay();
+	ALLEGRO_DISPLAY * getDisplay();
 
 
 	// instaladores
