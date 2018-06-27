@@ -146,6 +146,7 @@ public:
 	ALLEGRO_KEYBOARD_EVENT getKeyboardEvent() { return ev.keyboard; }
 	ALLEGRO_TIMER_EVENT getTimerEvent() { return ev.timer; }
 	ALLEGRO_MOUSE_EVENT getMouseEvent() { return ev.mouse; }
+	ALLEGRO_USER_EVENT getUserEvent() { return ev.user; }
 	void registerEventSource(ALLEGRO_EVENT_SOURCE * eventSource) {
 		al_register_event_source(eventQueue, eventSource);
 		sources.push_back(eventSource);

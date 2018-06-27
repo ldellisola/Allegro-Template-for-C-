@@ -127,13 +127,13 @@ void AllegroWindow::setBackground(ALLEGRO_COLOR color)
 
 void AllegroWindow::setImageAsBackground()
 {
-	this->backgroundImage = false;
+	if (image != nullptr);
+	backgroundImage = true;
 }
 
 void AllegroWindow::setColorAsBackground()
 {
-	if (image != nullptr);
-		backgroundImage = true;
+	this->backgroundImage = false;
 }
 
 void AllegroWindow::setImageBackground(string image)
