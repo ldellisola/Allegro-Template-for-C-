@@ -16,11 +16,20 @@ enum class TextLogFlag
 class AllegroLog
 {
 public:
-	AllegroLog(string title, TextLogFlag flag);
+
+	// Constructor:
+	//
+	//		- string title: the title of the debug window.
+	//		- TextLogFlag flag: an optional paramenter that affects the debug window. It can be Regular, NoClose of Monospace.
+	AllegroLog(string title, TextLogFlag flag = TextLogFlag::Regular);
+
+	//Destructor
 	~AllegroLog();
 
+	// It closes the debug window
 	void close();
 
+	// It return the event source
 	ALLEGRO_EVENT_SOURCE* getEventSource();
 
 	AllegroLog& operator<< (string text);
@@ -30,6 +39,6 @@ public:
 	AllegroLog& operator<< (double num);
 
 private:
-	ALLEGRO_TEXTLOG * logFile = nullptr;
+	ALLEGRO_TEXTLOG * logWindow = nullptr;
 };
 

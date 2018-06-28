@@ -2,7 +2,7 @@
 
 
 
-AllegroWindow::AllegroWindow(float w, float h, string name, string icon)
+AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue , string name, string icon)
 {
 	width = w;
 	height = h;
@@ -11,11 +11,13 @@ AllegroWindow::AllegroWindow(float w, float h, string name, string icon)
 		setName(name);
 	if (icon.size() > 0)
 		setIcon(icon);
+
+	this->queue = evQueue;
 }
 
 AllegroWindow::~AllegroWindow()
 {
-
+	deleteMenu();
 	close();
 	if (icon != nullptr)
 		al_destroy_bitmap(icon);
@@ -24,6 +26,11 @@ AllegroWindow::~AllegroWindow()
 	if (customCursorSprite != nullptr)
 		al_destroy_bitmap(customCursorSprite);
 
+}
+
+void AllegroWindow::setEventQueue(ALLEGRO_EVENT_QUEUE * queue)
+{
+	this->queue = queue;
 }
 
 void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight, float scaledWidth)
@@ -46,7 +53,7 @@ void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float 
 	drawings.push_back(temp);
 }
 
-void AllegroWindow::addBoxes(AllegroBox * box)
+void AllegroWindow::addBox(AllegroBox * box)
 {
 	this->boxes.push_back(box);
 }
@@ -105,6 +112,11 @@ void AllegroWindow::open()
 		this->on = true;
 		this->display = al_create_display(width, height);
 		this->setUp();
+		if (queue != nullptr)
+			al_register_event_source(queue, getEventSource());
+		if (menuOn && menuInitialized) {
+			al_set_display_menu(this->display, menu->GetMainMenu());
+		}
 	}
 }
 
@@ -112,15 +124,22 @@ void AllegroWindow::close()
 {
 	if (this->on) {
 		this->on = false;
+		if (menuOn)
+			al_remove_display_menu(this->display);
+		
 		if (customMouseCursor != nullptr)
 			al_destroy_mouse_cursor(customMouseCursor);
+
+		if (queue != nullptr)
+			al_unregister_event_source(queue, getEventSource());
+
 		
 		al_destroy_display(this->display);
 		this->display = nullptr;
 	}
 }
 
-void AllegroWindow::setBackground(ALLEGRO_COLOR color)
+void AllegroWindow::loadBackground(ALLEGRO_COLOR color)
 {
 	this->color = color;
 }
@@ -136,9 +155,19 @@ void AllegroWindow::setColorAsBackground()
 	this->backgroundImage = false;
 }
 
-void AllegroWindow::setImageBackground(string image)
+void AllegroWindow::loadImageBackground(string image)
 {
 	this->image = al_load_bitmap(image.c_str());
+}
+
+void AllegroWindow::loadImageBackground(ALLEGRO_BITMAP * image)
+{
+	this->image = image;
+}
+
+void AllegroWindow::loadImageBackground(AllegroBox & image)
+{
+	this->image = image.getBitmap();
 }
 
 void AllegroWindow::update()
@@ -304,10 +333,92 @@ void AllegroWindow::releaseMouseCursor()
 	this->setUp();
 }
 
-void AllegroWindow::setMenu(ALLEGRO_MENU * menu)
+void AllegroWindow::createMenu()
+{
+	this->menu = new AllegroMenu();
+
+	if (queue != nullptr)
+		al_register_event_source(queue, menu->getEventSource());
+}
+
+void AllegroWindow::hideMenu()
 {
 	if (on)
-		al_set_display_menu(this->display, menu);
+		al_remove_display_menu(this->display);
+	menuOn = false;
+}
+
+void AllegroWindow::showMenu()
+{
+	if (on && menuInitialized)
+		al_set_display_menu(this->display, menu->GetMainMenu());
+	menuOn = true;
+}
+
+void AllegroWindow::insertMenuItem(string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
+{
+	if (menu != nullptr) {
+		menu->insertItem(title, uniqueID, flag, pos);
+		menuInitialized = true;
+	}
+}
+
+void AllegroWindow::insertMenuSubItemp(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
+{
+	if (menu != nullptr)
+		this->menu->insertSubItem(parentID, title, uniqueID, flag, pos);
+}
+
+void AllegroWindow::appendMenuItem(string title, uint16_t uniqueID, MenuFlags flag)
+{
+
+	if (menu != nullptr) {
+		menu->appendItem(title, uniqueID, flag);
+		menuInitialized = true;
+	}
+}
+
+void AllegroWindow::appendMenuSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag)
+{
+	if (menu != nullptr)
+		menu->appendSubItem(parentID, title, uniqueID, flag);
+}
+
+void AllegroWindow::setMenuItemFlag(uint16_t uniqueID, MenuFlags flag)
+{
+	if (menu != nullptr)
+		menu->setItemFlag(uniqueID, flag);
+}
+
+void AllegroWindow::setMenuItemTitle(string title, uint16_t uniqueID)
+{
+	if (menu != nullptr)
+		menu->setItemTitle(title.c_str(), uniqueID);
+}
+
+MenuFlags AllegroWindow::getMenuItemFlag(uint16_t uniqueID)
+{
+	if (menu != nullptr)
+		return menu->getItemFlag(uniqueID);
+	else
+		return MenuFlags::Error;
+}
+
+string AllegroWindow::getMenuItemTitle(uint16_t uniqueID)
+{
+	if (menu != nullptr)
+		return menu->getItemTitle(uniqueID);
+	else
+		return string();
+}
+
+void AllegroWindow::deleteMenu()
+{
+	if (menu != nullptr)
+		delete menu;
+	menu = nullptr;
+	menuInitialized = false;
+
 }
 
 void AllegroWindow::setUp()

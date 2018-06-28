@@ -8,6 +8,7 @@
 #include <allegro5/allegro_native_dialog.h>
 
 #include "AllegroBox.h"
+#include "AllegroMenu.h"
 
 struct Drawing
 {
@@ -32,19 +33,52 @@ enum class ScreenMode
 
 using namespace std;
 
+
+/*
+		This class was made to simplify and escape from all the allegro functions. From here you can access pretty much everything that has to do with allegro_Display
+		although I did not include the more obscure functions as I normaly won't use.
+
+		AllegroWindow needs an eventQueue to facilitate everytime you ahve to open and close it. If you don't want to pass the eventQueue, it will work just by calling
+		al_register_event_source() everytime you open the display and al_unregister_event_source() whenever you close it.
+*/
+
 class AllegroWindow
 {
 public:
+
+	// BASIC
+
+
 	// Constructor: it create a window
 	//
 	//		- float w: the width of the window.
 	//		- float h: the height of the window.
 	//		- string name: the name of the window.
 	//		- string icon: the path to the icon of the window.
-	AllegroWindow(float w, float h, string name = "", string icon = "");
+	AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, string name = "", string icon = "");
 
 	// Destructor.
 	~AllegroWindow();
+
+	// Overloaded operator to check for equality with allegro displays ( for compatibility)
+	bool operator==(ALLEGRO_DISPLAY* disp);
+
+	// Overloaded operator to check for equality with another allegroWindow
+	bool operator==(AllegroWindow& window);
+
+
+	// EVENTS
+
+
+	// It sets an event queue ONLY TO REGISTER AND UNREGISTER EVENT SOURCES (MAINLY DISPLAY SOURCES)
+	void setEventQueue(ALLEGRO_EVENT_QUEUE * queue);
+
+	// It returns the event Source of the window. That event source will change everytime
+	ALLEGRO_EVENT_SOURCE * getEventSource();
+
+
+	// DRAW
+
 
 	// It adds a bitmap to the window. This bitmap will be drawn everytime the window is updated.
 	//
@@ -55,17 +89,35 @@ public:
 	//		- float scaledWidth:		new width for the bitmap to be printed in.
 	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
 
-	// It adds an AllegroBox to the window. It will be printed everytime the window is updatesd by its own draw function
-	void addBoxes(AllegroBox* box);
-
 	// It removes a bitmap that was being drawn on the window.
 	void removeDrawing(ALLEGRO_BITMAP *bitmap);
 
-	// It removes an AllegroBox htat was being drawn on the window
+	// It adds an AllegroBox to the window. It will be printed everytime the window is updatesd by its own draw function
+	void addBox(AllegroBox* box);
+
+	// It removes an AllegroBox that was being drawn on the window
 	void removeBox(AllegroBox& box);
 
 	// It moves a given draw to another place.
 	void moveDrawing(ALLEGRO_BITMAP *bitmapToMove, float newX, float newY);
+
+	// It sets the color of the display.
+	void loadBackground(ALLEGRO_COLOR color);
+
+	// It loads the background of the display
+	void loadImageBackground(string image);
+	void loadImageBackground(ALLEGRO_BITMAP * image);
+	void loadImageBackground(AllegroBox& image);
+
+	// It sets a previusly loaded image as the background of the window
+	void setImageAsBackground();
+
+	// It sets a previusly selected color as the background of the window
+	void setColorAsBackground();
+
+
+	// DISPLAY
+
 	
 	// Sets the window as the main window.
 	void setAsMain();
@@ -75,18 +127,6 @@ public:
 
 	// It closes the window.
 	void close();
-
-	// It sets the color of the display.
-	void setBackground(ALLEGRO_COLOR color);
-
-	// It sets the image as the background of the display
-	void setImageBackground(string image);
-
-	// It sets a previusly loaded image as the background of the window
-	void setImageAsBackground();
-
-	// It sets a previusly selected color as the background of the window
-	void setColorAsBackground();
 
 	// It draws all the bitmaps of the display.
 	void update();
@@ -124,16 +164,11 @@ public:
 	// It returns the Height of the window
 	float getHeight();
 
-	// It returns the event Source of the window. That event source will change everytime
-	ALLEGRO_EVENT_SOURCE * getEventSource();
-
 	ALLEGRO_DISPLAY * getDisplay();
 
-	// Overloaded operator to check for equality with allegro displays ( for compatibility)
-	bool operator==(ALLEGRO_DISPLAY* disp);
 
-	// Overloaded operator to check for equality with another allegroWindow
-	bool operator==(AllegroWindow& window);
+	// MOUSE
+
 
 	// It allows the user to use a custom sprite instead of the regular mouse cursor;
 	//
@@ -164,8 +199,69 @@ public:
 	void releaseMouseCursor();
 
 
-	// Experimental
-	void setMenu(ALLEGRO_MENU * menu);
+	// MENU
+
+
+	// Creates a menu
+	void createMenu();
+
+	// It deletes the menu
+	void deleteMenu();
+
+	// It shows a previusly created menu. If it was not created or if it wasn't initialized with an item, it will do noting
+	void showMenu();
+
+	// Hides a previusly created menu. If it was not created or if it wasn't initialized with an item, it will do noting
+	void hideMenu();
+
+	// It inserts an item into menu in a given position.
+	//
+	//		- string title: the title of the item.
+	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
+	//							 if the user pressed this item, it will return the ID int event.user.data1
+	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
+	//		- unsigned int pos: the position where the item will be placed.
+	void insertMenuItem(string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
+
+	// It inserts an item into a submenu in a given position. If there is no submenu created in that position it will create it.
+	//
+	//		- uint16_t parentID: the ID of the item that will be converted into a submenu.
+	//		- string title: the title of the item.
+	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
+	//							 if the user pressed this item, it will return the ID int event.user.data1
+	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
+	//		- unsigned int pos: the position where the item will be placed.
+	void insertMenuSubItemp(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
+
+	// It appends an item into a submenu. If there is no submeno, it will create it.
+	//
+	//		- uint16_t parentID: the ID of the item that will be converted into a submenu.
+	//		- string title: the title of the item.
+	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
+	//							 if the user pressed this item, it will return the ID int event.user.data1
+	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
+	void appendMenuItem(string title, uint16_t uniqueid, MenuFlags flag);
+
+	// It inserts an item into a submenu in a given position. If there is no submenu created in that position it will create it.
+	//
+	//		- uint16_t parentID: the ID of the item that will be converted into a submenu.
+	//		- string title: the title of the item.
+	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
+	//							 if the user pressed this item, it will return the ID int event.user.data1
+	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
+	void appendMenuSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag);
+
+	// It sets a new flag for a given item
+	void setMenuItemFlag(uint16_t uniqueID, MenuFlags flag);
+
+	// It sets the title of a given item
+	void setMenuItemTitle(string title, uint16_t uniqueID);
+
+	// It returns the flag of a given item
+	MenuFlags getMenuItemFlag(uint16_t uniqueID);
+
+	// It returns the title of a given item
+	string getMenuItemTitle(uint16_t uniqueID);
 
 	
 private:
@@ -196,5 +292,14 @@ private:
 
 	ALLEGRO_MOUSE_CURSOR *	customMouseCursor = nullptr;
 	ALLEGRO_BITMAP * customCursorSprite = nullptr;
+
+	// Menu
+	bool menuOn = false;
+	bool menuInitialized = false;
+	AllegroMenu *menu = nullptr;
+
+	// EVENTS
+	ALLEGRO_EVENT_QUEUE * queue = nullptr;
+
 };
 
