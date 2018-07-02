@@ -9,14 +9,7 @@
 
 #include "AllegroBox.h"
 #include "AllegroMenu.h"
-
-struct Drawing
-{
-	ALLEGRO_BITMAP * bitmap;
-	float x, y;
-	float scaledHeight, scaledWidth, height, width;
-
-};
+#include "AllegroLayout.h"
 
 
 enum class CursorSprite
@@ -79,6 +72,12 @@ public:
 
 	// DRAW
 
+	void insertLayout(AllegroLayout& layout);
+
+	void deleteLayout();
+
+	void setLayoutDrawMode(LayoutDrawMode mode);
+
 
 	// It adds a bitmap to the window. This bitmap will be drawn everytime the window is updated.
 	//
@@ -93,7 +92,7 @@ public:
 	void removeDrawing(ALLEGRO_BITMAP *bitmap);
 
 	// It adds an AllegroBox to the window. It will be printed everytime the window is updatesd by its own draw function
-	void addBox(AllegroBox* box);
+	void addBox(AllegroBox& box);
 
 	// It removes an AllegroBox that was being drawn on the window
 	void removeBox(AllegroBox& box);
@@ -272,11 +271,8 @@ private:
 	void setUp();
 
 	// Draw
-	vector<Drawing>drawings;
-	vector<AllegroBox *> boxes;
-	bool backgroundImage;
-	ALLEGRO_BITMAP * image = nullptr;
-	ALLEGRO_COLOR color;
+	AllegroLayout * layout = nullptr;
+	bool foreignLayout = false;
 
 	// Screen
 	ALLEGRO_BITMAP * icon = nullptr;

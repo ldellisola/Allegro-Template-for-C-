@@ -16,6 +16,8 @@ AllegroBox::AllegroBox(float x, float y, float width, float height)
 AllegroBox::~AllegroBox()
 {
 	al_destroy_bitmap(this->bitmap);
+	if (!this->foreignImage && this->imageBackground != nullptr)
+		al_destroy_bitmap(this->imageBackground);
 }
 
 void AllegroBox::draw()

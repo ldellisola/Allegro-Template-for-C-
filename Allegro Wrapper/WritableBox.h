@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#define KeyPressedTimeThreshold (0.02)
+#define KeyPressedTimeThreshold (0.00001)
 
 enum class KeyboardMode
 {

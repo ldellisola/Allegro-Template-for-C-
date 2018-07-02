@@ -12,6 +12,8 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue , st
 	if (icon.size() > 0)
 		setIcon(icon);
 
+	this->layout = new AllegroLayout(w,h,al_color_name("black"),LayoutDrawMode::Mid);
+
 	this->queue = evQueue;
 }
 
@@ -21,10 +23,11 @@ AllegroWindow::~AllegroWindow()
 	close();
 	if (icon != nullptr)
 		al_destroy_bitmap(icon);
-	if (image != nullptr)
-		al_destroy_bitmap(image);
 	if (customCursorSprite != nullptr)
 		al_destroy_bitmap(customCursorSprite);
+
+	if (layout != nullptr && !foreignLayout)
+		delete layout;
 
 }
 
@@ -33,72 +36,7 @@ void AllegroWindow::setEventQueue(ALLEGRO_EVENT_QUEUE * queue)
 	this->queue = queue;
 }
 
-void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight, float scaledWidth)
-{ 
-	Drawing temp;
-	temp.bitmap = bitmap;
-	temp.x = x;
-	temp.y = y;
-	temp.height = al_get_bitmap_height(bitmap);
-	temp.width = al_get_bitmap_width(bitmap);
 
-	if (scaledHeight == 0)
-		temp.scaledHeight = temp.height;
-	else
-		temp.scaledHeight = scaledHeight;
-	if (scaledWidth == 0)
-		temp.scaledWidth = temp.width;
-	else 
-		temp.scaledWidth = scaledWidth;
-	drawings.push_back(temp);
-}
-
-void AllegroWindow::addBox(AllegroBox * box)
-{
-	this->boxes.push_back(box);
-}
-
-
-void AllegroWindow::removeDrawing(ALLEGRO_BITMAP * bitmap)
-{
-	bool kill = false; int i = 0;
-	for ( i = 0; i < drawings.size() && !kill; i++) {
-		if (drawings[i].bitmap == bitmap)
-			kill = true;
-	}
-	i--;
-	if (kill) {
-		drawings.erase(drawings.begin() + i);
-	}
-}
-
-void AllegroWindow::removeBox(AllegroBox & box)
-{
-	bool kill = false; int i = 0;
-	for (i = 0; i < boxes.size() && !kill; i++) {
-		if (*boxes[i] == box)
-			kill = true;
-	}
-	i--;
-	if (kill) {
-		boxes.erase(boxes.begin() + i);
-	}
-}
-
-void AllegroWindow::moveDrawing(ALLEGRO_BITMAP * bitmapToMove, float newX, float newY)
-{
-	bool move = false; int i = 0;
-	for (int i = 0; i < drawings.size(); i++) {
-		if (drawings[i].bitmap == bitmapToMove)
-			move = true;
-	}
-	i--;
-	if (move) {
-		drawings[i].x = newX;
-		drawings[i].y = newY;
-
-	}
-}
 
 void AllegroWindow::setAsMain()
 {
@@ -139,50 +77,13 @@ void AllegroWindow::close()
 	}
 }
 
-void AllegroWindow::loadBackground(ALLEGRO_COLOR color)
-{
-	this->color = color;
-}
 
-void AllegroWindow::setImageAsBackground()
-{
-	if (image != nullptr);
-	backgroundImage = true;
-}
-
-void AllegroWindow::setColorAsBackground()
-{
-	this->backgroundImage = false;
-}
-
-void AllegroWindow::loadImageBackground(string image)
-{
-	this->image = al_load_bitmap(image.c_str());
-}
-
-void AllegroWindow::loadImageBackground(ALLEGRO_BITMAP * image)
-{
-	this->image = image;
-}
-
-void AllegroWindow::loadImageBackground(AllegroBox & image)
-{
-	this->image = image.getBitmap();
-}
 
 void AllegroWindow::update()
 {
 	if (on) {
-		if (backgroundImage)
-			al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, this->width, this->height, 0);
-		else
-			al_clear_to_color(color);
 
-		for (Drawing& drawing : drawings)
-			al_draw_scaled_bitmap(drawing.bitmap, 0, 0,drawing.width, drawing.height , drawing.x, drawing.y, drawing.scaledWidth, drawing.scaledHeight, 0);	
-
-		for (AllegroBox* box : boxes)
-			box->draw();
+		layout->draw();
 
 		al_flip_display();
 	}
@@ -262,6 +163,98 @@ float AllegroWindow::getHeight()
 ALLEGRO_EVENT_SOURCE * AllegroWindow::getEventSource()
 {
 	return al_get_display_event_source(display);
+}
+
+void AllegroWindow::insertLayout(AllegroLayout & layout)
+{
+	if (this->layout != nullptr)
+		delete this->layout;
+	this->foreignLayout = true;
+	this->layout = &layout;
+}
+
+void AllegroWindow::deleteLayout()
+{
+	if (layout != nullptr) {
+		if (foreignLayout)
+			this->layout = nullptr;
+		else
+			delete this->layout;
+	}
+
+	this->layout = new AllegroLayout(this->width, this->height, al_color_name("black"));
+}
+
+void AllegroWindow::setLayoutDrawMode(LayoutDrawMode mode)
+{
+	if (layout != nullptr)
+		layout->setDrawMode(mode);
+}
+
+void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight, float scaledWidth)
+{
+	if (layout != nullptr)
+		layout->addDrawing(bitmap, x, y, scaledHeight, scaledWidth);
+}
+
+void AllegroWindow::removeDrawing(ALLEGRO_BITMAP * bitmap)
+{
+	if (layout != nullptr)
+		layout->removeDrawing(bitmap);
+}
+
+void AllegroWindow::addBox(AllegroBox & box)
+{
+	if (layout != nullptr)
+		layout->addBox(&box);
+}
+
+void AllegroWindow::removeBox(AllegroBox & box)
+{
+	if (layout != nullptr)
+		layout->removeBox(box);
+}
+
+void AllegroWindow::moveDrawing(ALLEGRO_BITMAP * bitmapToMove, float newX, float newY)
+{
+	if (layout != nullptr)
+		layout->moveDrawing(bitmapToMove, newX, newY);
+}
+
+void AllegroWindow::loadBackground(ALLEGRO_COLOR color)
+{
+	if (layout != nullptr)
+		layout->loadBackground(color);
+}
+
+void AllegroWindow::loadImageBackground(string image)
+{
+	if (layout != nullptr)
+		layout->loadImageBackground(image);
+}
+
+void AllegroWindow::loadImageBackground(ALLEGRO_BITMAP * image)
+{
+	if (layout != nullptr)
+		layout->loadImageBackground(image);
+}
+
+void AllegroWindow::loadImageBackground(AllegroBox & image)
+{
+	if (layout != nullptr)
+		layout->loadImageBackground(image);
+}
+
+void AllegroWindow::setImageAsBackground()
+{
+	if (layout != nullptr)
+		layout->setImageAsBackground();
+}
+
+void AllegroWindow::setColorAsBackground()
+{
+	if (layout != nullptr)
+		layout->setColorAsBackground();
 }
 
 ALLEGRO_DISPLAY * AllegroWindow::getDisplay()

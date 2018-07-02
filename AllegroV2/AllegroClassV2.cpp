@@ -140,7 +140,7 @@ void AllegroClassV2::initNativeDialogAddon()
 {
 	if (nativeDialogAddon == nullptr) {
 		this->nativeDialogAddon = new NativeDialogAddon();
-		this->success - nativeDialogAddon->getSuccess();
+		this->success = nativeDialogAddon->getSuccess();
 	}
 }
 
