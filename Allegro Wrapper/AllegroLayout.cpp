@@ -48,7 +48,7 @@ void AllegroLayout::draw()
 	if (mode == LayoutDrawMode::Slow)
 		this->setUp();
 
-	al_draw_bitmap(this->layout, 0, 0, 0);
+	//al_draw_bitmap(this->layout, 0, 0, 0);
 
 	if (mode == LayoutDrawMode::Mid) 
 		drawBoxes();
@@ -180,8 +180,8 @@ void AllegroLayout::setUp()
 {
 	if (layout != nullptr) {
 
-		ALLEGRO_DISPLAY *disp = al_get_current_display();
-		al_set_target_bitmap(this->layout);
+		//ALLEGRO_DISPLAY *disp = al_get_current_display();
+		//al_set_target_bitmap(this->layout);
 
 		if (backgroundImage)
 			al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, this->w, this->h, 0);
@@ -192,7 +192,7 @@ void AllegroLayout::setUp()
 
 		drawBoxes();
 
-		al_set_target_backbuffer(disp);
+		//al_set_target_backbuffer(disp);
 		
 	}
 }

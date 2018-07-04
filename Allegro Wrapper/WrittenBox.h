@@ -12,7 +12,7 @@
 using namespace std;
 
 
-typedef struct AllegroWrittenBoxData
+struct AllegroWrittenBoxData
 {
 	float x, y, width, height;
 	string text;

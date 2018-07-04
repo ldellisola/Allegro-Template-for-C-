@@ -9,101 +9,93 @@ AllegroButton::~AllegroButton()
 {
 }
 
-void AllegroButton::click(float mouseX, float mouseY, double timeStamp)
+bool AllegroButton::click(float mouseX, float mouseY, double timeStamp)
 {
-	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY))) {
-		if (clickTimeStamp == 0) {
-			clickTimeStamp = timeStamp;
-			if (pressedC)
-				unpressC();
-			else
-				pressC();
-		}
-	}
-	if (timeStamp -clickTimeStamp >= MinClickThreshold) {
-		clickTimeStamp = 0;
-	}
-
-	
-
+	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY))) 
+		return true;
+	else 
+		return false;
 }
+
+
 
 bool AllegroButton::doubleClick(float mouseX, float mouseY, double timestamp)
 {
 	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY)))
-		if (pressedDC) {
-			if (MinClickThreshold < timestamp - doubleClickTimeStamp) {
-				unpressDC();
-				if (timestamp - doubleClickTimeStamp < MaxClickThreshold) {
+		if (pressed) {
+			if (MinClickThreshold < timestamp - clickTimeStamp) {
+				unpress();
+				if (timestamp - clickTimeStamp < MaxClickThreshold) 
 					return true;
-				}
-				else {
+				else 
 					return false;
-				}
 			}
-			else {
+			else 
 				return false;
-			}
-				
 		}
 		else {
-			pressDC();
-			doubleClickTimeStamp = timestamp;
+			press();
+			clickTimeStamp = timestamp;
 			return false;
 		}
 	else {
-		unpressDC();
-		doubleClickTimeStamp = 0;
+		unpress();
+		clickTimeStamp = 0;
 		return false;
 	}
 
 
-}
-
-bool AllegroButton::isPressed()
-{
-	if (doubleClickTimeStamp == 0)
-		return pressedC;
-	else
-		return false;
 }
 
 void AllegroButton::draw()
 {
+	al_draw_bitmap(this->bitmap, this->x, this->y, 0);
+}
 
 
-	if (doubleClickTimeStamp == 0) {
-		if (pressedC)
-			al_draw_tinted_bitmap(this->bitmap, this->pressedColor, this->x, this->y, 0);
-		else
-			al_draw_bitmap(this->bitmap, this->x, this->y, 0);
+
+void AllegroButton::press()
+{
+	pressed = true;
+}
+
+void AllegroButton::unpress()
+{
+	pressed = false;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+void AllegroFlipSwitch::click(float mouseX, float mouseY, double timeStamp)
+{
+
+	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY))) {
+		if (clickTimeStamp == 0) {
+			clickTimeStamp = timeStamp;
+			if (pressed)
+				unpress();
+			else
+				press();
+		}
 	}
+	if (timeStamp - clickTimeStamp >= MinClickThreshold) { // && clickTimeStamp !=0
+		clickTimeStamp = 0;
+	}
+
+
+}
+
+bool AllegroFlipSwitch::isPressed()
+{
+	return pressed;
+}
+
+void AllegroFlipSwitch::draw()
+{
+	if (pressed)
+		al_draw_tinted_bitmap(this->bitmap, this->pressedColor, this->x, this->y, 0);
 	else
 		al_draw_bitmap(this->bitmap, this->x, this->y, 0);
-
-
-	
-}
-
-
-
-void AllegroButton::pressC()
-{
-	pressedC = true;
-}
-
-void AllegroButton::unpressDC()
-{
-	pressedDC = false;
-}
-
-
-void AllegroButton::pressDC()
-{
-	pressedDC = true;
-}
-
-void AllegroButton::unpressC()
-{
-	pressedC = false;
 }

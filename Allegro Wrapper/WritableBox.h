@@ -18,7 +18,7 @@ enum class KeyboardMode
 	Numeric, Alphabetic, Alphanumeric 
 };
 
-typedef struct AllegroWritableBoxData
+struct AllegroWritableBoxData
 {
 	KeyboardMode mode;
 	float x, y, maxLenght;
