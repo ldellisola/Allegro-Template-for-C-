@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_color.h>
@@ -24,8 +25,9 @@ struct Drawing
 
 };
 
+
 /*
-	AllegroLayout is a class oriented to menus and such.
+	AllegroLayout is a class oriented to UI menus and such.
 */
 
 class AllegroLayout {
@@ -113,3 +115,14 @@ private:
 
 };
 
+struct BoxArray {
+public:
+	void addBox(AllegroBox* box);
+	void deleteBox(unsigned int ID);
+	unsigned int size();
+	AllegroBox * operator[](unsigned int ID);
+	~BoxArray();
+
+private:
+	vector<AllegroBox *> boxes;
+};

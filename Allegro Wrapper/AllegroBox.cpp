@@ -1,15 +1,17 @@
 #include "AllegroBox.h"
 
 
-AllegroBox::AllegroBox(float x, float y, float width, float height)
+AllegroBox::AllegroBox(float x, float y, float width, float height, unsigned int boxID )
 {
 	this->x = x;
 	this->y = y;
 	this->width = width;
 	this->height = height;
 	this->bitmap = al_create_bitmap(width, height);
+	this->
 	imageBackground = false;
-	
+	this->ID = boxID;
+	this->setBoxType(BoxType::Box);
 	this->setUp();
 }
 
@@ -133,9 +135,27 @@ float AllegroBox::getHeight()
 	return this->height;
 }
 
+unsigned int AllegroBox::getID()
+{
+	return this->ID;
+}
+
+BoxType AllegroBox::getType()
+{
+	return this->type;
+}
+
 bool AllegroBox::operator==(AllegroBox & box)
 {
 	if (box.bitmap == this->bitmap)
+		return true;
+	else
+		return false;
+}
+
+bool AllegroBox::operator!=(AllegroBox & box)
+{
+	if (box.bitmap != this->bitmap)
 		return true;
 	else
 		return false;
@@ -159,4 +179,9 @@ void AllegroBox::setUp()
 	}
 
 	al_set_target_backbuffer(main);
+}
+
+void AllegroBox::setBoxType(BoxType type)
+{
+	this->type = type;
 }

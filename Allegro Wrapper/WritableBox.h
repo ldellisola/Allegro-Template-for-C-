@@ -38,8 +38,9 @@ public:
 	//		- int fontSize:				size of the font.
 	//		- const char * fontPath:	the path to the font.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int maxLenght, int fontSize, const char * fontPath, ALLEGRO_COLOR fontColor)
-		:AllegroBox(x, y, fontSize* (2 + maxLenght), 3 * fontSize) {
+	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int maxLenght, int fontSize, const char * fontPath, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		:AllegroBox(x, y, fontSize* (2 + maxLenght), 3 * fontSize, boxID) {
+		this->setBoxType(BoxType::Writable);
 		this->maxLenght = maxLenght;
 		this->fontColor = fontColor;
 		foreingFont = false;
@@ -55,8 +56,9 @@ public:
 	//		- unsigned int maxLenght:	the max ammount of characters that the box will contain.
 	//		- ALLEGRO_FONT * font:		pointer to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int maxLenght, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor)
-		:AllegroBox(x, y, (maxLenght +2) *al_get_text_width(font, "W"), 3 * al_get_font_line_height(font)) {
+	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int maxLenght, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		:AllegroBox(x, y, (maxLenght +2) *al_get_text_width(font, "W"), 3 * al_get_font_line_height(font), boxID) {
+		this->setBoxType(BoxType::Writable);
 		this->maxLenght = maxLenght;
 		this->fontColor = fontColor;
 		foreingFont = true;
@@ -68,8 +70,9 @@ public:
 	//				create a box inside another function and you need all of this information from outside of it.
 	//
 	//		- AllegroWrittenBoxData& data: a structure with all the data of a box
-	AllegroWritableBox(AllegroWritableBoxData& data)
-		: AllegroBox(data.x, data.y, (data.maxLenght + 2) *al_get_text_width(data.font, "W"), 3 * al_get_font_line_height(data.font)) {
+	AllegroWritableBox(AllegroWritableBoxData& data, unsigned int boxID = DefaultID)
+		: AllegroBox(data.x, data.y, (data.maxLenght + 2) *al_get_text_width(data.font, "W"), 3 * al_get_font_line_height(data.font), boxID) {
+		this->setBoxType(BoxType::Writable);
 		this->maxLenght = data.maxLenght;
 		this->fontColor = data.fontColor;
 		foreingFont = true;

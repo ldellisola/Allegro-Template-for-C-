@@ -208,3 +208,131 @@ void AllegroLayout::drawDrawings()
 	for (Drawing& drawing : drawings)
 		al_draw_scaled_bitmap(drawing.bitmap, 0, 0, drawing.width, drawing.height, drawing.x, drawing.y, drawing.scaledWidth, drawing.scaledHeight, 0);
 }
+
+void BoxArray::addBox(AllegroBox * box)
+{
+	boxes.push_back(box);
+}
+
+void BoxArray::deleteBox(unsigned int ID)
+{
+	auto box = find_if(boxes.begin(), boxes.end(), [&ID](AllegroBox& obj) {return obj.getID() == ID; });
+
+	if (box != boxes.end())
+	{
+		AllegroBox * temp = *box;
+		boxes.erase(box);
+		delete temp;
+	}
+
+}
+
+unsigned int BoxArray::size()
+{
+	return boxes.size();
+}
+
+AllegroBox * BoxArray::operator[](unsigned int ID)
+{
+	
+	auto box = find_if(boxes.begin(), boxes.end(), [&ID](AllegroBox& obj) {return obj.getID() == ID; });
+
+	if (box == boxes.end())
+		return nullptr;
+	else
+		return *box;
+}
+
+BoxArray::~BoxArray()
+{
+	while (boxes.size() > 0) {
+		AllegroBox * temp = *boxes.begin();
+		boxes.erase(boxes.begin());
+		delete temp;
+	}
+}
+
+
+	// Tags:
+
+	// Main Tags : Display , Box, Button, Toggle, Written, Writable
+		// Secondary Tags:
+		// ID : Box , Butt, Togg ,Writt, Writa
+		// TintedColor: Togg
+		// Text: Writt, Butt, Togg
+		// Font : Writt, Writa, Butt, Togg, Disp
+			// Size
+			// Color
+			// Path
+		// KeyboardMode :  Writa
+		// x :  Box, Button, Toggle, Written, Writable
+		// Y :  Box, Button, Toggle, Written, Writable
+		// width :   Display ,Box, Button, Toggle, Written, Writable
+		// height :  Display ,Box, Button, Toggle, Written, Writable
+
+	// Display:
+		// Font : 
+			// Size
+			// Color
+			// Path
+		// Width
+		// Height
+		// Color
+		// Image
+	// Box:
+		// X
+		// Y
+		// Width
+		// Height
+		// Color
+		// Image
+	// Button:
+		// X
+		// Y
+		// Width
+		// Height
+		// Color
+		// Image
+		// text
+		// font:
+			// Size
+			// Color
+			// Path
+	// Toggle:
+		// X
+		// Y
+		// Width
+		// Height
+		// Color
+		// Image
+		// text
+		// font:
+			// Size
+			// Color
+			// Path
+		//TintedColor
+	// WrittenBox:
+		// X
+		// Y
+		// Width
+		// Height
+		// Color
+		// Image
+		// text
+		// font:
+			// Size
+			// Color
+			// Path
+	// WritableBox:
+		// X
+		// Y
+		// Width
+		// Height
+		// Color
+		// Image
+		// font:
+			// Size
+			// Color
+			// Path
+
+

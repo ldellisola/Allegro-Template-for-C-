@@ -68,7 +68,7 @@ void AllegroButton::unpress()
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-void AllegroFlipSwitch::click(float mouseX, float mouseY, double timeStamp)
+void AllegroToggle::click(float mouseX, float mouseY, double timeStamp)
 {
 
 	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY))) {
@@ -87,12 +87,12 @@ void AllegroFlipSwitch::click(float mouseX, float mouseY, double timeStamp)
 
 }
 
-bool AllegroFlipSwitch::isPressed()
+bool AllegroToggle::isPressed()
 {
 	return pressed;
 }
 
-void AllegroFlipSwitch::draw()
+void AllegroToggle::draw()
 {
 	if (pressed)
 		al_draw_tinted_bitmap(this->bitmap, this->pressedColor, this->x, this->y, 0);

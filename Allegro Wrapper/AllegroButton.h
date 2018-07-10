@@ -12,6 +12,7 @@
 #define MinClickThreshold (0.001)
 #define MaxClickThreshold (0.2)
 
+
 struct AllegroButtonData
 {
 	float x, y, width, height;
@@ -37,8 +38,10 @@ public:
 	//		- string text:				text of the button.
 	//		- ALLEGRO_FONT * font:		pointer to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroButton(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor)
-		: AllegroWrittenBox(x,y,width,height,text,font,fontColor){}
+	AllegroButton(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		: AllegroWrittenBox(x,y,width,height,text,font,fontColor, boxID){
+		this->setBoxType(BoxType::Button);
+	}
 
 	// Constructor: it will create a font
 	//
@@ -50,15 +53,19 @@ public:
 	//		- int fontSize:				size of the font (int pixels)
 	//		- const char * font:		path to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroButton(float x, float y, float width, float height, string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor)
-		:AllegroWrittenBox(x, y, width, height, fontSize, text, font, fontColor) {}
+	AllegroButton(float x, float y, float width, float height, string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		:AllegroWrittenBox(x, y, width, height, fontSize, text, font, fontColor, boxID) {
+		this->setBoxType(BoxType::Button);
+	}
 
 	// Constructor: It will take an existing font. This is a good option for when you have to create a lot of identical Boxes or you need to 
 	//				create a box inside another function and you need all of this information from outside of it.
 	//
 	//		- AllegroWrittenBoxData& data: a structure with all the data of a box
-	AllegroButton(AllegroButtonData& data)
-		:AllegroWrittenBox(data.x, data.y, data.width, data.height, data.text,data.font,data.fontColor) {}
+	AllegroButton(AllegroButtonData& data, unsigned int boxID = DefaultID)
+		:AllegroWrittenBox(data.x, data.y, data.width, data.height, data.text,data.font,data.fontColor, boxID) {
+		this->setBoxType(BoxType::Button);
+	}
 
 	// Destructor
 	~AllegroButton();
@@ -87,11 +94,12 @@ protected:
 	void unpress();
 	double clickTimeStamp = 0;
 	bool pressed = false;
+
 	
 };
 
 
-class AllegroFlipSwitch :public AllegroButton {
+class AllegroToggle :public AllegroButton {
 public:
 	// Constructor: It needs a pointer to a font.
 	//
@@ -102,8 +110,9 @@ public:
 	//		- string text:				text of the button.
 	//		- ALLEGRO_FONT * font:		pointer to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroFlipSwitch(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor)
-		: AllegroButton(x, y, width, height, text, font, fontColor) {
+	AllegroToggle(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		: AllegroButton(x, y, width, height, text, font, fontColor, boxID) {
+		this->setBoxType(BoxType::Toggle);
 		pressedColor = al_map_rgb(100, 100, 100);
 	}
 
@@ -117,8 +126,9 @@ public:
 	//		- int fontSize:				size of the font (int pixels)
 	//		- const char * font:		path to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroFlipSwitch(float x, float y, float width, float height, string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor)
-		:AllegroButton(x, y, width, height,text, fontSize, font, fontColor) {
+	AllegroToggle(float x, float y, float width, float height, string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		:AllegroButton(x, y, width, height,text, fontSize, font, fontColor, boxID) {
+		this->setBoxType(BoxType::Toggle);
 		pressedColor = al_map_rgb(100, 100, 100);
 	}
 
@@ -126,7 +136,9 @@ public:
 	//				create a box inside another function and you need all of this information from outside of it.
 	//
 	//		- AllegroWrittenBoxData& data: a structure with all the data of a box
-	AllegroFlipSwitch(AllegroButtonData& data) :AllegroButton(data) {
+	AllegroToggle(AllegroButtonData& data, unsigned int boxID = DefaultID) 
+		:AllegroButton(data, boxID) {
+		this->setBoxType(BoxType::Toggle);
 		pressedColor = al_map_rgb(100, 100, 100);
 	}
 

@@ -8,6 +8,14 @@ using namespace std;
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 
+#define DefaultID (0)
+
+enum class BoxType
+{
+	Box, Button, Toggle, Written, Writable
+};
+
+
 class AllegroBox
 {
 public:
@@ -17,7 +25,9 @@ public:
 	//		- float y:		initial Y coordinate.
 	//		- float width:	width of the box.
 	//		- float height: height of the box.
-	AllegroBox(float x, float y, float width, float height);
+	//		- BoxType type: Type of the box. It can be a Box, a button, a toggle, a WrittenBox or a WritableBox.
+	//		- unsigned int boxID : Unique ID to each box, if the user decides not to assign one, it will be set to DefaultID
+	AllegroBox(float x, float y, float width, float height, unsigned int boxID = DefaultID);
 	 virtual ~AllegroBox();
 
 	// Draws the bitmap to the actual screen.
@@ -50,15 +60,19 @@ public:
 	virtual float getY();
 	virtual float getWidth();
 	virtual float getHeight();
+	virtual unsigned int getID();
+	virtual BoxType getType();
 
 	// Overloaded operators.
 
 	bool operator==(AllegroBox&box);
+	bool operator!=(AllegroBox&box);
 
 protected:
 	// This function is called everytime a change is made in the box to reflect that change on the bitmap
 	// it should only be called from within the clases.
 	virtual void setUp();
+	virtual void setBoxType(BoxType type);
 	ALLEGRO_BITMAP * bitmap = nullptr;
 	ALLEGRO_BITMAP * imageBackground = nullptr;
 	ALLEGRO_COLOR borderColor;
@@ -71,5 +85,9 @@ protected:
 	float y;
 	float width;
 	float height;
+	BoxType type;
+	// ID given to all boxes and derivated classes. This is useful to identify boxes when you have an array of boxes (Duh).
+	// All boxes will have 0 as default ID, if the user decides not to assign one to it.
+	unsigned int ID;
 };
 

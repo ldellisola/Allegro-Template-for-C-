@@ -20,7 +20,7 @@ public:
 	// Constructor:
 	//
 	//		- string title: the title of the debug window.
-	//		- TextLogFlag flag: an optional paramenter that affects the debug window. It can be Regular, NoClose of Monospace.
+	//		- TextLogFlag flag: an optional paramenter that affects the debug window. It can be Regular, NoClose or Monospace.
 	AllegroLog(string title, TextLogFlag flag = TextLogFlag::Regular);
 
 	//Destructor

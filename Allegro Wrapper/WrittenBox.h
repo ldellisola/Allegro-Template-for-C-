@@ -33,9 +33,9 @@ public:
 	//		- string text:				text to be printed.
 	//		- ALLEGRO_FONT * font:		font of the text. IT HAS TO BE DESTROYED MANUALLY OUTSIDE OF THE CLASS.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor)
-		: AllegroBox(x, y, width, height) {
-
+	AllegroWrittenBox(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		: AllegroBox(x, y, width, height,boxID) {
+		this->setBoxType(BoxType::Written);
 		this->text = text;
 		this->font = font;
 		this->fontColor = fontColor;
@@ -53,9 +53,9 @@ public:
 	//		- string text:				text to be printed.
 	//		- const char * fontPath:	path to the font. IT will be destroyed after the object.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x, float y, float width, float height, int fontSize, string text, const char * fontPath, ALLEGRO_COLOR fontColor)
-		: AllegroBox(x, y, width, height) {
-
+	AllegroWrittenBox(float x, float y, float width, float height, int fontSize, string text, const char * fontPath, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		: AllegroBox(x, y, width, height, boxID) {
+		this->setBoxType(BoxType::Written);
 		this->text = text;
 		this->font = al_load_font(fontPath, -fontSize, ALLEGRO_ALIGN_CENTRE);
 		this->fontColor = fontColor;
@@ -70,9 +70,9 @@ public:
 	//		- string text:				text to be printed.
 	//		- ALLEGRO_FONT * font:		font of the text. IT HAS TO BE DESTROYED MANUALLY OUTSIDE OF THE CLASS.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x_, float y_, string text_, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor)
-		: AllegroBox(x_, y_, al_get_text_width(font,("WW" + text).c_str()), 3 * al_get_font_line_height(font)) {
-
+	AllegroWrittenBox(float x_, float y_, string text_, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		: AllegroBox(x_, y_, al_get_text_width(font,("WW" + text).c_str()), 3 * al_get_font_line_height(font), boxID) {
+		this->setBoxType(BoxType::Written);
 		this->text = text_;
 		this->font = font;
 		this->fontColor = fontColor;
@@ -84,8 +84,9 @@ public:
 	//				create a box inside another function and you need all of this information from outside of it.
 	//
 	//		- AllegroWrittenBoxData& data: a structure with all the data of a box
-	AllegroWrittenBox(AllegroWrittenBoxData& data)
-		: AllegroBox(data.x, data.y, data.width, data.height) {
+	AllegroWrittenBox(AllegroWrittenBoxData& data, unsigned int boxID = DefaultID)
+		: AllegroBox(data.x, data.y, data.width, data.height,boxID) {
+		this->setBoxType(BoxType::Written);
 		this->text = data.text;
 		this->font = data.font;
 		this->fontColor = data.fontColor;
