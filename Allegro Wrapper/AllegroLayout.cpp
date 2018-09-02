@@ -216,7 +216,7 @@ void BoxArray::addBox(AllegroBox * box)
 
 void BoxArray::deleteBox(unsigned int ID)
 {
-	auto box = find_if(boxes.begin(), boxes.end(), [&ID](AllegroBox& obj) {return obj.getID() == ID; });
+	auto box = find_if(boxes.begin(), boxes.end(), [&ID](AllegroBox* obj) {return obj->getID() == ID; });
 
 	if (box != boxes.end())
 	{
@@ -235,7 +235,7 @@ unsigned int BoxArray::size()
 AllegroBox * BoxArray::operator[](unsigned int ID)
 {
 	
-	auto box = find_if(boxes.begin(), boxes.end(), [&ID](AllegroBox& obj) {return obj.getID() == ID; });
+	auto box = find_if(boxes.begin(), boxes.end(), [&ID](AllegroBox* obj) {return obj->getID() == ID; });
 
 	if (box == boxes.end())
 		return nullptr;
@@ -251,88 +251,5 @@ BoxArray::~BoxArray()
 		delete temp;
 	}
 }
-
-
-	// Tags:
-
-	// Main Tags : Display , Box, Button, Toggle, Written, Writable
-		// Secondary Tags:
-		// ID : Box , Butt, Togg ,Writt, Writa
-		// TintedColor: Togg
-		// Text: Writt, Butt, Togg
-		// Font : Writt, Writa, Butt, Togg, Disp
-			// Size
-			// Color
-			// Path
-		// KeyboardMode :  Writa
-		// x :  Box, Button, Toggle, Written, Writable
-		// Y :  Box, Button, Toggle, Written, Writable
-		// width :   Display ,Box, Button, Toggle, Written, Writable
-		// height :  Display ,Box, Button, Toggle, Written, Writable
-
-	// Display:
-		// Font : 
-			// Size
-			// Color
-			// Path
-		// Width
-		// Height
-		// Color
-		// Image
-	// Box:
-		// X
-		// Y
-		// Width
-		// Height
-		// Color
-		// Image
-	// Button:
-		// X
-		// Y
-		// Width
-		// Height
-		// Color
-		// Image
-		// text
-		// font:
-			// Size
-			// Color
-			// Path
-	// Toggle:
-		// X
-		// Y
-		// Width
-		// Height
-		// Color
-		// Image
-		// text
-		// font:
-			// Size
-			// Color
-			// Path
-		//TintedColor
-	// WrittenBox:
-		// X
-		// Y
-		// Width
-		// Height
-		// Color
-		// Image
-		// text
-		// font:
-			// Size
-			// Color
-			// Path
-	// WritableBox:
-		// X
-		// Y
-		// Width
-		// Height
-		// Color
-		// Image
-		// font:
-			// Size
-			// Color
-			// Path
 
 
