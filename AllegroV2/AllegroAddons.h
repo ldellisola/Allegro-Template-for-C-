@@ -123,7 +123,7 @@ public:
 class TimerAddon : public Addon {
 public:
 	TimerAddon() { this->initSuccess(); }
-	TimerAddon(float fps) { if (refresh = al_create_timer(1 / fps)) this->initSuccess(); al_start_timer(this->refresh); }
+	TimerAddon(float fps) { if (refresh = al_create_timer(1 / (double)fps)) this->initSuccess(); al_start_timer(this->refresh); }
 	ALLEGRO_TIMER * getRefreshTimer() { return refresh; }
 	~TimerAddon() { if (refresh != nullptr) al_destroy_timer(refresh); }
 private:

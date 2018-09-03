@@ -141,7 +141,7 @@ public:
 	~AllegroEventFactory() { for (ALLEGRO_EVENT_SOURCE* eventSource : sources) al_unregister_event_source(eventQueue, eventSource); }
 	void flushQueue() { al_flush_event_queue(this->eventQueue); }
 
-	void getEvent() { al_get_next_event(eventQueue, &ev); }
+	bool getEvent() { return al_get_next_event(eventQueue, &ev); }
 	ALLEGRO_EVENT_TYPE getEventType() { return ev.type; }
 	ALLEGRO_DISPLAY_EVENT getDisplayEvent() { return ev.display; }
 	ALLEGRO_KEYBOARD_EVENT getKeyboardEvent() { return ev.keyboard; }

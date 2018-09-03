@@ -77,7 +77,7 @@ protected:
 	ALLEGRO_BITMAP * imageBackground = nullptr;
 	ALLEGRO_COLOR borderColor;
 	ALLEGRO_COLOR backgroundColor;
-	bool drawImage;
+	bool drawImage = false;
 	bool foreignImage = false;
 	float borderThickness;
 	double rotationDegree = 0;
