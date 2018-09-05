@@ -24,7 +24,6 @@ enum class ScreenMode
 	Regular, FullScreen, Maximized,Frameless
 };
 
-using namespace std;
 
 
 /*
@@ -48,7 +47,7 @@ public:
 	//		- float h: the height of the window.
 	//		- string name: the name of the window.
 	//		- string icon: the path to the icon of the window.
-	AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, string name = "", string icon = "");
+	AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, std::string name = "", std::string icon = "");
 
 	// Destructor.
 	~AllegroWindow();
@@ -104,7 +103,7 @@ public:
 	void loadBackground(ALLEGRO_COLOR color);
 
 	// It loads the background of the display
-	void loadImageBackground(string image);
+	void loadImageBackground(std::string image);
 	void loadImageBackground(ALLEGRO_BITMAP * image);
 	void loadImageBackground(AllegroBox& image);
 
@@ -131,10 +130,10 @@ public:
 	void update();
 
 	// It sets the name of the window.
-	void setName(string name);
+	void setName(std::string name);
 
 	// It sets the icon for the window.
-	void setIcon(string icon);
+	void setIcon(std::string icon);
 
 	// It sets the position of the window on the computer's screen.
 	void setPosition(float x, float y);
@@ -174,7 +173,7 @@ public:
 	//		- string iconPath: path to the sprite
 	//		- xFocus: X coordinate of the sprite where the mouse will click
 	//		- yFocus: Y coordinate of the sprite where the mouse will click
-	void setCustomMouseCursor(string iconPath, float xFocus = 0, float yFocus = 0);
+	void setCustomMouseCursor(std::string iconPath, float xFocus = 0, float yFocus = 0);
 
 	// it sets a custom mouse cursor as the main cursor for this window
 	void useCustomMouseCursor();
@@ -220,7 +219,7 @@ public:
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
 	//		- unsigned int pos: the position where the item will be placed.
-	void insertMenuItem(string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
+	void insertMenuItem(std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
 
 	// It inserts an item into a submenu in a given position. If there is no submenu created in that position it will create it.
 	//
@@ -230,7 +229,7 @@ public:
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
 	//		- unsigned int pos: the position where the item will be placed.
-	void insertMenuSubItemp(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
+	void insertMenuSubItemp(uint16_t parentID, std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
 
 	// It appends an item into a submenu. If there is no submeno, it will create it.
 	//
@@ -239,7 +238,7 @@ public:
 	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
-	void appendMenuItem(string title, uint16_t uniqueid, MenuFlags flag);
+	void appendMenuItem(std::string title, uint16_t uniqueid, MenuFlags flag);
 
 	// It inserts an item into a submenu in a given position. If there is no submenu created in that position it will create it.
 	//
@@ -248,19 +247,19 @@ public:
 	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
-	void appendMenuSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag);
+	void appendMenuSubItem(uint16_t parentID, std::string title, uint16_t uniqueID, MenuFlags flag);
 
 	// It sets a new flag for a given item
 	void setMenuItemFlag(uint16_t uniqueID, MenuFlags flag);
 
 	// It sets the title of a given item
-	void setMenuItemTitle(string title, uint16_t uniqueID);
+	void setMenuItemTitle(std::string title, uint16_t uniqueID);
 
 	// It returns the flag of a given item
 	MenuFlags getMenuItemFlag(uint16_t uniqueID);
 
 	// It returns the title of a given item
-	string getMenuItemTitle(uint16_t uniqueID);
+	std::string getMenuItemTitle(uint16_t uniqueID);
 
 	
 private:
@@ -276,7 +275,7 @@ private:
 
 	// Screen
 	ALLEGRO_BITMAP * icon = nullptr;
-	string name;
+	std::string name;
 	ScreenMode screenMode = ScreenMode::Regular;
 	void clearScreenMode();
 	

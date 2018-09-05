@@ -9,13 +9,12 @@
 
 #include "AllegroBox.h"
 
-using namespace std;
 
 
 struct AllegroWrittenBoxData
 {
 	float x, y, width, height;
-	string text;
+	std::string text;
 	ALLEGRO_FONT * font;
 	ALLEGRO_COLOR fontColor;
 };
@@ -33,7 +32,7 @@ public:
 	//		- string text:				text to be printed.
 	//		- ALLEGRO_FONT * font:		font of the text. IT HAS TO BE DESTROYED MANUALLY OUTSIDE OF THE CLASS.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroWrittenBox(float x, float y, float width, float height, std::string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		: AllegroBox(x, y, width, height,boxID) {
 		this->setBoxType(BoxType::Written);
 		this->text = text;
@@ -53,7 +52,7 @@ public:
 	//		- string text:				text to be printed.
 	//		- const char * fontPath:	path to the font. IT will be destroyed after the object.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x, float y, float width, float height, int fontSize, string text, const char * fontPath, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroWrittenBox(float x, float y, float width, float height, int fontSize, std::string text, const char * fontPath, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		: AllegroBox(x, y, width, height, boxID) {
 		this->setBoxType(BoxType::Written);
 		this->text = text;
@@ -70,7 +69,7 @@ public:
 	//		- string text:				text to be printed.
 	//		- ALLEGRO_FONT * font:		font of the text. IT HAS TO BE DESTROYED MANUALLY OUTSIDE OF THE CLASS.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x_, float y_, string text_, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroWrittenBox(float x_, float y_, std::string text_, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		: AllegroBox(x_, y_, al_get_text_width(font,("WW" + text).c_str()), 3 * al_get_font_line_height(font), boxID) {
 		this->setBoxType(BoxType::Written);
 		this->text = text_;
@@ -97,10 +96,10 @@ public:
 	~AllegroWrittenBox();
 
 	// It returns a copy of the text in the box.
-	string getText() { return text; }
+	std::string getText() { return text; }
 
 	// It sets the text for the box to print. DO NOT USE THIS WITH THE THIRD CONSTRUCTOR.
-	void setText(string text);
+	void setText(std::string text);
 
 protected:
 
@@ -110,7 +109,7 @@ protected:
 	// It tells you if the font of the box was created within the box or outside of it.
 	bool foreignFont;
 
-	string text;
+	std::string text;
 	ALLEGRO_COLOR fontColor;
 	ALLEGRO_FONT * font;
 	

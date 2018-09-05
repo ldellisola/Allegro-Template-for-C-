@@ -10,7 +10,6 @@
 
 #include "AllegroBox.h"
 
-using namespace std;
 
 enum class LayoutDrawMode
 {
@@ -51,7 +50,7 @@ public:
 	//		- LayoutDrawMode mode: it is how the layout will act. If it is set to fast, it will do a lot less of draw calls, but it may affect AllegroButton
 	//							   and WritableBoxes, as well as any change in any allegroBox. If it is set to Mid, it will do less draw calls than the average, but
 	//							   it will take slightly more time than Fast, as it will only draw AllegroBoxes again. Slow mode will redraw everything everytime.
-	AllegroLayout(float w, float h, string image, LayoutDrawMode mode = LayoutDrawMode::Mid);
+	AllegroLayout(float w, float h, std::string image, LayoutDrawMode mode = LayoutDrawMode::Mid);
 	AllegroLayout(float w, float h, ALLEGRO_BITMAP * image, LayoutDrawMode mode = LayoutDrawMode::Mid);
 
 	// Destructor
@@ -87,7 +86,7 @@ public:
 	void loadBackground(ALLEGRO_COLOR color);
 
 	// It loads the background of the display
-	void loadImageBackground(string image);
+	void loadImageBackground(std::string image);
 	void loadImageBackground(ALLEGRO_BITMAP * image);
 	void loadImageBackground(AllegroBox& image);
 
@@ -106,8 +105,8 @@ private:
 
 	ALLEGRO_BITMAP * layout = nullptr;
 	LayoutDrawMode mode;
-	vector<Drawing>drawings;
-	vector<AllegroBox *> boxes;
+	std::vector<Drawing>drawings;
+	std::vector<AllegroBox *> boxes;
 	bool backgroundImage = false;
 	bool foreignImage = false;
 	ALLEGRO_BITMAP * image = nullptr;
@@ -124,5 +123,5 @@ public:
 	~BoxArray();
 
 private:
-	vector<AllegroBox *> boxes;
+	std::vector<AllegroBox *> boxes;
 };

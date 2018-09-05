@@ -74,7 +74,7 @@ void AllegroBox::setRotationDegree(double degree)
 	this->rotationDegree = degree * (ALLEGRO_PI / 180.0);
 }
 
-void AllegroBox::loadImageBackground(string imagePath)
+void AllegroBox::loadImageBackground(std::string imagePath)
 {
 	this->imageBackground = al_load_bitmap(imagePath.c_str());
 	this->foreignImage = false;

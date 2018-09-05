@@ -2,7 +2,7 @@
 
 
 
-AllegroLog::AllegroLog(string title, TextLogFlag flag)
+AllegroLog::AllegroLog(std::string title, TextLogFlag flag)
 {
 	if (this->logWindow == nullptr)
 	{
@@ -30,7 +30,7 @@ ALLEGRO_EVENT_SOURCE * AllegroLog::getEventSource()
 	return al_get_native_text_log_event_source(this->logWindow);
 }
 
-AllegroLog & AllegroLog::operator<<(string text)
+AllegroLog & AllegroLog::operator<<(std::string text)
 {
 	if (logWindow != nullptr)
 		al_append_native_text_log(this->logWindow, text.c_str());
@@ -49,20 +49,20 @@ AllegroLog & AllegroLog::operator<<(char letter)
 AllegroLog & AllegroLog::operator<<(int num)
 {
 	if (logWindow != nullptr)
-		al_append_native_text_log(this->logWindow, to_string(num).c_str());
+		al_append_native_text_log(this->logWindow, std::to_string(num).c_str());
 	return *this;
 }
 
 AllegroLog & AllegroLog::operator<<(float num)
 {
 	if (logWindow != nullptr)
-		al_append_native_text_log(this->logWindow, to_string(num).c_str());
+		al_append_native_text_log(this->logWindow, std::to_string(num).c_str());
 	return *this;
 }
 
 AllegroLog & AllegroLog::operator<<(double num)
 {
 	if (logWindow != nullptr)
-		al_append_native_text_log(this->logWindow, to_string(num).c_str());
+		al_append_native_text_log(this->logWindow, std::to_string(num).c_str());
 	return *this;
 }

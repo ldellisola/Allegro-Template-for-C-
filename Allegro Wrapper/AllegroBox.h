@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-using namespace std;
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_color.h>
@@ -35,7 +34,7 @@ public:
 	virtual void draw();
 
 	virtual void resize(float width, float height);
-	virtual void loadImageBackground(string imagePath);
+	virtual void loadImageBackground(std::string imagePath);
 	virtual void loadImageBackground(ALLEGRO_BITMAP * image);
 
 	// Setters: each function set a given variable of the box
@@ -67,6 +66,47 @@ public:
 
 	bool operator==(AllegroBox&box);
 	bool operator!=(AllegroBox&box);
+
+	// Virtual Methods added to avoid casting. 
+
+	// ONLY WRTITENBOX AND WRITTABLEBOX :It returns a copy of the text in the box.
+	virtual std::string getText() { return ""; }
+
+	// ONLY WRTITENBOX : It sets the text for the box to print. DO NOT USE THIS WITH THE THIRD CONSTRUCTOR.
+	virtual void setText(std::string text) {}
+
+	// ONLY WrittableBox : It takes a keyboard event and uses the key that was pressed. 
+	virtual void input(ALLEGRO_KEYBOARD_EVENT ev){}
+
+	// ONLY WrittableBox : It restarts the texts that the user typed
+	virtual void clearText(){}
+
+
+	// ONLY AllegroButton: This function will return true if the user clicked on the button.
+	//
+	//		- float mouseX: X coordinate of the mouse.
+	//		- float mouseY: Y coordinate of the mouse.
+	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
+	virtual bool click(float mouseX, float mouseY, double timeStamp) { return false; }
+
+	// ONLY AllegroButton: This function will return true if there was a double click within the given time thresholds.
+	//
+	//		- float mouseX: X coordinate of the mouse.
+	//		- float mouseY: Y coordinate of the mouse.
+	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
+	virtual	bool doubleClick(float mouseX, float mouseY, double timeStamp) { return false; }
+
+	// ONLY AllegroToggle : This function will set the button as clicked if the mouse coordinates coincide with the button and the click was made a given number 
+	// of seconds after the last click
+	//
+	//		- float mouseX: X coordinate of the mouse.
+	//		- float mouseY: Y coordinate of the mouse.
+	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
+	virtual void press(float mouseX, float mouseY, double timeStamp) {}
+
+	// ONLY AllegroToggle : this function will return true if the button is pressed. IT ONLY WORKS WITH A SINGLE CLICK
+	virtual bool isPressed() { return false; }
+
 
 protected:
 	// This function is called everytime a change is made in the box to reflect that change on the bitmap

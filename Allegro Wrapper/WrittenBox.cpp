@@ -12,7 +12,7 @@ AllegroWrittenBox::~AllegroWrittenBox()
 		al_destroy_font(this->font);
 }
 
-void AllegroWrittenBox::setText(string text)
+void AllegroWrittenBox::setText(std::string text)
 {
 	this->text = text;
 	setUp();

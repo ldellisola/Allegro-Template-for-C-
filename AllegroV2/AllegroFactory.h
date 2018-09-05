@@ -2,8 +2,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_audio.h>
@@ -15,9 +13,6 @@ using namespace std;
 #include <allegro5/allegro_video.h>
 #include <allegro5/allegro_native_dialog.h>
 
-
-
-using namespace std;
 
 class AllegroDisplayFactory
 {
@@ -50,7 +45,7 @@ public:
 	};
 
 private:
-	vector<ALLEGRO_DISPLAY *> all;
+	std::vector<ALLEGRO_DISPLAY *> all;
 };
 
 enum class PopUpReturn
@@ -68,7 +63,7 @@ public:
 	AllegroPopUpFactory(){}
 	~AllegroPopUpFactory(){}
 
-	PopUpReturn create(string title, string heading, string text,PopUpType type ,ALLEGRO_DISPLAY * display = nullptr) {
+	PopUpReturn create(std::string title, std::string heading, std::string text,PopUpType type ,ALLEGRO_DISPLAY * display = nullptr) {
 		return (PopUpReturn) al_show_native_message_box(display, title.c_str(), heading.c_str(), text.c_str(), nullptr, (int)type);
 	}
 
@@ -87,7 +82,7 @@ public:
 
 	~AllegroColorFactory(){}
 
-	ALLEGRO_COLOR create(string color) { return al_color_name(color.c_str()); }
+	ALLEGRO_COLOR create(std::string color) { return al_color_name(color.c_str()); }
 	ALLEGRO_COLOR create(unsigned char r, unsigned char g, unsigned char b) { return al_map_rgb(r, g, b); }
 	ALLEGRO_COLOR create(unsigned char r, unsigned char g, unsigned char b, unsigned char a) { return al_map_rgba(r, g, b, a); }
 	void decode(ALLEGRO_COLOR& color, unsigned char&r, unsigned char & g, unsigned char & b) { al_unmap_rgb(color, &r, &g, &b); }
@@ -129,7 +124,7 @@ public:
 	}
 
 private:
-	vector<ALLEGRO_BITMAP *> all;
+	std::vector<ALLEGRO_BITMAP *> all;
 };
 
 // Dudo si esto deberia ser una factory o un tipo nuevo de dato
@@ -169,7 +164,7 @@ public:
 private:
 	ALLEGRO_EVENT_QUEUE * eventQueue = nullptr;
 	ALLEGRO_EVENT ev;
-	vector<ALLEGRO_EVENT_SOURCE*>sources;
+	std::vector<ALLEGRO_EVENT_SOURCE*>sources;
 };
 
 class AllegroFontFactory
@@ -179,7 +174,7 @@ public:
 
 	~AllegroFontFactory() { for (ALLEGRO_FONT * font : all) al_destroy_font(font); }
 
-	ALLEGRO_FONT*create(string file, int size,bool automaticDestruction = true) {
+	ALLEGRO_FONT*create(std::string file, int size,bool automaticDestruction = true) {
 		ALLEGRO_FONT * temp = al_load_ttf_font(file.c_str(), -size, 0);
 		if (temp) {
 			if (automaticDestruction)
@@ -202,7 +197,7 @@ public:
 		}
 	}
 private:
-	vector<ALLEGRO_FONT *> all;
+	std::vector<ALLEGRO_FONT *> all;
 };
 
 class AllegroTimerFactory
@@ -236,7 +231,7 @@ public:
 	}
 
 private:
-	vector<ALLEGRO_TIMER*>all;
+	std::vector<ALLEGRO_TIMER*>all;
 };
 
 
@@ -335,6 +330,6 @@ public:
 
 
 private:
-	vector<ALLEGRO_BITMAP *> all;
+	std::vector<ALLEGRO_BITMAP *> all;
 
 };

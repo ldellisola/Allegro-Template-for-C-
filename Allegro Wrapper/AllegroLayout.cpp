@@ -12,7 +12,7 @@ AllegroLayout::AllegroLayout(float w, float h, ALLEGRO_COLOR color,LayoutDrawMod
 	
 }
 
-AllegroLayout::AllegroLayout(float w, float h, string image, LayoutDrawMode mode) {
+AllegroLayout::AllegroLayout(float w, float h,std::string image, LayoutDrawMode mode) {
 	this->w = w;
 	this->h = w;
 	this->color = al_color_name("black");
@@ -161,7 +161,7 @@ void AllegroLayout::setColorAsBackground()
 
 }
 
-void AllegroLayout::loadImageBackground(string image)
+void AllegroLayout::loadImageBackground(std::string image)
 {
 	this->image = al_load_bitmap(image.c_str());
 }

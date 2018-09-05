@@ -2,7 +2,7 @@
 
 
 
-AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue , string name, string icon)
+AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,std::string name,std::string icon)
 {
 	width = w;
 	height = h;
@@ -90,13 +90,13 @@ void AllegroWindow::update()
 
 }
 
-void AllegroWindow::setName(string name)
+void AllegroWindow::setName(std::string name)
 {
 	this->name = name;
 	this->setUp();
 }
 
-void AllegroWindow::setIcon(string icon)
+void AllegroWindow::setIcon(std::string icon)
 {
 	this->icon = al_load_bitmap(icon.c_str());
 	this->setUp();
@@ -227,7 +227,7 @@ void AllegroWindow::loadBackground(ALLEGRO_COLOR color)
 		layout->loadBackground(color);
 }
 
-void AllegroWindow::loadImageBackground(string image)
+void AllegroWindow::loadImageBackground(std::string image)
 {
 	if (layout != nullptr)
 		layout->loadImageBackground(image);
@@ -278,7 +278,7 @@ bool AllegroWindow::operator==(AllegroWindow& window)
 		return false;
 }
 
-void AllegroWindow::setCustomMouseCursor(string iconPath, float xFocus , float yFocus )
+void AllegroWindow::setCustomMouseCursor(std::string iconPath, float xFocus , float yFocus )
 {
 	this->customCursorSprite = al_load_bitmap(iconPath.c_str());
 	this->customMouseCursor = al_create_mouse_cursor(customCursorSprite, xFocus, yFocus);
@@ -348,7 +348,7 @@ void AllegroWindow::showMenu()
 	menuOn = true;
 }
 
-void AllegroWindow::insertMenuItem(string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
+void AllegroWindow::insertMenuItem(std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
 {
 	if (menu != nullptr) {
 		menu->insertItem(title, uniqueID, flag, pos);
@@ -356,13 +356,13 @@ void AllegroWindow::insertMenuItem(string title, uint16_t uniqueID, MenuFlags fl
 	}
 }
 
-void AllegroWindow::insertMenuSubItemp(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
+void AllegroWindow::insertMenuSubItemp(uint16_t parentID,std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
 {
 	if (menu != nullptr)
 		this->menu->insertSubItem(parentID, title, uniqueID, flag, pos);
 }
 
-void AllegroWindow::appendMenuItem(string title, uint16_t uniqueID, MenuFlags flag)
+void AllegroWindow::appendMenuItem(std::string title, uint16_t uniqueID, MenuFlags flag)
 {
 
 	if (menu != nullptr) {
@@ -371,7 +371,7 @@ void AllegroWindow::appendMenuItem(string title, uint16_t uniqueID, MenuFlags fl
 	}
 }
 
-void AllegroWindow::appendMenuSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag)
+void AllegroWindow::appendMenuSubItem(uint16_t parentID,std::string title, uint16_t uniqueID, MenuFlags flag)
 {
 	if (menu != nullptr)
 		menu->appendSubItem(parentID, title, uniqueID, flag);
@@ -383,7 +383,7 @@ void AllegroWindow::setMenuItemFlag(uint16_t uniqueID, MenuFlags flag)
 		menu->setItemFlag(uniqueID, flag);
 }
 
-void AllegroWindow::setMenuItemTitle(string title, uint16_t uniqueID)
+void AllegroWindow::setMenuItemTitle(std::string title, uint16_t uniqueID)
 {
 	if (menu != nullptr)
 		menu->setItemTitle(title.c_str(), uniqueID);
@@ -397,12 +397,12 @@ MenuFlags AllegroWindow::getMenuItemFlag(uint16_t uniqueID)
 		return MenuFlags::Error;
 }
 
-string AllegroWindow::getMenuItemTitle(uint16_t uniqueID)
+std::string AllegroWindow::getMenuItemTitle(uint16_t uniqueID)
 {
 	if (menu != nullptr)
 		return menu->getItemTitle(uniqueID);
 	else
-		return string();
+		return std::string();
 }
 
 void AllegroWindow::deleteMenu()

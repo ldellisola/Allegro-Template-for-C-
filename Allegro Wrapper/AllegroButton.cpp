@@ -68,16 +68,16 @@ void AllegroButton::unpress()
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-void AllegroToggle::click(float mouseX, float mouseY, double timeStamp)
+void AllegroToggle::toggle(float mouseX, float mouseY, double timeStamp)
 {
 
 	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY))) {
 		if (clickTimeStamp == 0) {
 			clickTimeStamp = timeStamp;
 			if (pressed)
-				unpress();
+				pressed = true;
 			else
-				press();
+				pressed = false;
 		}
 	}
 	if (timeStamp - clickTimeStamp >= MinClickThreshold) { // && clickTimeStamp !=0

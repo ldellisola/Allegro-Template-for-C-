@@ -7,11 +7,6 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_native_dialog.h>
 
-
-
-
-using namespace std;
-
 enum class MenuFlags
 {
 	Error = -1 ,Enabled =0 , Disabled = 4, Checkbox = 2, checkedBox = 1
@@ -41,7 +36,7 @@ public:
 	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
-	void appendItem(string title, uint16_t uniqueid, MenuFlags flag);
+	void appendItem(std::string title, uint16_t uniqueid, MenuFlags flag);
 
 	// It inserts an item to the menu in a given position
 	//
@@ -50,7 +45,7 @@ public:
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
 	//		- unsigned int pos: the position where the item will be placed.
-	void insertItem(string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
+	void insertItem(std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
 
 	// It appends an item into a submenu. If there is no submeno, it will create it.
 	//	
@@ -59,7 +54,7 @@ public:
 	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
-	void appendSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag);
+	void appendSubItem(uint16_t parentID, std::string title, uint16_t uniqueID, MenuFlags flag);
 
 	// It inserts an item into a submenu in a given position. If there is no submenu created in that position it will create it.
 	//
@@ -68,7 +63,7 @@ public:
 	//		- uint16_t uniqueID: an unique 16 bit ID for that given item. This ID must be >0. It will be usefull to for events.
 	//							 if the user pressed this item, it will return the ID int event.user.data1
 	//		- MenuFlags flag: The kind of item it will be. It can be Enabled, Disabled,Checked and checkBox
-	void insertSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
+	void insertSubItem(uint16_t parentID, std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos);
 
 	// It sets a new flag for a given item
 	void setItemFlag(uint16_t uniqueID, MenuFlags flag);
@@ -77,10 +72,10 @@ public:
 	MenuFlags getItemFlag(uint16_t uniqueID);
 
 	// It sets the title of a given item
-	void setItemTitle(string title, uint16_t uniqueID);
+	void setItemTitle(std::string title, uint16_t uniqueID);
 
 	// It returns the title of a given item
-	string getItemTitle(uint16_t uniqueID);
+	std::string getItemTitle(uint16_t uniqueID);
 
 	// It returns the event source
 	ALLEGRO_EVENT_SOURCE * getEventSource();

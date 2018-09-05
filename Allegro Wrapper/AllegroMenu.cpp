@@ -18,19 +18,19 @@ AllegroMenu::~AllegroMenu()
 		al_destroy_menu(menu);
 }
 
-void AllegroMenu::appendItem(string title, uint16_t uniqueID, MenuFlags flag)
+void AllegroMenu::appendItem(std::string title, uint16_t uniqueID, MenuFlags flag)
 {
 	if (menu != nullptr)
 		al_append_menu_item(menu, title.c_str(), uniqueID, (int)flag, nullptr, nullptr);
 }
 
-void AllegroMenu::insertItem(string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
+void AllegroMenu::insertItem(std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
 {
 	if (menu != nullptr)
 		al_insert_menu_item(menu, (0-pos), title.c_str(), uniqueID, (int)flag, nullptr, nullptr);
 }	
 
-void AllegroMenu::appendSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag)
+void AllegroMenu::appendSubItem(uint16_t parentID,std::string title, uint16_t uniqueID, MenuFlags flag)
 {
 	ALLEGRO_MENU * father = al_find_menu(menu, parentID);
 	if (father != nullptr) {		// Me fijo si es un menu o no
@@ -42,7 +42,7 @@ void AllegroMenu::appendSubItem(uint16_t parentID, string title, uint16_t unique
 		int parentIndex;
 		if (al_find_menu_item(menu, parentID, &parentMenu, &parentIndex)) {
 			int parentFlag = al_get_menu_item_flags(parentMenu, -parentIndex);
-			string parentTitle = al_get_menu_item_caption(parentMenu, -parentIndex);
+			std::string parentTitle = al_get_menu_item_caption(parentMenu, -parentIndex);
 			al_remove_menu_item(menu, parentIndex);
 
 			ALLEGRO_MENU * temp = al_create_menu();
@@ -56,7 +56,7 @@ void AllegroMenu::appendSubItem(uint16_t parentID, string title, uint16_t unique
 	
 }
 
-void AllegroMenu::insertSubItem(uint16_t parentID, string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
+void AllegroMenu::insertSubItem(uint16_t parentID,std::string title, uint16_t uniqueID, MenuFlags flag, unsigned int pos)
 {
 	ALLEGRO_MENU * father = al_find_menu(menu, parentID);
 	if (father != nullptr) {		// Me fijo si es un menu o no
@@ -68,7 +68,7 @@ void AllegroMenu::insertSubItem(uint16_t parentID, string title, uint16_t unique
 		int parentIndex;
 		if (al_find_menu_item(menu, parentID, &parentMenu, &parentIndex)) {
 			int parentFlag = al_get_menu_item_flags(parentMenu, -parentIndex);
-			string parentTitle = al_get_menu_item_caption(parentMenu, -parentIndex);
+			std::string parentTitle = al_get_menu_item_caption(parentMenu, -parentIndex);
 			al_remove_menu_item(menu, parentIndex);
 
 			ALLEGRO_MENU * temp =al_create_menu();
@@ -93,18 +93,18 @@ MenuFlags AllegroMenu::getItemFlag(uint16_t uniqueID)
 		return MenuFlags::Error;
 }
 
-void AllegroMenu::setItemTitle(string title, uint16_t uniqueID)
+void AllegroMenu::setItemTitle(std::string title, uint16_t uniqueID)
 {
 	if (menu != nullptr)
 		al_set_menu_item_caption(this->menu, uniqueID, title.c_str());
 }
 
-string AllegroMenu::getItemTitle(uint16_t uniqueID)
+std::string AllegroMenu::getItemTitle(uint16_t uniqueID)
 {
 	if (menu != nullptr)
 		return al_get_menu_item_caption(this->menu, uniqueID);
 	else
-		return string();
+		return std::string();
 }
 
 ALLEGRO_EVENT_SOURCE * AllegroMenu::getEventSource()

@@ -11,7 +11,7 @@ AllegroWritableBox::~AllegroWritableBox()
 		al_destroy_font(font);
 }
 
-string AllegroWritableBox::getText()
+std::string AllegroWritableBox::getText()
 {
 	return this->text;
 }

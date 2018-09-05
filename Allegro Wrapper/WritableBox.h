@@ -9,7 +9,6 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 
-using namespace std;
 
 #define KeyPressedTimeThreshold (0.00001)
 
@@ -83,7 +82,7 @@ public:
 	~AllegroWritableBox();
 
 	// It returns the text that the user has typed
-	string getText();
+	std::string getText();
 
 	// It takes a keyboard event and uses the key that was pressed. 
 	void input(ALLEGRO_KEYBOARD_EVENT ev);
@@ -104,7 +103,7 @@ private:
 
 	double timeStamp = 0;
 
-	string text = "";
+	std::string text = "";
 	KeyboardMode mode;
 	unsigned int maxLenght;
 	ALLEGRO_COLOR fontColor;

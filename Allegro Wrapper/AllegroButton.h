@@ -16,7 +16,7 @@
 struct AllegroButtonData
 {
 	float x, y, width, height;
-	string text;
+	std::string text;
 	ALLEGRO_FONT* font;
 	ALLEGRO_COLOR fontColor;
 };
@@ -38,7 +38,7 @@ public:
 	//		- string text:				text of the button.
 	//		- ALLEGRO_FONT * font:		pointer to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroButton(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroButton(float x, float y, float width, float height, std::string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		: AllegroWrittenBox(x,y,width,height,text,font,fontColor, boxID){
 		this->setBoxType(BoxType::Button);
 	}
@@ -53,7 +53,7 @@ public:
 	//		- int fontSize:				size of the font (int pixels)
 	//		- const char * font:		path to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroButton(float x, float y, float width, float height, string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroButton(float x, float y, float width, float height, std::string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		:AllegroWrittenBox(x, y, width, height, fontSize, text, font, fontColor, boxID) {
 		this->setBoxType(BoxType::Button);
 	}
@@ -75,7 +75,7 @@ public:
 	//		- float mouseX: X coordinate of the mouse.
 	//		- float mouseY: Y coordinate of the mouse.
 	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
-	bool click(float mouseX, float mouseY, double timeStamp);
+	virtual bool click(float mouseX, float mouseY, double timeStamp);
 
 
 	// This function will return true if there was a double click within the given time thresholds.
@@ -83,7 +83,7 @@ public:
 	//		- float mouseX: X coordinate of the mouse.
 	//		- float mouseY: Y coordinate of the mouse.
 	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
-	bool doubleClick(float mouseX, float mouseY, double timeStamp);
+	virtual bool doubleClick(float mouseX, float mouseY, double timeStamp);
 
 
 
@@ -107,10 +107,10 @@ public:
 	//		- float y:					initial Y coordinate.
 	//		- float width:				width of the button.
 	//		- float height:				height of the button.
-	//		- string text:				text of the button.
+	//		-std::string text:				text of the button.
 	//		- ALLEGRO_FONT * font:		pointer to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroToggle(float x, float y, float width, float height, string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroToggle(float x, float y, float width, float height,std::string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		: AllegroButton(x, y, width, height, text, font, fontColor, boxID) {
 		this->setBoxType(BoxType::Toggle);
 		pressedColor = al_map_rgb(100, 100, 100);
@@ -126,7 +126,7 @@ public:
 	//		- int fontSize:				size of the font (int pixels)
 	//		- const char * font:		path to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroToggle(float x, float y, float width, float height, string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroToggle(float x, float y, float width, float height,std::string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		:AllegroButton(x, y, width, height,text, fontSize, font, fontColor, boxID) {
 		this->setBoxType(BoxType::Toggle);
 		pressedColor = al_map_rgb(100, 100, 100);
@@ -149,7 +149,7 @@ public:
 	//		- float mouseX: X coordinate of the mouse.
 	//		- float mouseY: Y coordinate of the mouse.
 	//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
-	void click(float mouseX, float mouseY, double timeStamp);
+	void toggle(float mouseX, float mouseY, double timeStamp);
 
 
 	// this function will return true if the button is pressed. IT ONLY WORKS WITH A SINGLE CLICK
@@ -157,7 +157,7 @@ public:
 
 	// It draws the button to the active display
 	void draw();
-
+	
 private:
 	ALLEGRO_COLOR pressedColor;
 };
