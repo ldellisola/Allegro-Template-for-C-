@@ -20,7 +20,7 @@ public:
 	//
 	//		- string title: the title of the debug window.
 	//		- TextLogFlag flag: an optional paramenter that affects the debug window. It can be Regular, NoClose or Monospace.
-	AllegroLog(std::string title, TextLogFlag flag = TextLogFlag::Regular);
+	AllegroLog(std::string title, bool logToFile = false, TextLogFlag flag = TextLogFlag::Regular);
 
 	//Destructor
 	~AllegroLog();
@@ -39,5 +39,7 @@ public:
 
 private:
 	ALLEGRO_TEXTLOG * logWindow = nullptr;
+	std::string log;
+	bool logToFile;
 };
 

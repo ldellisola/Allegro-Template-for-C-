@@ -110,8 +110,11 @@ void AllegroWindow::setPosition(float x, float y)
 void AllegroWindow::setFullScreen()
 {
 	this->screenMode = ScreenMode::FullScreen;
-	if (this->on) 
+	if (this->on) {
 		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, true);
+		this->width = al_get_display_width(this->display);
+		this->height = al_get_display_height(this->display);
+	}
 
 }
 
@@ -126,8 +129,11 @@ void AllegroWindow::setFrameless()
 void AllegroWindow::setMaximize()
 {
 	this->screenMode = ScreenMode::Maximized;
-	if (this->on)
+	if (this->on) {
 		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, true);
+		this->width = al_get_display_width(this->display);
+		this->height = al_get_display_height(this->display);
+	}
 
 }
 
@@ -135,6 +141,8 @@ void AllegroWindow::setRegular()
 {
 	this->clearScreenMode();
 	this->screenMode = ScreenMode::Regular;
+	this->width = al_get_display_width(this->display);
+	this->height = al_get_display_height(this->display);
 }
 
 void AllegroWindow::resize(float newW, float newH)
