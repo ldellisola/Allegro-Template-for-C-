@@ -167,38 +167,7 @@ private:
 	std::vector<ALLEGRO_EVENT_SOURCE*>sources;
 };
 
-class AllegroFontFactory
-{
-public:
-	AllegroFontFactory(){}
 
-	~AllegroFontFactory() { for (ALLEGRO_FONT * font : all) al_destroy_font(font); }
-
-	ALLEGRO_FONT*create(std::string file, int size,bool automaticDestruction = true) {
-		ALLEGRO_FONT * temp = al_load_ttf_font(file.c_str(), -size, 0);
-		if (temp) {
-			if (automaticDestruction)
-				all.push_back(temp);
-		}
-		return temp;
-	}
-
-	void destroy(ALLEGRO_FONT * font) {
-		int i;
-		bool kill = false;
-		for (i = 0; i < all.size(); i++) {
-			if (all[i] == font)
-				kill = true;
-		}
-		i--;
-		if (kill) {
-			all.erase(all.begin() + i);
-			al_destroy_font(font);
-		}
-	}
-private:
-	std::vector<ALLEGRO_FONT *> all;
-};
 
 class AllegroTimerFactory
 {

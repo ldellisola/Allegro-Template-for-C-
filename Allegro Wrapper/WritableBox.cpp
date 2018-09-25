@@ -20,7 +20,7 @@ void AllegroWritableBox::input(ALLEGRO_KEYBOARD_EVENT ev)
 {
 	int character = ev.keycode;
 	if (timeStamp == 0) {
-		if (text.length() < maxLenght) {
+		if (this->width > al_get_text_width(this->font,this->text.c_str())) {
 			switch (mode) {
 			case KeyboardMode::Alphabetic:
 				addLetter(character, ev.modifiers);

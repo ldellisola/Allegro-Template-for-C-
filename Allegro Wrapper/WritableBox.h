@@ -20,7 +20,8 @@ enum class KeyboardMode
 struct AllegroWritableBoxData
 {
 	KeyboardMode mode;
-	float x, y, maxLenght;
+	float x, y;
+	unsigned int width, height;
 	ALLEGRO_FONT * font;
 	ALLEGRO_COLOR fontColor;
 };
@@ -33,18 +34,19 @@ public:
 	//		- KeyboardMode mode:		the mode of the keyboard. It can be Numeric, Alphanumeric or Alphabetic
 	//		- float x:					the initial X coordinate.
 	//		- float y:					the initial Y coordinate.
-	//		- unsigned int maxLenght:	the max ammount of characters that the box will contain.
+	//		- unsigned int width:		the width of the box.
+	//		- unsigned int height:		the height of the box. 
 	//		- int fontSize:				size of the font.
 	//		- const char * fontPath:	the path to the font.
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int maxLenght, int fontSize, const char * fontPath, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		:AllegroBox(x, y, fontSize* (2 + maxLenght), 3 * fontSize, boxID) {
+	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, int fontSize, const char * fontPath, ALLEGRO_COLOR fontColor,  unsigned int boxID = DefaultID)
+		:AllegroBox(x, y,width, height, boxID) {
 		this->setBoxType(BoxType::Writable);
-		this->maxLenght = maxLenght;
+		this->font = al_load_font(fontPath, -fontSize, 0);
 		this->fontColor = fontColor;
 		foreingFont = false;
 		this->mode = mode;
-		this->font = al_load_font(fontPath, -fontSize, 0);
+		
 	}
 
 	// Constructor: It takes an existing font.
@@ -52,13 +54,13 @@ public:
 	//		- KeyboardMode mode:		the mode of the keyboard. It can be Numeric, Alphanumeric or Alphabetic
 	//		- float x:					the initial X coordinate.
 	//		- float y:					the initial Y coordinate.
-	//		- unsigned int maxLenght:	the max ammount of characters that the box will contain.
+	//		- unsigned int width:		the width of the box.
+	//		- unsigned int height:		the height of the box. 
 	//		- ALLEGRO_FONT * font:		pointer to the font
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int maxLenght, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		:AllegroBox(x, y, (maxLenght +2) *al_get_text_width(font, "W"), 3 * al_get_font_line_height(font), boxID) {
+	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		:AllegroBox(x, y,width, height, boxID) {
 		this->setBoxType(BoxType::Writable);
-		this->maxLenght = maxLenght;
 		this->fontColor = fontColor;
 		foreingFont = true;
 		this->mode = mode;
@@ -70,9 +72,8 @@ public:
 	//
 	//		- AllegroWrittenBoxData& data: a structure with all the data of a box
 	AllegroWritableBox(AllegroWritableBoxData& data, unsigned int boxID = DefaultID)
-		: AllegroBox(data.x, data.y, (data.maxLenght + 2) *al_get_text_width(data.font, "W"), 3 * al_get_font_line_height(data.font), boxID) {
+		: AllegroBox(data.x, data.y, data.width, data.height, boxID) {
 		this->setBoxType(BoxType::Writable);
-		this->maxLenght = data.maxLenght;
 		this->fontColor = data.fontColor;
 		foreingFont = true;
 		this->mode = data.mode;
@@ -105,7 +106,6 @@ private:
 
 	std::string text = "";
 	KeyboardMode mode;
-	unsigned int maxLenght;
 	ALLEGRO_COLOR fontColor;
 	ALLEGRO_FONT * font = nullptr;
 	bool foreingFont = false;
