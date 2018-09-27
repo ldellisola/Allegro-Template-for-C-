@@ -5,7 +5,7 @@
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
+#include "AllegroFont.h"
 
 #include "WrittenBox.h"
 
@@ -17,7 +17,7 @@ struct AllegroButtonData
 {
 	float x, y, width, height;
 	std::string text;
-	ALLEGRO_FONT* font;
+	AllegroFont* font;
 	ALLEGRO_COLOR fontColor;
 };
 
@@ -29,34 +29,21 @@ class AllegroButton :
 	public AllegroWrittenBox
 {
 public:
-	// Constructor: It needs a pointer to a font.
+	// Constructor:
 	//
 	//		- float x:					initial X coordinate.
 	//		- float y:					initial Y coordinate.
 	//		- float width:				width of the button.
 	//		- float height:				height of the button.
 	//		- string text:				text of the button.
-	//		- ALLEGRO_FONT * font:		pointer to the font
+	//		- AllegroFont * font:		Font to be loaded
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroButton(float x, float y, float width, float height, std::string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroButton(float x, float y, float width, float height, std::string text, AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		: AllegroWrittenBox(x,y,width,height,text,font,fontColor, boxID){
 		this->setBoxType(BoxType::Button);
 	}
 
-	// Constructor: it will create a font
-	//
-	//		- float x:					initial X coordinate.
-	//		- float y:					initial Y coordinate.
-	//		- float width:				width of the button.
-	//		- float height:				height of the button.
-	//		- string text:				text of the button.
-	//		- int fontSize:				size of the font (int pixels)
-	//		- const char * font:		path to the font
-	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroButton(float x, float y, float width, float height, std::string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		:AllegroWrittenBox(x, y, width, height, fontSize, text, font, fontColor, boxID) {
-		this->setBoxType(BoxType::Button);
-	}
+
 
 	// Constructor: It will take an existing font. This is a good option for when you have to create a lot of identical Boxes or you need to 
 	//				create a box inside another function and you need all of this information from outside of it.
@@ -101,33 +88,17 @@ protected:
 
 class AllegroToggle :public AllegroButton {
 public:
-	// Constructor: It needs a pointer to a font.
-	//
-	//		- float x:					initial X coordinate.
-	//		- float y:					initial Y coordinate.
-	//		- float width:				width of the button.
-	//		- float height:				height of the button.
-	//		-std::string text:				text of the button.
-	//		- ALLEGRO_FONT * font:		pointer to the font
-	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroToggle(float x, float y, float width, float height,std::string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		: AllegroButton(x, y, width, height, text, font, fontColor, boxID) {
-		this->setBoxType(BoxType::Toggle);
-		pressedColor = al_map_rgb(100, 100, 100);
-	}
-
-	// Constructor: it will create a font
+	// Constructor: 
 	//
 	//		- float x:					initial X coordinate.
 	//		- float y:					initial Y coordinate.
 	//		- float width:				width of the button.
 	//		- float height:				height of the button.
 	//		- string text:				text of the button.
-	//		- int fontSize:				size of the font (int pixels)
-	//		- const char * font:		path to the font
+	//		- AllegroFont * font:		Font to be loaded
 	//		- ALLEGRO_COLOR fontColor:	color of the font
-	AllegroToggle(float x, float y, float width, float height,std::string text, int fontSize, const char * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		:AllegroButton(x, y, width, height,text, fontSize, font, fontColor, boxID) {
+	AllegroToggle(float x, float y, float width, float height,std::string text, AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		:AllegroButton(x, y, width, height,text, font, fontColor, boxID) {
 		this->setBoxType(BoxType::Toggle);
 		pressedColor = al_map_rgb(100, 100, 100);
 	}

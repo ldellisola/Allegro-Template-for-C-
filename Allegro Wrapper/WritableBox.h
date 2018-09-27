@@ -7,7 +7,10 @@
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
+
+
+#include "AllegroFont.h"
+#include "AllegroFont.h"
 
 
 #define KeyPressedTimeThreshold (0.00001)
@@ -22,7 +25,7 @@ struct AllegroWritableBoxData
 	KeyboardMode mode;
 	float x, y;
 	unsigned int width, height;
-	ALLEGRO_FONT * font;
+	AllegroFont * font;
 	ALLEGRO_COLOR fontColor;
 };
 
@@ -37,35 +40,18 @@ public:
 	//		- unsigned int width:		the width of the box.
 	//		- unsigned int height:		the height of the box. 
 	//		- int fontSize:				size of the font.
-	//		- const char * fontPath:	the path to the font.
+	//		- AllegroFont * font:		Font to be loaded
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, int fontSize, const char * fontPath, ALLEGRO_COLOR fontColor,  unsigned int boxID = DefaultID)
+	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, AllegroFont * font, ALLEGRO_COLOR fontColor,  unsigned int boxID = DefaultID)
 		:AllegroBox(x, y,width, height, boxID) {
 		this->setBoxType(BoxType::Writable);
-		this->font = al_load_font(fontPath, -fontSize, 0);
+		this->font = font;
 		this->fontColor = fontColor;
 		foreingFont = false;
 		this->mode = mode;
 		
 	}
 
-	// Constructor: It takes an existing font.
-	//
-	//		- KeyboardMode mode:		the mode of the keyboard. It can be Numeric, Alphanumeric or Alphabetic
-	//		- float x:					the initial X coordinate.
-	//		- float y:					the initial Y coordinate.
-	//		- unsigned int width:		the width of the box.
-	//		- unsigned int height:		the height of the box. 
-	//		- ALLEGRO_FONT * font:		pointer to the font
-	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		:AllegroBox(x, y,width, height, boxID) {
-		this->setBoxType(BoxType::Writable);
-		this->fontColor = fontColor;
-		foreingFont = true;
-		this->mode = mode;
-		this->font = font;
-	}
 
 	// Constructor: It will take an existing font. This is a good option for when you have to create a lot of identical Boxes or you need to 
 	//				create a box inside another function and you need all of this information from outside of it.
@@ -107,7 +93,7 @@ private:
 	std::string text = "";
 	KeyboardMode mode;
 	ALLEGRO_COLOR fontColor;
-	ALLEGRO_FONT * font = nullptr;
+	AllegroFont * font = nullptr;
 	bool foreingFont = false;
 };
 

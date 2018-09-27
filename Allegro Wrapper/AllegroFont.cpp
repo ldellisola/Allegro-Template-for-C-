@@ -7,12 +7,29 @@ AllegroFont::AllegroFont(std::string fileName, int size, unsigned int ID)
 	this->ID = ID;
 }
 
+void AllegroFont::drawCentredText(std::string text, ALLEGRO_COLOR color, float width, float height)
+{
+	al_draw_text(this->font, color, width / 2.0, (height - this->previewTextHeight()) / 2.0, ALLEGRO_ALIGN_CENTRE, text.c_str());
+}
+
+void AllegroFont::drawLeftText(std::string text, ALLEGRO_COLOR color, float x, float y)
+{
+	al_draw_text(this->font, color, x, y, ALLEGRO_ALIGN_LEFT, text.c_str());
+
+}
+
+void AllegroFont::drawRightText(std::string text, ALLEGRO_COLOR color, float x, float y)
+{
+	al_draw_text(this->font, color, x, y, ALLEGRO_ALIGN_RIGHT, text.c_str());
+
+}
+
 float AllegroFont::previewTextWidth(std::string text)
 {
 	return al_get_text_width(this->font,text.c_str());
 }
 
-float AllegroFont::previewTextHeight(std::string text)
+float AllegroFont::previewTextHeight()
 {
 	return al_get_font_line_height(this->font);
 }
