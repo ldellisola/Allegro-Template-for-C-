@@ -64,27 +64,7 @@ void AllegroLayout::setDrawMode(LayoutDrawMode mode)
 
 
 
-void AllegroLayout::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight, float scaledWidth)
-{
-	Drawing temp;
-	temp.bitmap = bitmap;
-	temp.x = x;
-	temp.y = y;
-	temp.height = al_get_bitmap_height(bitmap);
-	temp.width = al_get_bitmap_width(bitmap);
 
-	if (scaledHeight == 0)
-		temp.scaledHeight = temp.height;
-	else
-		temp.scaledHeight = scaledHeight;
-	if (scaledWidth == 0)
-		temp.scaledWidth = temp.width;
-	else
-		temp.scaledWidth = scaledWidth;
-	drawings.push_back(temp);
-	this->setUp();
-
-}
 
 void AllegroLayout::addBox(AllegroBox * box)
 {
@@ -93,20 +73,7 @@ void AllegroLayout::addBox(AllegroBox * box)
 }
 
 
-void AllegroLayout::removeDrawing(ALLEGRO_BITMAP * bitmap)
-{
-	bool kill = false; int i = 0;
-	for (i = 0; i < drawings.size() && !kill; i++) {
-		if (drawings[i].bitmap == bitmap)
-			kill = true;
-	}
-	i--;
-	if (kill) {
-		drawings.erase(drawings.begin() + i);
-	}
-	this->setUp();
 
-}
 
 void AllegroLayout::removeBox(AllegroBox & box)
 {
@@ -123,22 +90,7 @@ void AllegroLayout::removeBox(AllegroBox & box)
 
 }
 
-void AllegroLayout::moveDrawing(ALLEGRO_BITMAP * bitmapToMove, float newX, float newY)
-{
-	bool move = false; int i = 0;
-	for (i = 0; i < drawings.size(); i++) {
-		if (drawings[i].bitmap == bitmapToMove)
-			move = true;
-	}
-	i--;
-	if (move) {
-		drawings[i].x = newX;
-		drawings[i].y = newY;
 
-	}
-	this->setUp();
-
-}
 
 
 void AllegroLayout::loadBackground(ALLEGRO_COLOR color)
@@ -188,7 +140,6 @@ void AllegroLayout::setUp()
 		else
 			al_clear_to_color(color);
 
-		drawDrawings();
 
 		drawBoxes();
 
@@ -203,11 +154,6 @@ void AllegroLayout::drawBoxes()
 		box->draw();
 }
 
-void AllegroLayout::drawDrawings()
-{
-	for (Drawing& drawing : drawings)
-		al_draw_scaled_bitmap(drawing.bitmap, 0, 0, drawing.width, drawing.height, drawing.x, drawing.y, drawing.scaledWidth, drawing.scaledHeight, 0);
-}
 
 void BoxArray::addBox(AllegroBox * box)
 {
