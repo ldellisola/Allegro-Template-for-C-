@@ -199,18 +199,6 @@ void AllegroWindow::setLayoutDrawMode(LayoutDrawMode mode)
 		layout->setDrawMode(mode);
 }
 
-void AllegroWindow::addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight, float scaledWidth)
-{
-	if (layout != nullptr)
-		layout->addDrawing(bitmap, x, y, scaledHeight, scaledWidth);
-}
-
-void AllegroWindow::removeDrawing(ALLEGRO_BITMAP * bitmap)
-{
-	if (layout != nullptr)
-		layout->removeDrawing(bitmap);
-}
-
 void AllegroWindow::addBox(AllegroBox & box)
 {
 	if (layout != nullptr)
@@ -221,12 +209,6 @@ void AllegroWindow::removeBox(AllegroBox & box)
 {
 	if (layout != nullptr)
 		layout->removeBox(box);
-}
-
-void AllegroWindow::moveDrawing(ALLEGRO_BITMAP * bitmapToMove, float newX, float newY)
-{
-	if (layout != nullptr)
-		layout->moveDrawing(bitmapToMove, newX, newY);
 }
 
 void AllegroWindow::loadBackground(ALLEGRO_COLOR color)

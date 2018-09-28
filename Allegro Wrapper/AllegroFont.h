@@ -11,9 +11,8 @@ class AllegroFont;
 class AllegroFontFactory
 {
 public:
-	AllegroFontFactory() {}
 
-	~AllegroFontFactory() { for (AllegroFont * font : all) deleteFont(font); }
+	~AllegroFontFactory();
 
 
 	// It creates a font and stores it in the factory. The font will be automatically destroyed after the factory is destroyed
@@ -32,12 +31,10 @@ public:
 	// It recovers a pointer to a font given its ID.
 	AllegroFont * recover(unsigned int ID);
 
-	// DO NOT USE.
-	void deleteFont(AllegroFont* font);
 private:
 
 	
-	std::vector<AllegroFont *> all;
+	std::vector<AllegroFont *> fonts;
 };
 
 
@@ -88,11 +85,9 @@ public:
 	// It retrieves the ID of a font.
 	unsigned int getID();
 
-private:
 	~AllegroFont();
-	friend void AllegroFontFactory::deleteFont(AllegroFont * font);
-	friend void AllegroFontFactory::destroy(AllegroFont * font);
-	friend void AllegroFontFactory::destroy(unsigned int ID);
+private:
+	
 	unsigned int ID;
 	int size;
 	ALLEGRO_FONT * font = nullptr;

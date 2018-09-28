@@ -1,7 +1,7 @@
 #include "AllegroClassV2.h"
 
 
-AllegroClassV2::AllegroClassV2(Allegro::InitMode mode, float width, float height, float fps)
+AllegroClass::AllegroClass(Allegro::InitMode mode, float width, float height, float fps)
 {
 	if (al_init())
 		this->success = true;
@@ -42,13 +42,13 @@ AllegroClassV2::AllegroClassV2(Allegro::InitMode mode, float width, float height
 		registerAllAvailableEventsSource();
 }
 
-AllegroClassV2::AllegroClassV2()
+AllegroClass::AllegroClass()
 {
 	if (al_init())
 		this->success = true;
 }
 
-void AllegroClassV2::initImageAddon()
+void AllegroClass::initImageAddon()
 {
 	if (imageAddon == nullptr) {
 		this->imageAddon = new ImageAddon();
@@ -56,7 +56,7 @@ void AllegroClassV2::initImageAddon()
 	}
 }
 
-void AllegroClassV2::initAudioAddon()
+void AllegroClass::initAudioAddon()
 {
 	if (audioAddon == nullptr) {
 		this->audioAddon = new AudioAddon();
@@ -64,7 +64,7 @@ void AllegroClassV2::initAudioAddon()
 	}
 }
 
-void AllegroClassV2::initFontAddon()
+void AllegroClass::initFontAddon()
 {
 	if (fontAddon == nullptr) {
 		this->fontAddon = new FontAddon();
@@ -72,7 +72,7 @@ void AllegroClassV2::initFontAddon()
 	}
 }
 
-void AllegroClassV2::initKeyboardAddon()
+void AllegroClass::initKeyboardAddon()
 {
 	if (keyboardAddon == nullptr) {
 		this->keyboardAddon = new KeyboardAddon();
@@ -80,7 +80,7 @@ void AllegroClassV2::initKeyboardAddon()
 	}
 }
 
-void AllegroClassV2::initDisplayAddon(float x, float y)
+void AllegroClass::initDisplayAddon(float x, float y)
 {
 	if (displayAddon == nullptr) {
 		this->displayAddon = new DisplayAddon(x, y);
@@ -88,7 +88,7 @@ void AllegroClassV2::initDisplayAddon(float x, float y)
 	}
 }
 
-void AllegroClassV2::initMouseAddon()
+void AllegroClass::initMouseAddon()
 {
 	if (mouseAddon == nullptr) {
 		this->mouseAddon = new MouseAddon();
@@ -96,7 +96,7 @@ void AllegroClassV2::initMouseAddon()
 	}
 }
 
-void AllegroClassV2::initEventsAddon()
+void AllegroClass::initEventsAddon()
 {
 	if (eventsAddon == nullptr) {
 		this->eventsAddon = new EventsAddon();
@@ -104,7 +104,7 @@ void AllegroClassV2::initEventsAddon()
 	}
 }
 
-void AllegroClassV2::initTimerAddon(float fps)
+void AllegroClass::initTimerAddon(float fps)
 {
 	if (this->timerAddon == nullptr) {
 		this->timerAddon = new TimerAddon(fps);
@@ -112,7 +112,7 @@ void AllegroClassV2::initTimerAddon(float fps)
 	}
 }
 
-void AllegroClassV2::initTimerAddon()
+void AllegroClass::initTimerAddon()
 {
 	if (this->timerAddon == nullptr) {
 		this->timerAddon = new TimerAddon();
@@ -120,7 +120,7 @@ void AllegroClassV2::initTimerAddon()
 	}
 }
 
-void AllegroClassV2::initPrimitivesAddon()
+void AllegroClass::initPrimitivesAddon()
 {
 	if (primitivesAddon == nullptr) {
 		this->primitivesAddon = new PrimitivesAddon();
@@ -128,7 +128,7 @@ void AllegroClassV2::initPrimitivesAddon()
 	}
 }
 
-void AllegroClassV2::initVideoAddon()
+void AllegroClass::initVideoAddon()
 {
 	if (videoAddon == nullptr) {
 		this->videoAddon = new VideoAddon();
@@ -136,7 +136,7 @@ void AllegroClassV2::initVideoAddon()
 	}
 }
 
-void AllegroClassV2::initNativeDialogAddon()
+void AllegroClass::initNativeDialogAddon()
 {
 	if (nativeDialogAddon == nullptr) {
 		this->nativeDialogAddon = new NativeDialogAddon();
@@ -144,84 +144,84 @@ void AllegroClassV2::initNativeDialogAddon()
 	}
 }
 
-void AllegroClassV2::uninstallImageAddon()
+void AllegroClass::uninstallImageAddon()
 {
 	if (imageAddon != nullptr)
 		delete imageAddon;
 	imageAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallAudioAddon()
+void AllegroClass::uninstallAudioAddon()
 {
 	if (audioAddon != nullptr)
 		delete audioAddon;
 	audioAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallFontAddon()
+void AllegroClass::uninstallFontAddon()
 {
 	if (fontAddon != nullptr)
 		delete fontAddon;
 	fontAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallKeyboardAddon()
+void AllegroClass::uninstallKeyboardAddon()
 {
 	if (keyboardAddon != nullptr)
 		delete keyboardAddon;
 	keyboardAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallDisplayAddon()
+void AllegroClass::uninstallDisplayAddon()
 {
 	if (displayAddon != nullptr)
 		delete displayAddon;
 	displayAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallMouseAddon()
+void AllegroClass::uninstallMouseAddon()
 {
 	if (mouseAddon != nullptr)
 		delete mouseAddon;
 	mouseAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallEventsAddon()
+void AllegroClass::uninstallEventsAddon()
 {
 	if (eventsAddon != nullptr)
 		delete eventsAddon;
 	eventsAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallTimerAddon()
+void AllegroClass::uninstallTimerAddon()
 {
 	if (timerAddon != nullptr)
 		delete timerAddon;
 	timerAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallPrimitivesAddon()
+void AllegroClass::uninstallPrimitivesAddon()
 {
 	if (primitivesAddon != nullptr)
 		delete primitivesAddon;
 	primitivesAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallVideoAddon()
+void AllegroClass::uninstallVideoAddon()
 {
 	if (videoAddon != nullptr)
 		delete videoAddon;
 	videoAddon = nullptr;
 }
 
-void AllegroClassV2::uninstallNativeDialogAddon()
+void AllegroClass::uninstallNativeDialogAddon()
 {
 	if (nativeDialogAddon != nullptr)
 		delete nativeDialogAddon;
 	nativeDialogAddon = nullptr;
 }
 
-void AllegroClassV2::registerAllAvailableEventsSource()
+void AllegroClass::registerAllAvailableEventsSource()
 {
 	if (eventsAddon != nullptr) {
 		if (this->timerAddon != nullptr && this->timerAddon->getRefreshTimer() !=nullptr)
@@ -235,79 +235,79 @@ void AllegroClassV2::registerAllAvailableEventsSource()
 	}
 }
 
-void AllegroClassV2::registerEventSource(ALLEGRO_VIDEO * video)
+void AllegroClass::registerEventSource(ALLEGRO_VIDEO * video)
 {
 	if (this->eventsAddon != nullptr)
 		eventsAddon->registerEventSource(video);
 }
 
-void AllegroClassV2::registerEventSource(ALLEGRO_DISPLAY * disp)
+void AllegroClass::registerEventSource(ALLEGRO_DISPLAY * disp)
 {
 	if (this->eventsAddon != nullptr)
 		eventsAddon->registerEventSource(disp);
 }
 
-void AllegroClassV2::registerEventSource(ALLEGRO_TIMER * timer)
+void AllegroClass::registerEventSource(ALLEGRO_TIMER * timer)
 {
 	if (this->eventsAddon != nullptr)
 		eventsAddon->registerEventSource(timer);
 }
 
-void AllegroClassV2::unregisterEventSource(ALLEGRO_VIDEO * video)
+void AllegroClass::unregisterEventSource(ALLEGRO_VIDEO * video)
 {
 	if (eventsAddon != nullptr)
 		al_unregister_event_source(this->eventsAddon->getEventQueue(), al_get_video_event_source(video));
 }
 
-void AllegroClassV2::unregisterEventSource(ALLEGRO_DISPLAY * disp)
+void AllegroClass::unregisterEventSource(ALLEGRO_DISPLAY * disp)
 {
 	if (eventsAddon != nullptr)
 		al_unregister_event_source(this->eventsAddon->getEventQueue(), al_get_display_event_source(disp));
 }
 
-void AllegroClassV2::unregisterEventSource(ALLEGRO_TIMER * timer)
+void AllegroClass::unregisterEventSource(ALLEGRO_TIMER * timer)
 {
 	if (eventsAddon != nullptr)
 		al_unregister_event_source(this->eventsAddon->getEventQueue(), al_get_timer_event_source(timer));
 }
 
-ALLEGRO_EVENT_QUEUE * AllegroClassV2::getEventQueue()
+ALLEGRO_EVENT_QUEUE * AllegroClass::getEventQueue()
 {
 	return this->eventsAddon->getEventQueue();
 }
 
-void AllegroClassV2::setDisplayColor(ALLEGRO_COLOR color)
+void AllegroClass::setDisplayColor(ALLEGRO_COLOR color)
 {
 	displayAddon->setDisplayColor(color);
 }
 
-void AllegroClassV2::setDisplayColor(const char * color)
+void AllegroClass::setDisplayColor(const char * color)
 {
 	displayAddon->setDisplayColor(al_color_name(color));
 }
 
-void AllegroClassV2::setDisplayName(const char * name)
+void AllegroClass::setDisplayName(const char * name)
 {
 	al_set_window_title(displayAddon->getDisplay(), name);
 }
 
-void AllegroClassV2::setMainDisplay()
+void AllegroClass::setMainDisplay()
 {
 	al_set_target_backbuffer(this->displayAddon->getDisplay());
 }
 
-void AllegroClassV2::updateDisplay()
+void AllegroClass::updateDisplay()
 {
 	displayAddon->updateDisplay();
 }
 
-ALLEGRO_DISPLAY * AllegroClassV2::getDisplay()
+ALLEGRO_DISPLAY * AllegroClass::getDisplay()
 {
 	return displayAddon->getDisplay();
 }
 
 
-AllegroClassV2::~AllegroClassV2()
+AllegroClass::~AllegroClass()
 {
 	this->uninstallImageAddon();
 	this->uninstallAudioAddon();
@@ -319,4 +319,14 @@ AllegroClassV2::~AllegroClassV2()
 	this->uninstallTimerAddon();
 	this->uninstallPrimitivesAddon();
 	this->uninstallVideoAddon();
+}
+
+bool AllegroClass::inhibitScreenSaver()
+{
+	return al_inhibit_screensaver(true);
+}
+
+bool AllegroClass::allowScreenSaver()
+{
+	return al_inhibit_screensaver(false);
 }
