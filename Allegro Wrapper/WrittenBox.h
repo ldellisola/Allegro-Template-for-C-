@@ -5,8 +5,8 @@
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
 
+#include "AllegroFont.h"
 #include "AllegroBox.h"
 
 
@@ -15,7 +15,7 @@ struct AllegroWrittenBoxData
 {
 	float x, y, width, height;
 	std::string text;
-	ALLEGRO_FONT * font;
+	AllegroFont * font;
 	ALLEGRO_COLOR fontColor;
 };
 
@@ -23,54 +23,35 @@ struct AllegroWrittenBoxData
 class AllegroWrittenBox : public AllegroBox
 {
 public:
-	// Constructor: It takes an existing font to write.
-	//
-	//		- float X:					initial X coordinate.
-	//		- float Y:					initial Y coordinate.
-	//		- float width:				width of the box.
-	//		- float height:				height of the box.
-	//		- string text:				text to be printed.
-	//		- ALLEGRO_FONT * font:		font of the text. IT HAS TO BE DESTROYED MANUALLY OUTSIDE OF THE CLASS.
-	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x, float y, float width, float height, std::string text, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		: AllegroBox(x, y, width, height,boxID) {
-		this->setBoxType(BoxType::Written);
-		this->text = text;
-		this->font = font;
-		this->fontColor = fontColor;
-		foreignFont = true;
-		this->setUp();
-	}
 
-	// Constructor: It will create a new font.
+	// Constructor:
 	//
 	//		- float X:					initial X coordinate.
 	//		- float Y:					initial Y coordinate.
 	//		- float width:				width of the box.
 	//		- float height:				height of the box.
-	//		- int fontSize:				size of the font.
 	//		- string text:				text to be printed.
-	//		- const char * fontPath:	path to the font. IT will be destroyed after the object.
+	//		- AllegroFont * font:		Font to be loaded
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x, float y, float width, float height, int fontSize, std::string text, const char * fontPath, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+	AllegroWrittenBox(float x, float y, float width, float height, std::string text, AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
 		: AllegroBox(x, y, width, height, boxID) {
 		this->setBoxType(BoxType::Written);
 		this->text = text;
-		this->font = al_load_font(fontPath, -fontSize, ALLEGRO_ALIGN_CENTRE);
+		this->font = font;
 		this->fontColor = fontColor;
 		foreignFont = false;
 		this->setUp();
 	}
 
-	// Constructor: It takes an existing font to write. It will also create a box the size of the text.
+	// Constructor: It will create a box the size of the text.
 	//
 	//		- float X:					initial X coordinate.
 	//		- float Y:					initial Y coordinate.
 	//		- string text:				text to be printed.
-	//		- ALLEGRO_FONT * font:		font of the text. IT HAS TO BE DESTROYED MANUALLY OUTSIDE OF THE CLASS.
+	//		- AllegroFont * font:		Font to be loaded
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
-	AllegroWrittenBox(float x_, float y_, std::string text_, ALLEGRO_FONT * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		: AllegroBox(x_, y_, al_get_text_width(font,("WW" + text).c_str()), 3 * al_get_font_line_height(font), boxID) {
+	AllegroWrittenBox(float x_, float y_, std::string text_, AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+		: AllegroBox(x_, y_, font->previewTextWidth("WW" + text), 3 * font->previewTextHeight(), boxID) {
 		this->setBoxType(BoxType::Written);
 		this->text = text_;
 		this->font = font;
@@ -111,7 +92,7 @@ protected:
 
 	std::string text;
 	ALLEGRO_COLOR fontColor;
-	ALLEGRO_FONT * font;
+	AllegroFont * font;
 	
 };
 

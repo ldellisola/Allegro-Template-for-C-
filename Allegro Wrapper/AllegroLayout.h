@@ -16,13 +16,7 @@ enum class LayoutDrawMode
 	Slow, Mid, Fast
 };
 
-struct Drawing
-{
-	ALLEGRO_BITMAP * bitmap;
-	float x, y;
-	float scaledHeight, scaledWidth, height, width;
 
-};
 
 
 /*
@@ -61,26 +55,12 @@ public:
 
 	void setDrawMode(LayoutDrawMode mode);
 
-	// It adds a bitmap to the window. 
-	//
-	//		- ALLEGRO_BITMAP * bitmap:	bitmap to be drawn.
-	//		- float x:					initial X coordinate.
-	//		- float y:					initial Y coordinate.
-	//		- float scaledHeight:		new height for the bitmap to be printed in.
-	//		- float scaledWidth:		new width for the bitmap to be printed in.
-	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
-
-	// It removes a bitmap that was being drawn on the window.
-	void removeDrawing(ALLEGRO_BITMAP *bitmap);
 
 	// It adds an AllegroBox to the window. 
 	void addBox(AllegroBox* box);
 
 	// It removes an AllegroBox that was being drawn on the window
 	void removeBox(AllegroBox& box);
-
-	// It moves a given draw to another place.
-	void moveDrawing(ALLEGRO_BITMAP *bitmapToMove, float newX, float newY);
 
 	// It sets the color of the display.
 	void loadBackground(ALLEGRO_COLOR color);
@@ -99,13 +79,11 @@ public:
 private:
 	void setUp();
 	void drawBoxes();
-	void drawDrawings();
 
 	float w = 0,  h = 0;
 
 	ALLEGRO_BITMAP * layout = nullptr;
 	LayoutDrawMode mode;
-	std::vector<Drawing>drawings;
 	std::vector<AllegroBox *> boxes;
 	bool backgroundImage = false;
 	bool foreignImage = false;

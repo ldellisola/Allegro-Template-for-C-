@@ -77,27 +77,11 @@ public:
 
 	void setLayoutDrawMode(LayoutDrawMode mode);
 
-
-	// It adds a bitmap to the window. This bitmap will be drawn everytime the window is updated.
-	//
-	//		- ALLEGRO_BITMAP * bitmap:	bitmap to be drawn.
-	//		- float x:					initial X coordinate.
-	//		- float y:					initial Y coordinate.
-	//		- float scaledHeight:		new height for the bitmap to be printed in.
-	//		- float scaledWidth:		new width for the bitmap to be printed in.
-	void addDrawing(ALLEGRO_BITMAP * bitmap, float x, float y, float scaledHeight = 0, float scaledWidth = 0);
-
-	// It removes a bitmap that was being drawn on the window.
-	void removeDrawing(ALLEGRO_BITMAP *bitmap);
-
 	// It adds an AllegroBox to the window. It will be printed everytime the window is updatesd by its own draw function
 	void addBox(AllegroBox& box);
 
 	// It removes an AllegroBox that was being drawn on the window
 	void removeBox(AllegroBox& box);
-
-	// It moves a given draw to another place.
-	void moveDrawing(ALLEGRO_BITMAP *bitmapToMove, float newX, float newY);
 
 	// It sets the color of the display.
 	void loadBackground(ALLEGRO_COLOR color);

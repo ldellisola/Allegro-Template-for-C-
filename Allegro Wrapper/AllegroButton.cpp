@@ -11,7 +11,7 @@ AllegroButton::~AllegroButton()
 
 bool AllegroButton::click(float mouseX, float mouseY, double timeStamp)
 {
-	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY))) 
+	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y ) || (this->y + this->height < mouseY)))
 		return true;
 	else 
 		return false;
@@ -21,7 +21,7 @@ bool AllegroButton::click(float mouseX, float mouseY, double timeStamp)
 
 bool AllegroButton::doubleClick(float mouseX, float mouseY, double timestamp)
 {
-	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y) || (this->y + this->height < mouseY)))
+	if (!((mouseX < this->x) || (this->x + this->width < mouseX) || (mouseY < this->y ) || (this->y + this->height < mouseY)))
 		if (pressed) {
 			if (MinClickThreshold < timestamp - clickTimeStamp) {
 				unpress();

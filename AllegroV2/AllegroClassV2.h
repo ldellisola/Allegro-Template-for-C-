@@ -17,15 +17,15 @@
 		Tengo que hacer un helper de eventos para desligar a la clase allegro de todo esto
 */
 
-class AllegroClassV2
+class AllegroClass
 {
 public:
 	// Constructor Automatizado: le podes ingresar un modo y otros valores para olvidarte de la inicializacion de allegro.
-	AllegroClassV2(Allegro::InitMode mode, float width = Allegro::NoValue, float height = Allegro::NoValue, float fps = Allegro::NoValue);
+	AllegroClass(Allegro::InitMode mode, float width = Allegro::NoValue, float height = Allegro::NoValue, float fps = Allegro::NoValue);
 	// Constructor manual, solo inicializa allegro, si queres inicializar otro addon, hacelo a mano con las funciones que ofrece la clase.
-	AllegroClassV2();
+	AllegroClass();
 	// Destructor: elimina todo lo que se haya creado dinamicamente.
-	~AllegroClassV2();
+	~AllegroClass();
 
 
 	// Funciones de Events

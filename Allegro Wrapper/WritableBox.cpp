@@ -7,8 +7,6 @@
 
 AllegroWritableBox::~AllegroWritableBox()
 {
-	if (font != nullptr && foreingFont == false)
-		al_destroy_font(font);
 }
 
 std::string AllegroWritableBox::getText()
@@ -20,7 +18,7 @@ void AllegroWritableBox::input(ALLEGRO_KEYBOARD_EVENT ev)
 {
 	int character = ev.keycode;
 	if (timeStamp == 0) {
-		if (this->width > al_get_text_width(this->font,this->text.c_str())) {
+		if (this->width > this->font->previewTextWidth(text)) {
 			switch (mode) {
 			case KeyboardMode::Alphabetic:
 				addLetter(character, ev.modifiers);
@@ -56,7 +54,7 @@ void AllegroWritableBox::setUp()
 	ALLEGRO_BITMAP * c = al_get_backbuffer(al_get_current_display());
 	al_set_target_bitmap(this->bitmap);
 
-	al_draw_text(this->font, this->fontColor, this->width / 2.0, (this->height / 2.0) - (al_get_font_line_height(this->font) / 2.0), ALLEGRO_ALIGN_CENTRE, this->text.c_str());
+	this->font->drawCentredText(this->text, this->fontColor, this->width, this->height);
 
 	al_set_target_bitmap(c);
 	

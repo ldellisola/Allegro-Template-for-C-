@@ -62,9 +62,10 @@ AllegroSoundFactory::~AllegroSoundFactory()
 
 AllegroSound * AllegroSoundFactory::create(std::string fileName, PlayMode playMode, unsigned int ID, float speed , float gain, float pan)
 {
-	al_reserve_samples(int(this->sounds.size()));
+	
 	AllegroSound * temp = new AllegroSound(fileName, playMode, ID, speed, gain, pan);
 	this->sounds.push_back(temp);
+	al_reserve_samples(int(this->sounds.size()));
 	return temp;
 }
 
