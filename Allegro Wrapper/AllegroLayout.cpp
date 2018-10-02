@@ -14,7 +14,7 @@ AllegroLayout::AllegroLayout(float w, float h, ALLEGRO_COLOR color,LayoutDrawMod
 
 AllegroLayout::AllegroLayout(float w, float h,std::string image, LayoutDrawMode mode) {
 	this->w = w;
-	this->h = w;
+	this->h = h;
 	this->color = al_color_name("black");
 	this->mode = mode;
 	this->foreignImage = false;
@@ -26,7 +26,7 @@ AllegroLayout::AllegroLayout(float w, float h,std::string image, LayoutDrawMode 
 
 AllegroLayout::AllegroLayout(float w, float h, ALLEGRO_BITMAP * image , LayoutDrawMode mode) {
 	this->w = w;
-	this->h = w;
+	this->h = h;
 	this->color = al_color_name("black");
 	this->mode = mode;
 	this->foreignImage = true;
@@ -50,8 +50,8 @@ void AllegroLayout::draw()
 
 	//al_draw_bitmap(this->layout, 0, 0, 0);
 
-	if (mode == LayoutDrawMode::Mid) 
-		drawBoxes();
+
+	drawBoxes();
 
 }
 
@@ -136,7 +136,9 @@ void AllegroLayout::setUp()
 		//al_set_target_bitmap(this->layout);
 
 		if (backgroundImage)
-			al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, this->w, this->h, 0);
+			al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, this->w, this->h,0);
+			//al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image),al_get_bitmap_height(image), 0, 0, 1300, 600, 0);
+
 		else
 			al_clear_to_color(color);
 
