@@ -20,6 +20,8 @@ AllegroLayout::AllegroLayout(float w, float h,std::string image, LayoutDrawMode 
 	this->foreignImage = false;
 	this->backgroundImage = true;
 	this->image = al_load_bitmap(image.c_str());
+	if (this->image == nullptr)
+		throw InvalidLoadException();
 
 	this->layout = al_create_bitmap(w, h);
 }
@@ -116,6 +118,8 @@ void AllegroLayout::setColorAsBackground()
 void AllegroLayout::loadImageBackground(std::string image)
 {
 	this->image = al_load_bitmap(image.c_str());
+	if (this->image == nullptr)
+		throw InvalidLoadException();
 }
 
 void AllegroLayout::loadImageBackground(ALLEGRO_BITMAP * image)

@@ -7,6 +7,9 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 
+#include "AllegroException.h"
+#include "AllegroException.h"
+
 #define DefaultID (0)
 
 enum class BoxType

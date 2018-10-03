@@ -99,6 +99,8 @@ void AllegroWindow::setName(std::string name)
 void AllegroWindow::setIcon(std::string icon)
 {
 	this->icon = al_load_bitmap(icon.c_str());
+	if (this->icon == nullptr)
+		throw InvalidLoadException();
 	this->setUp();
 }
 
@@ -271,6 +273,8 @@ bool AllegroWindow::operator==(AllegroWindow& window)
 void AllegroWindow::setCustomMouseCursor(std::string iconPath, float xFocus , float yFocus )
 {
 	this->customCursorSprite = al_load_bitmap(iconPath.c_str());
+	if (this->customCursorSprite == nullptr)
+		throw InvalidLoadException();
 	this->customMouseCursor = al_create_mouse_cursor(customCursorSprite, xFocus, yFocus);
 }
 

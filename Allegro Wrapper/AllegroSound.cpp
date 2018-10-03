@@ -5,6 +5,8 @@
 AllegroSound::AllegroSound(std::string fileName, PlayMode playMode, unsigned int ID, float speed, float gain, float pan)
 {
 	this->sample = al_load_sample(fileName.c_str());
+	if (this->sample == nullptr)
+		throw InvalidLoadException();
 	this->gain = gain;
 	this->pan = pan;
 	this->speed = speed;
@@ -100,7 +102,6 @@ bool AllegroSoundFactory::destroy(AllegroSound * sound)
 {
 	int i;
 	bool kill = false;
-	AllegroSound * temp;
 	for (i = 0; i < sounds.size(); i++) {
 		if (sounds[i] == sound)
 			kill = true;

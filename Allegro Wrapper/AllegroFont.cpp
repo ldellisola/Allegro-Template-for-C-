@@ -3,6 +3,8 @@
 AllegroFont::AllegroFont(std::string fileName, int size, unsigned int ID)
 {
 	this->font = al_load_ttf_font(fileName.c_str(), -size, 0);
+	if (this->font == nullptr)
+		throw InvalidLoadException();
 	this->size = size;
 	this->ID = ID;
 }

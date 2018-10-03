@@ -9,6 +9,7 @@
 #include <allegro5/allegro_font.h>
 
 #include "AllegroBox.h"
+#include "AllegroException.h"
 
 
 enum class LayoutDrawMode
