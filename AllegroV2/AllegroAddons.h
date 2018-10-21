@@ -114,13 +114,12 @@ class DisplayAddon : public Addon {
 public:
 	DisplayAddon(float x = Allegro::NoValue, float y = Allegro::NoValue) {
 		if (x != Allegro::NoValue && y != Allegro::NoValue)	
-			display = al_create_display(x, y);		
-		else
-			throw AllegroInitException();
-		if (x == Allegro::NoValue || y == Allegro::NoValue)	
+			display = al_create_display(x, y);	
+		else if (x == Allegro::NoValue || y == Allegro::NoValue)
 			this->initSuccess();
-		else
+		else 
 			throw AllegroInitException();
+
 		if (x != Allegro::NoValue && y != Allegro::NoValue && display != nullptr)	
 			this->initSuccess();
 		else
