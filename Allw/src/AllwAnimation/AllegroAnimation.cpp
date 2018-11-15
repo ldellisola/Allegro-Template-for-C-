@@ -44,6 +44,14 @@ AllegroAnimation::AllegroAnimation(std::vector<AllegroSprite *> animation)
 		sprites.push_back(animation[i]);
 }
 
+AllegroAnimation::AllegroAnimation(std::initializer_list<std::string>list)
+{
+	for (std::string str : list) {
+		sprites.push_back(new AllegroSprite(str));
+	}
+}
+
+
 bool AllegroAnimation::insert(std::string file, unsigned int position)
 {
 	if (this->foreignAnimation)

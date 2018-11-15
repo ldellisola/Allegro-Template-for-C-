@@ -1,11 +1,12 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <initializer_list>
 
 #include <allegro5/allegro.h>
 
 
-#include "AllegroSprite.h"
+#include "AllwAnimation/AllegroSprite.h"
 
 enum class FlipSprite
 {
@@ -45,6 +46,12 @@ public:
 	//
 	// - std::vector<AllegroSprite *> animation:All the sprites for your animation already loaded in memory.	
 	AllegroAnimation(std::vector<AllegroSprite *> animation);
+
+	// Constructor: It will load and destroy all sprites.
+	//
+	// - std::initializer_list<std::string> list: Initializer List with all the sprites
+	AllegroAnimation(std::initializer_list<std::string> list);
+
 
 	// It inserts a sprite at a given part of the animation. IT SHOULD ONLY BE USED IF ALL YOUR SPRITES WERE CREATED FROM WITHIN THE ANIMATION.
 	// IF YOU LOADED A VECTOR OF AllegroSprite * YOU CAN ONLY LOAD MORE AllegroSprites *. It returnS true if it was loaded correctly.
