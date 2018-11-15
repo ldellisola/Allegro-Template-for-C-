@@ -18,13 +18,6 @@ AllegroAnimation::AllegroAnimation(std::vector<std::string> files)
 		sprites.push_back(new AllegroSprite(files[i]));
 }
 
-AllegroAnimation::AllegroAnimation(std::initializer_list<std::string>list)
-{
-	for (std::string str : list) {
-		sprites.push_back(new AllegroSprite(str));
-	}
-}
-
 AllegroAnimation::AllegroAnimation(std::vector<std::string> files, float angle)
 {
 	for (int i = 0; i < files.size(); i++)

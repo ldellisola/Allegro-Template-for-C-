@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include <string>
-#include <initializer_list>
 
 #include <allegro5/allegro.h>
 
@@ -20,11 +19,6 @@ public:
 	//
 	//	- std::vector<std::string> files:		Path to the sprites to be loaded.
 	AllegroAnimation(std::vector<std::string> files);
-
-	// Constructor: It will load and destroy all sprites.
-	//
-	// - std::initializer_list<std::string> list: Initializer List with all the sprites
-	AllegroAnimation(std::initializer_list<std::string> list);
 
 	// Constructor: It will load and destroy all sprites.
 	//
