@@ -77,6 +77,9 @@ void AllegroBox::setRotationDegree(double degree)
 void AllegroBox::loadImageBackground(std::string imagePath)
 {
 	this->imageBackground = al_load_bitmap(imagePath.c_str());
+	if (this->imageBackground == nullptr)
+		throw InvalidLoadException();
+
 	this->foreignImage = false;
 }
 

@@ -26,6 +26,11 @@ public:
 	AllegroClass();
 	// Destructor: elimina todo lo que se haya creado dinamicamente.
 	~AllegroClass();
+	// Miscelaneo
+
+	bool inhibitScreenSaver();
+	bool allowScreenSaver();
+
 
 
 	// Funciones de Events

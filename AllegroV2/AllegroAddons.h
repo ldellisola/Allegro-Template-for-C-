@@ -10,6 +10,8 @@
 #include <allegro5/allegro_video.h>
 #include <allegro5/allegro_native_dialog.h>
 
+#include "../Allegro Wrapper/AllegroException.h"
+
 namespace Allegro {
 	// Modos de inicializacion de allegro:
 	// Modo Basic: Inicializa display,keyboard, Font, Primitives.
@@ -43,6 +45,8 @@ public:
 	ImageAddon() {
 		if (al_init_image_addon())
 			this->initSuccess();
+		else
+			throw AllegroInitException();
 	}
 	~ImageAddon() { al_shutdown_image_addon(); }
 };
@@ -53,6 +57,8 @@ public:
 	NativeDialogAddon() {
 		if (al_init_native_dialog_addon())
 			this->initSuccess();
+		else
+			throw AllegroInitException();
 	}
 	~NativeDialogAddon() { al_shutdown_native_dialog_addon(); }
 };
@@ -60,7 +66,12 @@ public:
 
 class AudioAddon : public Addon {
 public:
-	AudioAddon() { if (al_install_audio() && al_init_acodec_addon()) this->initSuccess(); }
+	AudioAddon() { 
+		if (al_install_audio() && al_init_acodec_addon()) 
+			this->initSuccess(); 
+		else
+			throw AllegroInitException();
+	}
 	~AudioAddon() { al_uninstall_audio(); }
 	
 };
@@ -71,7 +82,12 @@ public:
 
 class FontAddon : public Addon {
 public:
-	FontAddon() { if (al_init_font_addon() && al_init_ttf_addon()) this->initSuccess(); }
+	FontAddon() {
+		if (al_init_font_addon() && al_init_ttf_addon())
+			this->initSuccess();
+		else
+			throw AllegroInitException();
+	}
 	~FontAddon() { al_shutdown_font_addon(); al_shutdown_ttf_addon(); }
 };
 
@@ -81,7 +97,12 @@ public:
 
 class KeyboardAddon : public Addon {
 public:
-	KeyboardAddon() { if (al_install_keyboard()) this->initSuccess(); }
+	KeyboardAddon() { 
+		if (al_install_keyboard()) 
+			this->initSuccess();
+		else
+			throw AllegroInitException();
+	}
 	~KeyboardAddon() { al_uninstall_keyboard(); }
 };
 
@@ -92,9 +113,17 @@ public:
 class DisplayAddon : public Addon {
 public:
 	DisplayAddon(float x = Allegro::NoValue, float y = Allegro::NoValue) {
-		if (x != Allegro::NoValue && y != Allegro::NoValue)	display = al_create_display(x, y);
-		if (x == Allegro::NoValue || y == Allegro::NoValue)	this->initSuccess();
-		if (x != Allegro::NoValue && y != Allegro::NoValue && display != nullptr)	this->initSuccess();
+		if (x != Allegro::NoValue && y != Allegro::NoValue)	
+			display = al_create_display(x, y);	
+		else if (x == Allegro::NoValue || y == Allegro::NoValue)
+			this->initSuccess();
+		else 
+			throw AllegroInitException();
+
+		if (x != Allegro::NoValue && y != Allegro::NoValue && display != nullptr)	
+			this->initSuccess();
+		else
+			throw AllegroInitException();
 	}
 
 	void setDisplayColor(ALLEGRO_COLOR color) { al_clear_to_color(color); }
@@ -112,7 +141,12 @@ private:
 
 class MouseAddon : public Addon {
 public:
-	MouseAddon() { if (al_install_mouse()) this->initSuccess(); }
+	MouseAddon() { 
+		if (al_install_mouse()) 
+			this->initSuccess();
+		else
+			throw AllegroInitException();
+	}
 	~MouseAddon() { al_uninstall_mouse(); }
 };
 
@@ -123,7 +157,14 @@ public:
 class TimerAddon : public Addon {
 public:
 	TimerAddon() { this->initSuccess(); }
-	TimerAddon(float fps) { if (refresh = al_create_timer(1 / (double)fps)) this->initSuccess(); al_start_timer(this->refresh); }
+	TimerAddon(float fps) {
+		if (refresh = al_create_timer(1 / (double)fps)){
+			this->initSuccess(); 
+			al_start_timer(this->refresh);
+		}
+		else
+			throw AllegroInitException();
+	}
 	ALLEGRO_TIMER * getRefreshTimer() { return refresh; }
 	~TimerAddon() { if (refresh != nullptr) al_destroy_timer(refresh); }
 private:
@@ -136,7 +177,12 @@ private:
 
 class PrimitivesAddon : public Addon {
 public:
-	PrimitivesAddon() { if (al_init_primitives_addon()) this->initSuccess(); }
+	PrimitivesAddon() { 
+		if (al_init_primitives_addon()) 
+			this->initSuccess(); 
+		else
+			throw AllegroInitException();
+	}
 	~PrimitivesAddon() { al_shutdown_primitives_addon(); }
 };
 
@@ -146,7 +192,12 @@ public:
 
 class EventsAddon : public Addon {
 public:
-	EventsAddon() { if (eventQueue = al_create_event_queue()) this->initSuccess(); }
+	EventsAddon() {
+		if (eventQueue = al_create_event_queue()) 
+			this->initSuccess();
+		else
+			throw AllegroInitException();
+	}
 
 	void registerEventSourceAddon(MouseAddon * mouse) { al_register_event_source(eventQueue, al_get_mouse_event_source()); }
 	void registerEventSourceAddon(KeyboardAddon * keyboard) { al_register_event_source(eventQueue, al_get_keyboard_event_source()); }
@@ -164,7 +215,12 @@ private:
 
 class VideoAddon : public Addon {
 public:
-	VideoAddon() { if (al_init_video_addon()) this->initSuccess(); }
+	VideoAddon() {
+		if (al_init_video_addon()) 
+			this->initSuccess();	
+		else
+			throw AllegroInitException();
+	}
 
 	~VideoAddon() { al_shutdown_video_addon(); }
 };

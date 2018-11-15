@@ -13,6 +13,8 @@ float degreesToRadians(float deg) {
 AllegroSprite::AllegroSprite(std::string file)
 {
 	this->bitmap = al_load_bitmap(file.c_str());
+	if (this->bitmap == nullptr)
+		throw InvalidLoadException();
 	this->angle = 0;
 	this->height = al_get_bitmap_height(this->bitmap);
 	this->width = al_get_bitmap_width(this->bitmap);
@@ -23,6 +25,8 @@ AllegroSprite::AllegroSprite(std::string file)
 AllegroSprite::AllegroSprite(std::string file, float height, float width)
 {
 	this->bitmap = al_load_bitmap(file.c_str());
+	if (this->bitmap == nullptr)
+		throw InvalidLoadException();
 	this->angle = 0;
 	this->height = al_get_bitmap_height(this->bitmap);
 	this->width = al_get_bitmap_width(this->bitmap);
@@ -33,6 +37,8 @@ AllegroSprite::AllegroSprite(std::string file, float height, float width)
 AllegroSprite::AllegroSprite(std::string file, float height, float width, float angle)
 {
 	this->bitmap = al_load_bitmap(file.c_str());
+	if (this->bitmap == nullptr)
+		throw InvalidLoadException();
 	this->angle = degreesToRadians(angle);
 	this->height = al_get_bitmap_height(this->bitmap);
 	this->width = al_get_bitmap_width(this->bitmap);
@@ -43,6 +49,8 @@ AllegroSprite::AllegroSprite(std::string file, float height, float width, float 
 AllegroSprite::AllegroSprite(std::string file, float angle)
 {
 	this->bitmap = al_load_bitmap(file.c_str());
+	if (this->bitmap == nullptr)
+		throw InvalidLoadException();
 	this->angle = degreesToRadians(angle);
 	this->height = al_get_bitmap_height(this->bitmap);
 	this->width = al_get_bitmap_width(this->bitmap);
