@@ -1,14 +1,14 @@
 #include <iostream>
 #include"AllwInit/AllegroFactory.h"
 #include"AllwInit/Allw.h"
+#include "AllwBasics/AllegroSound.h"
+
 
 int main(void) {
 
-	Allw allegro(Allegro::InitMode::Basic,1000,1000);
+	Allw::Allw allegro(Allw::Init::Mode::Basic,1000,1000);
 
-	AllegroColorFactory colorF;
-	colorF.create("white");
-	std::cin.get();
+
 
 
 	return 0;
