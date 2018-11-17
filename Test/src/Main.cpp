@@ -4,7 +4,7 @@
 
 int main(void) {
 
-	Allw allegro(Allegro::InitMode::Basic, 1000, 1000, 0);
+	Allw allegro(Allegro::InitMode::Basic,1000,1000);
 
 	AllegroColorFactory colorF;
 	colorF.create("white");

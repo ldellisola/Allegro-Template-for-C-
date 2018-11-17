@@ -117,10 +117,7 @@ public:
 			display = al_create_display(x, y);	
 		else if (x == Allegro::NoValue || y == Allegro::NoValue)
 			this->initSuccess();
-		else 
-			throw AllegroInitException();
-
-		if (x != Allegro::NoValue && y != Allegro::NoValue && display != nullptr)	
+		else if (x != Allegro::NoValue && y != Allegro::NoValue && display != nullptr)	
 			this->initSuccess();
 		else
 			throw AllegroInitException();
