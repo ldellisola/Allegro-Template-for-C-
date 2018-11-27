@@ -6,8 +6,7 @@
 
 int main(void) {
 
-	Allw::Allw allegro(Allw::Init::Mode::Basic,1000,1000);
-
+	Allw::Allw allegro(Allw::Init::Mode::Basic);
 
 
 
