@@ -8,6 +8,8 @@ AllegroBox::AllegroBox(float x, float y, float width, float height, unsigned int
 	this->width = width;
 	this->height = height;
 	this->bitmap = al_create_bitmap(width, height);
+	if (bitmap == nullptr) 
+		throw InvalidLoadException();
 	this->imageBackground = nullptr;
 	this->drawImage = false;
 	this->ID = boxID;
