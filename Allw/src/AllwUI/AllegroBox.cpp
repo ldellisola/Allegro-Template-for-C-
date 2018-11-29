@@ -10,6 +10,8 @@ namespace Allw {
 			this->width = width;
 			this->height = height;
 			this->bitmap = al_create_bitmap(width, height);
+			if (bitmap == nullptr)
+				throw Allw::Exception::InvalidLoadException();
 			this->imageBackground = nullptr;
 			this->drawImage = false;
 			this->ID = boxID;
