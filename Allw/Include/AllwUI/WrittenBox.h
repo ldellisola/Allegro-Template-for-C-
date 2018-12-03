@@ -51,7 +51,7 @@ public:
 	//		- AllegroFont * font:		Font to be loaded
 	//		- ALLEGRO_COLOR fontColor:	color of the font.
 	AllegroWrittenBox(float x_, float y_, std::string text_, AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
-		: AllegroBox(x_, y_, font->previewTextWidth("WW" + text), 3 * font->previewTextHeight(), boxID) {
+		: AllegroBox(x_, y_, font->previewTextWidth("WW" + text_), 3 * font->previewTextHeight(), boxID) {
 		this->setBoxType(BoxType::Written);
 		this->text = text_;
 		this->font = font;
