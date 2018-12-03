@@ -26,9 +26,12 @@ public:
 	bool destroy(unsigned int ID);
 	bool destroy(AllegroSound * sound);
 
+	void reserveMoreSamples(int add);
+	unsigned int getNumberOfReservedSamples();
+
 private:
 	std::vector<AllegroSound *> sounds;
-
+	unsigned int reservedSamples = 0;
 };
 
 

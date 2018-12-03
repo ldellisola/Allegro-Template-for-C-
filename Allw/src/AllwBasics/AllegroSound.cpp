@@ -69,6 +69,7 @@ AllegroSound * AllegroSoundFactory::create(std::string fileName, PlayMode playMo
 	this->sounds.push_back(temp);
 	al_reserve_samples(int(this->sounds.size()));
 	return temp;
+	reservedSamples++;
 }
 
 AllegroSound * AllegroSoundFactory::recover(unsigned int ID)
@@ -93,6 +94,7 @@ bool AllegroSoundFactory::destroy(unsigned int ID)
 		sounds.erase(sounds.begin() + i);
 		delete temp;
 		al_reserve_samples(int(this->sounds.size()));
+		reservedSamples--;
 		return true;
 	}
 	return false;
@@ -111,7 +113,19 @@ bool AllegroSoundFactory::destroy(AllegroSound * sound)
 		sounds.erase(sounds.begin() + i);
 		al_reserve_samples(int(this->sounds.size()));
 		delete sound;
+		reservedSamples--;
 		return true;
 	}
 	return false;
+}
+
+void AllegroSoundFactory::reserveMoreSamples(int add)
+{
+	this->reservedSamples + add;
+	al_reserve_samples(reservedSamples);
+}
+
+unsigned int AllegroSoundFactory::getNumberOfReservedSamples()
+{
+	return reservedSamples;
 }
