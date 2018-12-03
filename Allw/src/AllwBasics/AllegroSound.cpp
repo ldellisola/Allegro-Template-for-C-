@@ -121,7 +121,7 @@ bool AllegroSoundFactory::destroy(AllegroSound * sound)
 
 void AllegroSoundFactory::reserveMoreSamples(int add)
 {
-	this->reservedSamples + add;
+	this->reservedSamples += add;
 	al_reserve_samples(reservedSamples);
 }
 
