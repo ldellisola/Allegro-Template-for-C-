@@ -2,7 +2,7 @@
 
 
 
-AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,std::string name,std::string icon)
+AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,bool open,std::string name,std::string icon)
 {
 	width = w;
 	height = h;
@@ -15,6 +15,9 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,std
 	this->layout = new AllegroLayout(w,h,al_color_name("black"),LayoutDrawMode::Mid);
 
 	this->queue = evQueue;
+
+	if (open)
+		this->open();
 }
 
 AllegroWindow::~AllegroWindow()
@@ -113,9 +116,20 @@ void AllegroWindow::setFullScreen()
 {
 	this->screenMode = ScreenMode::FullScreen;
 	if (this->on) {
+		this->regularHeight = height;
+		this->regularWidth = width;
+
+		ALLEGRO_DISPLAY_MODE disp;
+		al_get_display_mode(al_get_num_display_modes() - 1, &disp);
+
+		height = disp.height;
+		width = disp.width;
+
+		al_resize_display(display, width, height);
+		al_acknowledge_resize(display);
+
 		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, true);
-		this->width = al_get_display_width(this->display);
-		this->height = al_get_display_height(this->display);
+
 	}
 
 }
@@ -130,11 +144,24 @@ void AllegroWindow::setFrameless()
 
 void AllegroWindow::setMaximize()
 {
+	clearScreenMode();
 	this->screenMode = ScreenMode::Maximized;
+
 	if (this->on) {
+		this->regularHeight = height;
+		this->regularWidth = width;
+
+		ALLEGRO_DISPLAY_MODE disp;
+		al_get_display_mode(al_get_num_display_modes() - 1, &disp);
+
+		height = disp.height;
+		width = disp.width;
+
+		al_resize_display(display, width, height);
+		al_acknowledge_resize(display);
+
 		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, true);
-		this->width = al_get_display_width(this->display);
-		this->height = al_get_display_height(this->display);
+
 	}
 
 }
@@ -451,6 +478,13 @@ void AllegroWindow::clearScreenMode()
 		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, false);
 		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, false);
 		al_set_display_flag(this->display, ALLEGRO_FRAMELESS, false);
+
+		height = regularHeight;
+		width = regularWidth;
+
+		al_resize_display(display, width, height);
+		al_acknowledge_resize(display);
+
 	}
 
 	screenMode = ScreenMode::Regular;

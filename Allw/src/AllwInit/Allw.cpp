@@ -48,6 +48,11 @@ Allw::Allw()
 		this->success = true;
 }
 
+void Allw::wait(double seconds)
+{
+	al_rest(seconds);
+}
+
 void Allw::initImageAddon()
 {
 	if (imageAddon == nullptr) {

@@ -47,7 +47,7 @@ public:
 	//		- float h: the height of the window.
 	//		- string name: the name of the window.
 	//		- string icon: the path to the icon of the window.
-	AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, std::string name = "", std::string icon = "");
+	AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, bool open = true, std::string name = "", std::string icon = "");
 
 	// Destructor.
 	~AllegroWindow();
@@ -250,6 +250,7 @@ private:
 	// Display
 	ALLEGRO_DISPLAY * display = nullptr;
 	float width, height;
+	float regularWidth, regularHeight;
 	bool on = false;
 	void setUp();
 
