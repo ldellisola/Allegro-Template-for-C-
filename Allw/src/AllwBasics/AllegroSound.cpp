@@ -68,36 +68,41 @@ namespace Allw {
 
 			AllegroSound * temp = new AllegroSound(fileName, playMode, ID, speed, gain, pan);
 			this->sounds.push_back(temp);
-			al_reserve_samples(int(this->sounds.size()));
+			al_reserve_samples(++reservedSamples);
 			return temp;
 		}
 
-		AllegroSound * AllegroSoundFactory::recover(unsigned int ID)
-		{
-			for (int i = 0; i < (int)sounds.size(); i++) {
-				if (sounds[i]->getID() == ID)
-					return sounds[i];
-			}
-			return nullptr;
-		}
+        bool AllegroSoundFactory::destroy(unsigned int ID)
+        {
+        	int i;
+        	AllegroSound * temp = nullptr;
+        	for (i = 0; i < (int)sounds.size(); i++) {
+        		if (sounds[i]->getID() == ID)
+        			temp = sounds[i];
+        	}
+        	i--;
+        	if (temp != nullptr) {
+        		sounds.erase(sounds.begin() + i);
+        		delete temp;
+        		al_reserve_samples(--reservedSamples);
+        		
+        		return true;
+        	}
+        	return false;
+        }
 
-		bool AllegroSoundFactory::destroy(unsigned int ID)
-		{
-			int i;
-			AllegroSound * temp = nullptr;
-			for (i = 0; i < (int)sounds.size(); i++) {
-				if (sounds[i]->getID() == ID)
-					temp = sounds[i];
-			}
-			i--;
-			if (temp != nullptr) {
-				sounds.erase(sounds.begin() + i);
-				delete temp;
-				al_reserve_samples(int(this->sounds.size()));
-				return true;
-			}
-			return false;
-		}
+
+		
+		void AllegroSoundFactory::reserveMoreSamples(int add)
+        {
+        	this->reservedSamples += add;
+        	al_reserve_samples(reservedSamples);
+        }
+        
+        unsigned int AllegroSoundFactory::getNumberOfReservedSamples()
+        {
+        	return reservedSamples;
+        }
 
 		bool AllegroSoundFactory::destroy(AllegroSound * sound)
 		{
@@ -112,12 +117,15 @@ namespace Allw {
 				sounds.erase(sounds.begin() + i);
 				al_reserve_samples(int(this->sounds.size()));
 				delete sound;
+				reservedSamples--;
 				return true;
 			}
 			return false;
 		}
 
 	}
+
 }
 
 Allw::Sound::AllegroSoundFactory* Allw::Sound::AllegroSoundFactory::instance = nullptr;
+

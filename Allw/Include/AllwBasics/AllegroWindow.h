@@ -41,6 +41,13 @@ namespace Allw {
 	class AllegroWindow
 	{
 	public:
+	// Constructor: it create a window
+	//
+	//		- float w: the width of the window.
+	//		- float h: the height of the window.
+	//		- string name: the name of the window.
+	//		- string icon: the path to the icon of the window.
+	AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, bool open = true, std::string name = "", std::string icon = "");
 
 		// BASIC
 
@@ -51,7 +58,7 @@ namespace Allw {
 		//		- float h: the height of the window.
 		//		- string name: the name of the window.
 		//		- string icon: the path to the icon of the window.
-		AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, std::string name = "", std::string icon = "");
+		//AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, std::string name = "", std::string icon = "");
 
 		// Destructor.
 		~AllegroWindow();

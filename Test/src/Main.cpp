@@ -5,10 +5,15 @@
 
 
 int main(void) {
+	
 
 	Allw::Allw allegro(Allw::Init::Mode::Basic);
 
 
 
+
 	return 0;
 }
+
+
+

@@ -18,6 +18,7 @@ namespace Allw {
 
 
 
+
 	class Allw
 	{
 	public:
@@ -31,7 +32,8 @@ namespace Allw {
 
 		bool inhibitScreenSaver();
 		bool allowScreenSaver();
-
+	    // The program stops for a given ammount of seconds
+	    void wait(double seconds);
 
 
 		// Funciones de Events

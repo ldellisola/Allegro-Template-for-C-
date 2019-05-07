@@ -65,6 +65,19 @@ namespace Allw {
 			this->success = audioAddon->getSuccess();
 		}
 	}
+    void Allw::wait(double seconds)
+    {
+	    al_rest(seconds);
+    }
+
+    void Allw::initImageAddon()
+    {
+	    if (imageAddon == nullptr) {
+		    this->imageAddon = new ImageAddon();
+		    this->success = imageAddon->getSuccess();
+	    }
+    }
+	
 
 	void Allw::initFontAddon()
 	{

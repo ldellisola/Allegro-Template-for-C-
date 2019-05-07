@@ -19,11 +19,9 @@ namespace Allw {
 			Once = ALLEGRO_PLAYMODE_ONCE, Loop = ALLEGRO_PLAYMODE_LOOP, Bidir = ALLEGRO_PLAYMODE_BIDIR
 		};
 
-		class AllegroSound;
 
-		class AllegroSoundFactory
-		{
-		public:
+	
+	
 
 
 			AllegroSound * create(std::string fileName, Mode playMode, unsigned int ID, float speed = 1, float gain = 1.0, float pan = 0.0);
@@ -41,13 +39,15 @@ namespace Allw {
 
 			AllegroSoundFactory(AllegroSoundFactory const&) = delete;
 			void operator=(AllegroSoundFactory const&) = delete;
-
+	        void reserveMoreSamples(int add);
+	        unsigned int getNumberOfReservedSamples();
 
 		private:
 			static AllegroSoundFactory * instance;
 			AllegroSoundFactory();
 			~AllegroSoundFactory();
 			std::vector<AllegroSound *> sounds;
+			unsigned int reservedSamples = 0;
 
 		};
 
