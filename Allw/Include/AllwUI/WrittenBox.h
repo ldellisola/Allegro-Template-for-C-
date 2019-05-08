@@ -1,14 +1,9 @@
 #pragma once
 #include <string>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
-
 #include "AllwBasics/AllegroFont.h"
 #include "AllwUI/AllegroBox.h"
-
+#include "AllwBasics/AllegroColor.h"
 
 namespace Allw {
 	namespace UI {
@@ -17,7 +12,7 @@ namespace Allw {
 			float x, y, width, height;
 			std::string text;
 			Font::AllegroFont * font;
-			ALLEGRO_COLOR fontColor;
+			Color::AllegroColor fontColor;
 		};
 
 
@@ -33,8 +28,8 @@ namespace Allw {
 			//		- float height:				height of the box.
 			//		- string text:				text to be printed.
 			//		- AllegroFont * font:		Font to be loaded
-			//		- ALLEGRO_COLOR fontColor:	color of the font.
-			AllegroWrittenBox(float x, float y, float width, float height, std::string text, Font::AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+			//		- Color::AllegroColor fontColor:	color of the font.
+			AllegroWrittenBox(float x, float y, float width, float height, std::string text, Font::AllegroFont * font, Color::AllegroColor fontColor, unsigned int boxID = DefaultID)
 				: AllegroBox(x, y, width, height, boxID) {
 				this->setBoxType(BoxType::Written);
 				this->text = text;
@@ -50,8 +45,8 @@ namespace Allw {
 			//		- float Y:					initial Y coordinate.
 			//		- string text:				text to be printed.
 			//		- AllegroFont * font:		Font to be loaded
-			//		- ALLEGRO_COLOR fontColor:	color of the font.
-			AllegroWrittenBox(float x_, float y_, std::string text_, Font::AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+			//		- Color::AllegroColor fontColor:	color of the font.
+			AllegroWrittenBox(float x_, float y_, std::string text_, Font::AllegroFont * font, Color::AllegroColor fontColor, unsigned int boxID = DefaultID)
 				: AllegroBox(x_, y_, font->previewTextWidth("WW" + text), 3 * font->previewTextHeight(), boxID) {
 				this->setBoxType(BoxType::Written);
 				this->text = text_;
@@ -92,7 +87,7 @@ namespace Allw {
 			bool foreignFont;
 
 			std::string text;
-			ALLEGRO_COLOR fontColor;
+			Color::AllegroColor fontColor;
 			Font::AllegroFont * font;
 
 		};

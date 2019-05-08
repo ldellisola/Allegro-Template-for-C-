@@ -1,4 +1,5 @@
 #include "AllwAnimation/AllegroAnimation.h"
+#include <allegro5/allegro.h>
 
 namespace Allw {
 	namespace Animation {
@@ -51,13 +52,6 @@ namespace Allw {
 				sprites.push_back(new AllegroSprite(str));
 			}
 		}
-
-        AllegroAnimation::AllegroAnimation(std::initializer_list<std::string>list)
-        {
-	        for (std::string str : list) {
-	        	sprites.push_back(new AllegroSprite(str));
-	        }
-        }
 
 		bool AllegroAnimation::insert(std::string file, unsigned int position)
 		{

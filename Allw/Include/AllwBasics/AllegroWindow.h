@@ -2,14 +2,19 @@
 #include <vector>
 #include <string>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_native_dialog.h>
+
 
 #include "AllwUI/AllegroBox.h"
 #include "AllwUI/AllegroMenu.h"
 #include "AllwUI/AllegroLayout.h"
+#include "AllwBasics/AllegroColor.h"
+
+typedef struct ALLEGRO_EVENT_QUEUE ALLEGRO_EVENT_QUEUE;
+typedef struct ALLEGRO_EVENT_SOURCE ALLEGRO_EVENT_SOURCE;
+typedef struct ALLEGRO_DISPLAY ALLEGRO_DISPLAY;
+typedef struct ALLEGRO_BITMAP ALLEGRO_BITMAP;
+typedef struct ALLEGRO_MOUSE_CURSOR ALLEGRO_MOUSE_CURSOR;
+
 
 namespace Allw {
 
@@ -38,19 +43,12 @@ namespace Allw {
 			al_register_event_source() everytime you open the display and al_unregister_event_source() whenever you close it.
 	*/
 
+
 	class AllegroWindow
 	{
 	public:
-	// Constructor: it create a window
-	//
-	//		- float w: the width of the window.
-	//		- float h: the height of the window.
-	//		- string name: the name of the window.
-	//		- string icon: the path to the icon of the window.
-	AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, bool open = true, std::string name = "", std::string icon = "");
 
 		// BASIC
-
 
 		// Constructor: it create a window
 		//
@@ -58,20 +56,16 @@ namespace Allw {
 		//		- float h: the height of the window.
 		//		- string name: the name of the window.
 		//		- string icon: the path to the icon of the window.
-		//AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, std::string name = "", std::string icon = "");
+		AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE  *evQueue = nullptr, bool open = true, std::string name = "", std::string icon = "");
 
 		// Destructor.
 		~AllegroWindow();
 
-		// Overloaded operator to check for equality with allegro displays ( for compatibility)
-		bool operator==(ALLEGRO_DISPLAY* disp);
 
 		// Overloaded operator to check for equality with another allegroWindow
 		bool operator==(AllegroWindow& window);
 
-
 		// EVENTS
-
 
 		// It sets an event queue ONLY TO REGISTER AND UNREGISTER EVENT SOURCES (MAINLY DISPLAY SOURCES)
 		void setEventQueue(ALLEGRO_EVENT_QUEUE * queue);
@@ -95,11 +89,10 @@ namespace Allw {
 		void removeBox(UI::AllegroBox& box);
 
 		// It sets the color of the display.
-		void loadBackground(ALLEGRO_COLOR color);
+		void loadBackground(Color::AllegroColor color);
 
 		// It loads the background of the display
 		void loadImageBackground(std::string image);
-		void loadImageBackground(ALLEGRO_BITMAP * image);
 		void loadImageBackground(UI::AllegroBox& image);
 
 		// It sets a previusly loaded image as the background of the window
@@ -157,7 +150,7 @@ namespace Allw {
 		// It returns the Height of the window
 		float getHeight();
 
-		ALLEGRO_DISPLAY * getDisplay();
+		//ALLEGRO_DISPLAY * getDisplay();
 
 
 		// MOUSE
@@ -256,11 +249,11 @@ namespace Allw {
 		// It returns the title of a given item
 		std::string getMenuItemTitle(uint16_t uniqueID);
 
-
 	private:
 		// Display
 		ALLEGRO_DISPLAY * display = nullptr;
 		float width, height;
+		float regularWidth, regularHeight;
 		bool on = false;
 		void setUp();
 

@@ -1,11 +1,62 @@
 #include "AllwBasics/AllegroEvent.h"
+#include <allegro5/allegro.h>
+
+class AllegroEventFactory
+{
+public:
+	AllegroEventFactory(ALLEGRO_EVENT_QUEUE* eventQueue) {
+		this->eventQueue = eventQueue;
+	}
+
+	~AllegroEventFactory() {
+		for (ALLEGRO_EVENT_SOURCE* eventSource : sources)
+			al_unregister_event_source(eventQueue, eventSource);
+	}
+	void flushQueue() {
+		al_flush_event_queue(this->eventQueue);
+	}
+
+	bool getEvent() {
+
+		return al_get_next_event(eventQueue, &ev);
+
+	}
+	ALLEGRO_EVENT_TYPE getEventType(){ return ev.type; }
+	ALLEGRO_DISPLAY_EVENT getDisplayEvent() { return ev.display; }
+	ALLEGRO_KEYBOARD_EVENT getKeyboardEvent() { return ev.keyboard; }
+	ALLEGRO_TIMER_EVENT getTimerEvent() { return ev.timer; }
+	ALLEGRO_MOUSE_EVENT getMouseEvent() { return ev.mouse; }
+	ALLEGRO_USER_EVENT getUserEvent() { return ev.user; }
+	void registerEventSource(ALLEGRO_EVENT_SOURCE * eventSource) {
+		al_register_event_source(eventQueue, eventSource);
+		sources.push_back(eventSource);
+	}
+	void unregisterEventSource(ALLEGRO_EVENT_SOURCE* eventSource) {
+		int i;
+		bool kill = false;
+		for (i = 0; i < (int)sources.size() && !kill; i++) {
+			if (sources[i] == eventSource)
+				kill = true;
+		}
+		i--;
+		if (kill) {
+			sources.erase(sources.begin() + i);
+			al_unregister_event_source(eventQueue, eventSource);
+		}
+	}
+
+private:
+	ALLEGRO_EVENT_QUEUE* eventQueue = nullptr;
+	ALLEGRO_EVENT ev;
+	std::vector<ALLEGRO_EVENT_SOURCE*>sources;
+};
 
 namespace Allw {
 	namespace Event {
 
 		AllegroEventHandler::AllegroEventHandler(ALLEGRO_EVENT_QUEUE * queue)
 		{
-			this->eventF = new Allw::Factories::AllegroEventFactory(queue);
+			this->eventF = new AllegroEventFactory(queue);
 			this->evnt = new AllegroEvent(Type::Empty, 0);
 		}
 

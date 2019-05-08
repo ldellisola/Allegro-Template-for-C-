@@ -3,24 +3,20 @@
 #include <vector>
 #include <algorithm>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_font.h>
-
 #include "AllwUI/AllegroBox.h"
 #include "AllwMisc/AllegroException.h"
+#include "AllwBasics/AllegroColor.h"
+
+typedef struct ALLEGRO_BITMAP ALLEGRO_BITMAP;
 
 namespace Allw {
 	namespace UI {
+
 		enum class LayoutDrawMode
 		{
 			Slow, Mid, Fast
 		};
-
-
-
-
+		
 		/*
 			AllegroLayout is a class oriented to UI menus and such.
 		*/
@@ -36,7 +32,7 @@ namespace Allw {
 			//		- LayoutDrawMode mode: it is how the layout will act. If it is set to fast, it will do a lot less of draw calls, but it may affect AllegroButton
 			//							   and WritableBoxes, as well as any change in any allegroBox. If it is set to Mid, it will do less draw calls than the average, but
 			//							   it will take slightly more time than Fast, as it will only draw AllegroBoxes again. Slow mode will redraw everything everytime.
-			AllegroLayout(float w, float h, ALLEGRO_COLOR color, LayoutDrawMode mode = LayoutDrawMode::Mid);
+			AllegroLayout(float w, float h, Color::AllegroColor color, LayoutDrawMode mode = LayoutDrawMode::Mid);
 
 			// Constructor:
 			//
@@ -47,6 +43,7 @@ namespace Allw {
 			//							   and WritableBoxes, as well as any change in any allegroBox. If it is set to Mid, it will do less draw calls than the average, but
 			//							   it will take slightly more time than Fast, as it will only draw AllegroBoxes again. Slow mode will redraw everything everytime.
 			AllegroLayout(float w, float h, std::string image, LayoutDrawMode mode = LayoutDrawMode::Mid);
+			
 			AllegroLayout(float w, float h, ALLEGRO_BITMAP * image, LayoutDrawMode mode = LayoutDrawMode::Mid);
 
 			// Destructor
@@ -65,7 +62,7 @@ namespace Allw {
 			void removeBox(AllegroBox& box);
 
 			// It sets the color of the display.
-			void loadBackground(ALLEGRO_COLOR color);
+			void loadBackground(Color::AllegroColor color);
 
 			// It loads the background of the display
 			void loadImageBackground(std::string image);
@@ -90,7 +87,7 @@ namespace Allw {
 			bool backgroundImage = false;
 			bool foreignImage = false;
 			ALLEGRO_BITMAP * image = nullptr;
-			ALLEGRO_COLOR color;
+			Color::AllegroColor color;
 
 		};
 

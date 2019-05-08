@@ -2,12 +2,11 @@
 #include <string>
 #include <vector>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_font.h>
-#include<allegro5/allegro_ttf.h>
 
+#include "AllwBasics/AllegroColor.h"
 #include "AllwMisc/AllegroException.h"
 
+typedef struct ALLEGRO_FONT ALLEGRO_FONT;
 
 namespace Allw {
 	namespace Font {
@@ -18,9 +17,6 @@ namespace Allw {
 		class AllegroFontFactory
 		{
 		public:
-
-
-
 
 			// It creates a font and stores it in the factory. The font will be automatically destroyed after the factory is destroyed
 			//
@@ -73,26 +69,26 @@ namespace Allw {
 			// Draws a given text in the middle of a given rectangle
 			//
 			//	std::string text:			Text to be written.
-			//	ALLEGRO_COLOR color:		The color in which the text will be written.
+			//	Color::AllegroColor color:		The color in which the text will be written.
 			//	float width:				The width of the rectangle.
 			//	float height:				The height of the rectangle.
-			void drawCentredText(std::string text, ALLEGRO_COLOR color, float width, float height);
+			void drawCentredText(std::string text, Color::AllegroColor color, float width, float height);
 
 			// Draws a given text from left to right
 			//
 			//	std::string text:			Text to be written.
-			//	ALLEGRO_COLOR color:		The color in which the text will be written.
+			//	Color::AllegroColor color:		The color in which the text will be written.
 			//	float x:					X coordinate.
 			//	float y:					Y coordinate.
-			void drawLeftText(std::string text, ALLEGRO_COLOR color, float x, float y);
+			void drawLeftText(std::string text, Color::AllegroColor color, float x, float y);
 
 			// Draws a given text from right to left
 			//
 			//	std::string text:			Text to be written.
-			//	ALLEGRO_COLOR color:		The color in which the text will be written.
+			//	Color::AllegroColor color:		The color in which the text will be written.
 			//	float x:					X coordinate.
 			//	float y:					Y coordinate.
-			void drawRightText(std::string text, ALLEGRO_COLOR color, float x, float y);
+			void drawRightText(std::string text, Color::AllegroColor color, float x, float y);
 
 			// It returns the lenght of the text
 			//
@@ -118,3 +114,4 @@ namespace Allw {
 
 	}
 }
+

@@ -22,32 +22,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3DA104CA-8049-4E95-B4DB-55A5A1AC27AC}</ProjectGuid>
     <RootNamespace>Allw</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -201,15 +201,19 @@
     <ClInclude Include="Include\AllwUI\AllegroMenu.h" />
     <ClInclude Include="Include\AllwUI\WritableBox.h" />
     <ClInclude Include="Include\AllwUI\WrittenBox.h" />
+    <ClInclude Include="Include\AllwBasics\AllegroColor.h" />
     <ClInclude Include="src\header.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AllwAnimation\AllegroAnimation.cpp" />
     <ClCompile Include="src\AllwAnimation\AllegroSprite.cpp" />
+    <ClCompile Include="src\AllwBasics\AllegroColor.cpp" />
     <ClCompile Include="src\AllwBasics\AllegroEvent.cpp" />
     <ClCompile Include="src\AllwBasics\AllegroFont.cpp" />
     <ClCompile Include="src\AllwBasics\AllegroSound.cpp" />
     <ClCompile Include="src\AllwBasics\AllegroWindow.cpp" />
+    <ClCompile Include="src\AllwInit\AllegroAddons.cpp" />
+    <ClCompile Include="src\AllwInit\AllegroFactory.cpp" />
     <ClCompile Include="src\AllwInit\Allw.cpp" />
     <ClCompile Include="src\AllwMisc\AllegroLog.cpp" />
     <ClCompile Include="src\AllwUI\AllegroBox.cpp" />

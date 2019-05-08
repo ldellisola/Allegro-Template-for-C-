@@ -3,7 +3,6 @@
 #include <string>
 #include <initializer_list>
 
-#include <allegro5/allegro.h>
 
 
 #include "AllwAnimation/AllegroSprite.h"

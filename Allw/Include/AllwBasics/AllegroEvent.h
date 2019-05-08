@@ -1,10 +1,9 @@
 #pragma once
 #include <queue>
-
-#include <allegro5/allegro.h>
-
 #include "AllwInit/AllegroFactory.h"
 
+class AllegroEventFactory;
+typedef struct ALLEGRO_EVENT_QUEUE ALLEGRO_EVENT_QUEUE;
 
 namespace Allw {
 	namespace Event {
@@ -37,9 +36,9 @@ namespace Allw {
 			Type type;
 			int value;
 			float x, y;
-			double timeStamp;
-
+			double timeStamp = 0;
 		};
+
 
 		class AllegroEventHandler {
 		public:
@@ -54,7 +53,7 @@ namespace Allw {
 
 
 		private:
-			Allw::Factories::AllegroEventFactory * eventF = nullptr;
+			AllegroEventFactory * eventF = nullptr;
 			std::queue<AllegroEvent> eventQueue;
 
 		};

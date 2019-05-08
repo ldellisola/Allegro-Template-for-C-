@@ -2,12 +2,12 @@
 
 #include <string>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
 
+#include "AllwBasics/AllegroColor.h"
 #include "AllwMisc/AllegroException.h"
+typedef struct ALLEGRO_BITMAP ALLEGRO_BITMAP;
+typedef struct ALLEGRO_KEYBOARD_EVENT ALLEGRO_KEYBOARD_EVENT;
+
 
 #define DefaultID (0)
 
@@ -45,8 +45,8 @@ namespace Allw {
 
 			// Setters: each function set a given variable of the box
 			//
-			virtual void setBackgroundColor(ALLEGRO_COLOR color);
-			virtual void setBorderColor(ALLEGRO_COLOR color);
+			virtual void setBackgroundColor(Color::AllegroColor color);
+			virtual void setBorderColor(Color::AllegroColor color);
 			virtual void setBorderThickness(float thickness);
 			virtual void setX(float x);
 			virtual void setY(float y);
@@ -58,8 +58,8 @@ namespace Allw {
 			// Getters: each function returns a given variable of the box
 
 			virtual ALLEGRO_BITMAP * getBitmap();
-			virtual ALLEGRO_COLOR getBorderColor();
-			virtual ALLEGRO_COLOR getBackgroundColor();
+			virtual Color::AllegroColor getBorderColor();
+			virtual Color::AllegroColor getBackgroundColor();
 			virtual float getBorderThickness();
 			virtual float getX();
 			virtual float getY();
@@ -76,13 +76,20 @@ namespace Allw {
 			// Virtual Methods added to avoid casting. 
 
 			// ONLY WRTITENBOX AND WRITTABLEBOX :It returns a copy of the text in the box.
-			virtual std::string getText() { return ""; }
+			virtual std::string getText() { 
+				NotImplemented();
+				return ""; 
+			}
 
 			// ONLY WRTITENBOX : It sets the text for the box to print. DO NOT USE THIS WITH THE THIRD CONSTRUCTOR.
-			virtual void setText(std::string text) {}
+			virtual void setText(std::string text) {
+				NotImplemented();
+			}
 
 			// ONLY WrittableBox : It takes a keyboard event and uses the key that was pressed. 
-			virtual void input(ALLEGRO_KEYBOARD_EVENT ev) {}
+			virtual void input(ALLEGRO_KEYBOARD_EVENT ev) {
+				NotImplemented();
+			}
 
 			// ONLY WrittableBox : It restarts the texts that the user typed
 			virtual void clearText() {}
@@ -93,14 +100,20 @@ namespace Allw {
 			//		- float mouseX: X coordinate of the mouse.
 			//		- float mouseY: Y coordinate of the mouse.
 			//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
-			virtual bool click(float mouseX, float mouseY, double timeStamp) { return false; }
+			virtual bool click(float mouseX, float mouseY, double timeStamp) {
+				NotImplemented();
+				return false; 
+			}
 
 			// ONLY AllegroButton: This function will return true if there was a double click within the given time thresholds.
 			//
 			//		- float mouseX: X coordinate of the mouse.
 			//		- float mouseY: Y coordinate of the mouse.
 			//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
-			virtual	bool doubleClick(float mouseX, float mouseY, double timeStamp) { return false; }
+			virtual	bool doubleClick(float mouseX, float mouseY, double timeStamp) {
+				NotImplemented();
+				return false; 
+			}
 
 			// ONLY AllegroToggle : This function will set the button as clicked if the mouse coordinates coincide with the button and the click was made a given number 
 			// of seconds after the last click
@@ -108,10 +121,14 @@ namespace Allw {
 			//		- float mouseX: X coordinate of the mouse.
 			//		- float mouseY: Y coordinate of the mouse.
 			//		- double timeStamp: timestamp of the event. this should be under mouse.timestamp .
-			virtual void press(float mouseX, float mouseY, double timeStamp) {}
+			virtual void press(float mouseX, float mouseY, double timeStamp) {
+				NotImplemented();
+			}
 
 			// ONLY AllegroToggle : this function will return true if the button is pressed. IT ONLY WORKS WITH A SINGLE CLICK
-			virtual bool isPressed() { return false; }
+			virtual bool isPressed() {
+				NotImplemented();
+				return false; }
 
 
 		protected:
@@ -121,8 +138,8 @@ namespace Allw {
 			virtual void setBoxType(BoxType type);
 			ALLEGRO_BITMAP * bitmap = nullptr;
 			ALLEGRO_BITMAP * imageBackground = nullptr;
-			ALLEGRO_COLOR borderColor;
-			ALLEGRO_COLOR backgroundColor;
+			Color::AllegroColor borderColor;
+			Color::AllegroColor backgroundColor;
 			bool drawImage = false;
 			bool foreignImage = false;
 			float borderThickness;
@@ -135,6 +152,11 @@ namespace Allw {
 			// ID given to all boxes and derivated classes. This is useful to identify boxes when you have an array of boxes (Duh).
 			// All boxes will have 0 as default ID, if the user decides not to assign one to it.
 			unsigned int ID;
+
+			private:
+				void NotImplemented() {
+					throw new Exception::AllegroNotImplementedException();
+				}
 		};
 
 	}

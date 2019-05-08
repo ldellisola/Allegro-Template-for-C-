@@ -1,6 +1,8 @@
 #include "AllwBasics/AllegroFont.h"
 
-
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
+#include<allegro5/allegro_ttf.h>
 namespace Allw {
 	namespace Font {
 
@@ -15,20 +17,20 @@ namespace Allw {
 			this->ID = ID;
 		}
 
-		void AllegroFont::drawCentredText(std::string text, ALLEGRO_COLOR color, float width, float height)
+		void AllegroFont::drawCentredText(std::string text, Color::AllegroColor color, float width, float height)
 		{
-			al_draw_text(this->font, color, width / 2.0, (height - this->previewTextHeight()) / 2.0, ALLEGRO_ALIGN_CENTRE, text.c_str());
+			al_draw_text(this->font, color.GetColor(), width / 2.0, (height - this->previewTextHeight()) / 2.0, ALLEGRO_ALIGN_CENTRE, text.c_str());
 		}
 
-		void AllegroFont::drawLeftText(std::string text, ALLEGRO_COLOR color, float x, float y)
+		void AllegroFont::drawLeftText(std::string text, Color::AllegroColor color, float x, float y)
 		{
-			al_draw_text(this->font, color, x, y, ALLEGRO_ALIGN_LEFT, text.c_str());
+			al_draw_text(this->font, color.GetColor(), x, y, ALLEGRO_ALIGN_LEFT, text.c_str());
 
 		}
 
-		void AllegroFont::drawRightText(std::string text, ALLEGRO_COLOR color, float x, float y)
+		void AllegroFont::drawRightText(std::string text, Color::AllegroColor color, float x, float y)
 		{
-			al_draw_text(this->font, color, x, y, ALLEGRO_ALIGN_RIGHT, text.c_str());
+			al_draw_text(this->font, color.GetColor(), x, y, ALLEGRO_ALIGN_RIGHT, text.c_str());
 
 		}
 

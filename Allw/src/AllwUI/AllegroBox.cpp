@@ -1,5 +1,10 @@
 #include "AllwUI/AllegroBox.h"
 
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_color.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
+
 namespace Allw {
 	namespace UI {
 
@@ -31,13 +36,13 @@ namespace Allw {
 			al_draw_rotated_bitmap(this->bitmap, this->width / 2.0, this->height / 2.0, this->x + this->width / 2.0, this->y + this->height / 2.0, this->rotationDegree, 0);
 		}
 
-		void AllegroBox::setBackgroundColor(ALLEGRO_COLOR color)
+		void AllegroBox::setBackgroundColor(Color::AllegroColor color)
 		{
 			this->backgroundColor = color;
 			setUp();
 		}
 
-		void AllegroBox::setBorderColor(ALLEGRO_COLOR color)
+		void AllegroBox::setBorderColor(Color::AllegroColor color)
 		{
 			this->borderColor = color;
 			setUp();
@@ -107,12 +112,12 @@ namespace Allw {
 			return this->bitmap;
 		}
 
-		ALLEGRO_COLOR AllegroBox::getBorderColor()
+		Color::AllegroColor AllegroBox::getBorderColor()
 		{
 			return this->borderColor;
 		}
 
-		ALLEGRO_COLOR AllegroBox::getBackgroundColor()
+		Color::AllegroColor AllegroBox::getBackgroundColor()
 		{
 			return this->backgroundColor;
 		}
@@ -175,14 +180,14 @@ namespace Allw {
 			if (drawImage)
 				al_draw_scaled_bitmap(this->imageBackground, 0, 0, al_get_bitmap_width(imageBackground), al_get_bitmap_height(imageBackground), 0, 0, width, height, 0);
 			else
-				al_clear_to_color(backgroundColor);
+				al_clear_to_color(backgroundColor.GetColor());
 
 			if (borderThickness > 0) {
 				float x1 = borderThickness;
 				float x2 = width - borderThickness;
 				float y1 = borderThickness;
 				float y2 = height - borderThickness;
-				al_draw_rectangle(x1, y1, x2, y2, borderColor, borderThickness);
+				al_draw_rectangle(x1, y1, x2, y2, borderColor.GetColor(), borderThickness);
 			}
 
 			al_set_target_backbuffer(main);

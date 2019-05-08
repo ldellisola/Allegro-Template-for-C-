@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_native_dialog.h>
+
+typedef struct ALLEGRO_EVENT_SOURCE ALLEGRO_EVENT_SOURCE;
+typedef struct ALLEGRO_TEXTLOG ALLEGRO_TEXTLOG;
+
 
 namespace Allw {
 	namespace Log {

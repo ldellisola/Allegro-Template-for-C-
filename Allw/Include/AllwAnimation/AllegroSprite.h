@@ -1,7 +1,8 @@
 #pragma once
-#include <allegro5/allegro.h>
 #include "AllwMisc/AllegroException.h"
 #include <string>
+
+typedef struct ALLEGRO_BITMAP ALLEGRO_BITMAP;
 
 namespace Allw {
 	namespace Animation {
@@ -123,3 +124,4 @@ namespace Allw {
 
 	}
 }
+

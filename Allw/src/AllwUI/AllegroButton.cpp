@@ -1,5 +1,8 @@
 #include "AllwUI/AllegroButton.h"
-
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_color.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
 
 
 namespace Allw {
@@ -96,7 +99,7 @@ namespace Allw {
 		void AllegroToggle::draw()
 		{
 			if (pressed)
-				al_draw_tinted_bitmap(this->bitmap, this->pressedColor, this->x, this->y, 0);
+				al_draw_tinted_bitmap(this->bitmap, this->pressedColor.GetColor(), this->x, this->y, 0);
 			else
 				al_draw_bitmap(this->bitmap, this->x, this->y, 0);
 		}

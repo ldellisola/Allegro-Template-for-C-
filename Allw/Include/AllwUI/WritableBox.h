@@ -3,17 +3,14 @@
 #include <string>
 #include <vector>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
+
 
 
 #include "AllwBasics/AllegroFont.h"
 #include "AllwUI/AllegroBox.h"
+#include "AllwBasics/AllegroColor.h"
 
-
-
+typedef struct ALLEGRO_KEYBOARD_EVENT ALLEGRO_KEYBOARD_EVENT;
 
 #define KeyPressedTimeThreshold (0.00001)
 
@@ -31,7 +28,7 @@ namespace Allw {
 			float x, y;
 			unsigned int width, height;
 			Font::AllegroFont * font;
-			ALLEGRO_COLOR fontColor;
+			Color::AllegroColor fontColor;
 		};
 
 
@@ -46,8 +43,8 @@ namespace Allw {
 			//		- unsigned int height:		the height of the box. 
 			//		- int fontSize:				size of the font.
 			//		- AllegroFont * font:		Font to be loaded
-			//		- ALLEGRO_COLOR fontColor:	color of the font.
-			AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, Font::AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+			//		- Color::AllegroColor fontColor:	color of the font.
+			AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, Font::AllegroFont * font, Color::AllegroColor fontColor, unsigned int boxID = DefaultID)
 				:AllegroBox(x, y, width, height, boxID) {
 				this->setBoxType(BoxType::Writable);
 				this->font = font;
@@ -97,7 +94,7 @@ namespace Allw {
 
 			std::string text = "";
 			KeyboardMode mode;
-			ALLEGRO_COLOR fontColor;
+			Color::AllegroColor fontColor;
 			Font::AllegroFont * font = nullptr;
 			bool foreingFont = false;
 		};

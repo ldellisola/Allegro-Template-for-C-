@@ -1,6 +1,9 @@
 #include "AllwUI/WrittenBox.h"
 
-
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_color.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
 
 namespace Allw {
 	namespace UI {

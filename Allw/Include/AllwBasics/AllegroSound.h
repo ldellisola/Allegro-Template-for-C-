@@ -1,33 +1,28 @@
 #pragma once
 #include <string>
 #include <vector>
-
-
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_audio.h>
-
 #include "AllwMisc/AllegroException.h"
+
+typedef struct ALLEGRO_SAMPLE_ID ALLEGRO_SAMPLE_ID;
+typedef struct ALLEGRO_SAMPLE ALLEGRO_SAMPLE;
 
 namespace Allw {
 	namespace Sound {
 
-
-
-
 		enum class Mode
 		{
-			Once = ALLEGRO_PLAYMODE_ONCE, Loop = ALLEGRO_PLAYMODE_LOOP, Bidir = ALLEGRO_PLAYMODE_BIDIR
+			Once =256 /*ALLEGRO_PLAYMODE_ONCE*/, Loop = 257/* ALLEGRO_PLAYMODE_LOOP*/, Bidir = 258/* ALLEGRO_PLAYMODE_BIDIR*/
 		};
 
+		class AllegroSound;
 
-	
-	
+		class AllegroSoundFactory {
+		public:
 
-
-			AllegroSound * create(std::string fileName, Mode playMode, unsigned int ID, float speed = 1, float gain = 1.0, float pan = 0.0);
-			AllegroSound * recover(unsigned int ID);
+			AllegroSound* create(std::string fileName, Mode playMode, unsigned int ID, float speed = 1, float gain = 1.0, float pan = 0.0);
+			AllegroSound* recover(unsigned int ID);
 			bool destroy(unsigned int ID);
-			bool destroy(AllegroSound * sound);
+			bool destroy(AllegroSound* sound);
 
 			static AllegroSoundFactory& getInstance() {
 				if (instance == nullptr) {
@@ -39,14 +34,14 @@ namespace Allw {
 
 			AllegroSoundFactory(AllegroSoundFactory const&) = delete;
 			void operator=(AllegroSoundFactory const&) = delete;
-	        void reserveMoreSamples(int add);
-	        unsigned int getNumberOfReservedSamples();
+			void reserveMoreSamples(int add);
+			unsigned int getNumberOfReservedSamples();
 
 		private:
-			static AllegroSoundFactory * instance;
+			static AllegroSoundFactory* instance;
 			AllegroSoundFactory();
 			~AllegroSoundFactory();
-			std::vector<AllegroSound *> sounds;
+			std::vector<AllegroSound*> sounds;
 			unsigned int reservedSamples = 0;
 
 		};
@@ -79,10 +74,10 @@ namespace Allw {
 
 		private:
 			ALLEGRO_SAMPLE * sample = nullptr;
-			ALLEGRO_SAMPLE_ID playID;
+			ALLEGRO_SAMPLE_ID * playID;
 			unsigned int ID = NAN;
 			float gain, pan, speed;
-			ALLEGRO_PLAYMODE playMode;
+			Mode playMode; 
 
 			~AllegroSound();
 		};

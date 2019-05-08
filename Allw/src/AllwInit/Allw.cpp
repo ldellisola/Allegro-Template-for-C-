@@ -1,4 +1,14 @@
 #include "AllwInit/Allw.h"
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_color.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_video.h>
+#include <allegro5/allegro_native_dialog.h>
 
 namespace Allw {
 
@@ -53,7 +63,7 @@ namespace Allw {
 	void Allw::initImageAddon()
 	{
 		if (imageAddon == nullptr) {
-			this->imageAddon = new ImageAddon();
+			this->imageAddon = new Init::ImageAddon();
 			this->success = imageAddon->getSuccess();
 		}
 	}
@@ -61,7 +71,7 @@ namespace Allw {
 	void Allw::initAudioAddon()
 	{
 		if (audioAddon == nullptr) {
-			this->audioAddon = new AudioAddon();
+			this->audioAddon = new Init::AudioAddon();
 			this->success = audioAddon->getSuccess();
 		}
 	}
@@ -70,19 +80,10 @@ namespace Allw {
 	    al_rest(seconds);
     }
 
-    void Allw::initImageAddon()
-    {
-	    if (imageAddon == nullptr) {
-		    this->imageAddon = new ImageAddon();
-		    this->success = imageAddon->getSuccess();
-	    }
-    }
-	
-
 	void Allw::initFontAddon()
 	{
 		if (fontAddon == nullptr) {
-			this->fontAddon = new FontAddon();
+			this->fontAddon = new Init::FontAddon();
 			this->success = fontAddon->getSuccess();
 		}
 	}
@@ -90,7 +91,7 @@ namespace Allw {
 	void Allw::initKeyboardAddon()
 	{
 		if (keyboardAddon == nullptr) {
-			this->keyboardAddon = new KeyboardAddon();
+			this->keyboardAddon = new Init::KeyboardAddon();
 			this->success = keyboardAddon->getSuccess();
 		}
 	}
@@ -98,7 +99,7 @@ namespace Allw {
 	void Allw::initDisplayAddon(float x, float y)
 	{
 		if (displayAddon == nullptr) {
-			this->displayAddon = new DisplayAddon(x, y);
+			this->displayAddon = new Init::DisplayAddon(x, y);
 			this->success = displayAddon->getSuccess();
 		}
 	}
@@ -106,7 +107,7 @@ namespace Allw {
 	void Allw::initMouseAddon()
 	{
 		if (mouseAddon == nullptr) {
-			this->mouseAddon = new MouseAddon();
+			this->mouseAddon = new Init::MouseAddon();
 			this->success = mouseAddon->getSuccess();
 		}
 	}
@@ -114,7 +115,7 @@ namespace Allw {
 	void Allw::initEventsAddon()
 	{
 		if (eventsAddon == nullptr) {
-			this->eventsAddon = new EventsAddon();
+			this->eventsAddon = new Init::EventsAddon();
 			this->success = eventsAddon->getSuccess();
 		}
 	}
@@ -122,7 +123,7 @@ namespace Allw {
 	void Allw::initTimerAddon(float fps)
 	{
 		if (this->timerAddon == nullptr) {
-			this->timerAddon = new TimerAddon(fps);
+			this->timerAddon = new Init::TimerAddon(fps);
 			this->success = timerAddon->getSuccess();
 		}
 	}
@@ -130,7 +131,7 @@ namespace Allw {
 	void Allw::initTimerAddon()
 	{
 		if (this->timerAddon == nullptr) {
-			this->timerAddon = new TimerAddon();
+			this->timerAddon = new Init::TimerAddon();
 			this->success = timerAddon->getSuccess();
 		}
 	}
@@ -138,7 +139,7 @@ namespace Allw {
 	void Allw::initPrimitivesAddon()
 	{
 		if (primitivesAddon == nullptr) {
-			this->primitivesAddon = new PrimitivesAddon();
+			this->primitivesAddon = new Init::PrimitivesAddon();
 			this->success = primitivesAddon->getSuccess();
 		}
 	}
@@ -146,7 +147,7 @@ namespace Allw {
 	void Allw::initVideoAddon()
 	{
 		if (videoAddon == nullptr) {
-			this->videoAddon = new VideoAddon();
+			this->videoAddon = new Init::VideoAddon();
 			this->success = videoAddon->getSuccess();
 		}
 	}
@@ -154,7 +155,7 @@ namespace Allw {
 	void Allw::initNativeDialogAddon()
 	{
 		if (nativeDialogAddon == nullptr) {
-			this->nativeDialogAddon = new NativeDialogAddon();
+			this->nativeDialogAddon = new Init::NativeDialogAddon();
 			this->success = nativeDialogAddon->getSuccess();
 		}
 	}
@@ -291,14 +292,14 @@ namespace Allw {
 		return this->eventsAddon->getEventQueue();
 	}
 
-	void Allw::setDisplayColor(ALLEGRO_COLOR color)
+	void Allw::setDisplayColor(Color::AllegroColor color)
 	{
 		displayAddon->setDisplayColor(color);
 	}
 
 	void Allw::setDisplayColor(const char * color)
 	{
-		displayAddon->setDisplayColor(al_color_name(color));
+		displayAddon->setDisplayColor(Color::AllegroColor(color));
 	}
 
 	void Allw::setDisplayName(const char * name)

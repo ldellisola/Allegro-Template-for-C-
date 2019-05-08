@@ -1,23 +1,14 @@
 #pragma once
 #include "AllegroAddons.h"
 #include "AllegroFactory.h"
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_acodec.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_ttf.h>
-#include <allegro5/allegro_video.h>
-#include <allegro5/allegro_native_dialog.h>
+#include "AllwBasics/AllegroColor.h"
 
-
+typedef struct ALLEGRO_VIDEO ALLEGRO_VIDEO;
+typedef struct ALLEGRO_DISPLAY ALLEGRO_DISPLAY ;
+typedef struct ALLEGRO_TIMER ALLEGRO_TIMER;
+typedef struct ALLEGRO_EVENT_QUEUE ALLEGRO_EVENT_QUEUE;
 
 namespace Allw {
-
-
-
 
 	class Allw
 	{
@@ -49,7 +40,7 @@ namespace Allw {
 		ALLEGRO_EVENT_QUEUE * getEventQueue();
 
 		// Funciones de Display
-		void setDisplayColor(ALLEGRO_COLOR color);
+		void setDisplayColor(Color::AllegroColor color);
 		void setDisplayColor(const char * color);
 		void setDisplayName(const char * name);
 		void setMainDisplay();
@@ -87,17 +78,17 @@ namespace Allw {
 		bool success = false;
 
 		// Addons de allegro
-		ImageAddon * imageAddon = nullptr;
-		AudioAddon * audioAddon = nullptr;
-		FontAddon * fontAddon = nullptr;
-		KeyboardAddon * keyboardAddon = nullptr;
-		DisplayAddon * displayAddon = nullptr;
-		MouseAddon * mouseAddon = nullptr;
-		EventsAddon * eventsAddon = nullptr;
-		TimerAddon * timerAddon = nullptr;
-		PrimitivesAddon * primitivesAddon = nullptr;
-		VideoAddon * videoAddon = nullptr;
-		NativeDialogAddon * nativeDialogAddon = nullptr;
+		Init::ImageAddon * imageAddon = nullptr;
+		Init::AudioAddon * audioAddon = nullptr;
+		Init::FontAddon * fontAddon = nullptr;
+		Init::KeyboardAddon * keyboardAddon = nullptr;
+		Init::DisplayAddon * displayAddon = nullptr;
+		Init::MouseAddon * mouseAddon = nullptr;
+		Init::EventsAddon * eventsAddon = nullptr;
+		Init::TimerAddon * timerAddon = nullptr;
+		Init::PrimitivesAddon * primitivesAddon = nullptr;
+		Init::VideoAddon * videoAddon = nullptr;
+		Init::NativeDialogAddon * nativeDialogAddon = nullptr;
 	};
 
 }

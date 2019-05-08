@@ -69,6 +69,9 @@
     <ClInclude Include="Include\AllwInit\Allw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\AllwBasics\AllegroColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AllwAnimation\AllegroAnimation.cpp">
@@ -111,6 +114,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AllwInit\Allw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwInit\AllegroAddons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwInit\AllegroFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwBasics\AllegroColor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

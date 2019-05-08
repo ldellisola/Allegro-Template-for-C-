@@ -1,15 +1,12 @@
 #pragma once
 #include <string>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_color.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
+
 
 #include "AllwBasics/AllegroFont.h"
 #include "AllwUI/WrittenBox.h"
 
-
+#include "AllwBasics/AllegroColor.h"
 #define MinClickThreshold (0.001)
 #define MaxClickThreshold (0.2)
 
@@ -20,7 +17,7 @@ namespace Allw {
 			float x, y, width, height;
 			std::string text;
 			Font::AllegroFont* font;
-			ALLEGRO_COLOR fontColor;
+			Color::AllegroColor fontColor;
 		};
 
 		/*
@@ -39,8 +36,8 @@ namespace Allw {
 			//		- float height:				height of the button.
 			//		- string text:				text of the button.
 			//		- AllegroFont * font:		Font to be loaded
-			//		- ALLEGRO_COLOR fontColor:	color of the font
-			AllegroButton(float x, float y, float width, float height, std::string text, Font::AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+			//		- Color::AllegroColor fontColor:	color of the font
+			AllegroButton(float x, float y, float width, float height, std::string text, Font::AllegroFont * font, Color::AllegroColor fontColor, unsigned int boxID = DefaultID)
 				: AllegroWrittenBox(x, y, width, height, text, font, fontColor, boxID) {
 				this->setBoxType(BoxType::Button);
 			}
@@ -98,11 +95,11 @@ namespace Allw {
 			//		- float height:				height of the button.
 			//		- string text:				text of the button.
 			//		- AllegroFont * font:		Font to be loaded
-			//		- ALLEGRO_COLOR fontColor:	color of the font
-			AllegroToggle(float x, float y, float width, float height, std::string text, Font::AllegroFont * font, ALLEGRO_COLOR fontColor, unsigned int boxID = DefaultID)
+			//		- Color::AllegroColor fontColor:	color of the font
+			AllegroToggle(float x, float y, float width, float height, std::string text, Font::AllegroFont * font, Color::AllegroColor fontColor, unsigned int boxID = DefaultID)
 				:AllegroButton(x, y, width, height, text, font, fontColor, boxID) {
 				this->setBoxType(BoxType::Toggle);
-				pressedColor = al_map_rgb(100, 100, 100);
+				pressedColor = Color::AllegroColor(100,100,100);
 			}
 
 			// Constructor: It will take an existing font. This is a good option for when you have to create a lot of identical Boxes or you need to 
@@ -112,7 +109,7 @@ namespace Allw {
 			AllegroToggle(AllegroButtonData& data, unsigned int boxID = DefaultID)
 				:AllegroButton(data, boxID) {
 				this->setBoxType(BoxType::Toggle);
-				pressedColor = al_map_rgb(100, 100, 100);
+				pressedColor = Color::AllegroColor(100, 100, 100);
 			}
 
 
@@ -132,7 +129,7 @@ namespace Allw {
 			void draw();
 
 		private:
-			ALLEGRO_COLOR pressedColor;
+			Color::AllegroColor pressedColor;
 		};
 
 

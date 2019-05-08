@@ -1,25 +1,30 @@
 #include "AllwBasics/AllegroWindow.h"
 
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_color.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_native_dialog.h>
+
 namespace Allw {
 
 
-AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,bool open,std::string name,std::string icon)
-{
-	width = w;
-	height = h;
+	AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE* evQueue, bool open, std::string name, std::string icon)
+	{
+		width = w;
+		height = h;
 
 		if (name.size() > 0)
 			setName(name);
 		if (icon.size() > 0)
 			setIcon(icon);
 
-		this->layout = new UI::AllegroLayout(w, h, al_color_name("black"), UI::LayoutDrawMode::Mid);
+		this->layout = new UI::AllegroLayout(w, h, Color::AllegroColor("black"), UI::LayoutDrawMode::Mid);
 
-	this->queue = evQueue;
+		this->queue = evQueue;
 
-	if (open)
-		this->open();
-}
+		if (open)
+			this->open();
+	}
 
 	AllegroWindow::~AllegroWindow()
 	{
@@ -113,33 +118,27 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 		al_set_window_position(this->display, x, y);
 	}
 
+
+
 	void AllegroWindow::setFullScreen()
 	{
 		this->screenMode = ScreenMode::FullScreen;
 		if (this->on) {
+			this->regularHeight = height;
+			this->regularWidth = width;
+
+			ALLEGRO_DISPLAY_MODE disp;
+			al_get_display_mode(al_get_num_display_modes() - 1, &disp);
+
+			height = disp.height;
+			width = disp.width;
+
+			al_resize_display(display, width, height);
+			al_acknowledge_resize(display);
+
 			al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, true);
-			this->width = al_get_display_width(this->display);
-			this->height = al_get_display_height(this->display);
+
 		}
-
-    void AllegroWindow::setFullScreen()
-    {
-    	this->screenMode = ScreenMode::FullScreen;
-    	if (this->on) {
-    		this->regularHeight = height;
-    		this->regularWidth = width;
-    
-    		ALLEGRO_DISPLAY_MODE disp;
-    		al_get_display_mode(al_get_num_display_modes() - 1, &disp);
-    
-    		height = disp.height;
-    		width = disp.width;
-    
-    		al_resize_display(display, width, height);
-    		al_acknowledge_resize(display);
-    
-    		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, true);
-
 	}
 
 	void AllegroWindow::setFrameless()
@@ -152,33 +151,34 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 
 	void AllegroWindow::setMaximize()
 	{
+
+		clearScreenMode();
 		this->screenMode = ScreenMode::Maximized;
+
 		if (this->on) {
+			this->regularHeight = height;
+			this->regularWidth = width;
+
+			ALLEGRO_DISPLAY_MODE disp;
+			al_get_display_mode(al_get_num_display_modes() - 1, &disp);
+
+			height = disp.height;
+			width = disp.width;
+
+			al_resize_display(display, width, height);
+			al_acknowledge_resize(display);
+
 			al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, true);
-			this->width = al_get_display_width(this->display);
-			this->height = al_get_display_height(this->display);
+
 		}
+	}
 
-    void AllegroWindow::setMaximize()
-    {
-    	clearScreenMode();
-    	this->screenMode = ScreenMode::Maximized;
-    
-    	if (this->on) {
-    		this->regularHeight = height;
-    		this->regularWidth = width;
-    
-    		ALLEGRO_DISPLAY_MODE disp;
-    		al_get_display_mode(al_get_num_display_modes() - 1, &disp);
-    
-    		height = disp.height;
-    		width = disp.width;
-    
-    		al_resize_display(display, width, height);
-    		al_acknowledge_resize(display);
-    
-    		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, true);
-
+	void AllegroWindow::setRegular()
+	{
+		this->clearScreenMode();
+		this->screenMode = ScreenMode::Regular;
+		this->width = al_get_display_width(this->display);
+		this->height = al_get_display_height(this->display);
 	}
 
 	void AllegroWindow::resize(float newW, float newH)
@@ -204,12 +204,12 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 		return this->height;
 	}
 
-	ALLEGRO_EVENT_SOURCE * AllegroWindow::getEventSource()
+	ALLEGRO_EVENT_SOURCE* AllegroWindow::getEventSource()
 	{
 		return al_get_display_event_source(display);
 	}
 
-	void AllegroWindow::insertLayout(UI::AllegroLayout & layout)
+	void AllegroWindow::insertLayout(UI::AllegroLayout& layout)
 	{
 		if (this->layout != nullptr)
 			delete this->layout;
@@ -226,7 +226,7 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 				delete this->layout;
 		}
 
-		this->layout = new UI::AllegroLayout(this->width, this->height, al_color_name("black"));
+		this->layout = new UI::AllegroLayout(this->width, this->height, Color::AllegroColor("black"));
 	}
 
 	void AllegroWindow::setLayoutDrawMode(UI::LayoutDrawMode mode)
@@ -247,7 +247,7 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 			layout->removeBox(box);
 	}
 
-	void AllegroWindow::loadBackground(ALLEGRO_COLOR color)
+	void AllegroWindow::loadBackground(Color::AllegroColor color)
 	{
 		if (layout != nullptr)
 			layout->loadBackground(color);
@@ -259,11 +259,6 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 			layout->loadImageBackground(image);
 	}
 
-	void AllegroWindow::loadImageBackground(ALLEGRO_BITMAP * image)
-	{
-		if (layout != nullptr)
-			layout->loadImageBackground(image);
-	}
 
 	void AllegroWindow::loadImageBackground(UI::AllegroBox & image)
 	{
@@ -283,20 +278,13 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 			layout->setColorAsBackground();
 	}
 
-	ALLEGRO_DISPLAY * AllegroWindow::getDisplay()
-	{
-		return display;
-	}
+	//ALLEGRO_DISPLAY* AllegroWindow::getDisplay()
+	//{
+	//	return display;
+	//}
 
-	bool AllegroWindow::operator==(ALLEGRO_DISPLAY * disp)
-	{
-		if (this->display == disp)
-			return true;
-		else
-			return false;
-	}
 
-	bool AllegroWindow::operator==(AllegroWindow& window)
+	bool AllegroWindow::operator==(AllegroWindow & window)
 	{
 		if (this->display == window.display)
 			return true;
@@ -479,20 +467,22 @@ AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE *evQueue ,boo
 		}
 	}
 
-void AllegroWindow::clearScreenMode()
-{
-	if (on) {
-		al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, false);
-		al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, false);
-		al_set_display_flag(this->display, ALLEGRO_FRAMELESS, false);
+	void AllegroWindow::clearScreenMode()
+	{
+		if (on) {
+			al_set_display_flag(this->display, ALLEGRO_FULLSCREEN_WINDOW, false);
+			al_set_display_flag(this->display, ALLEGRO_MAXIMIZED, false);
+			al_set_display_flag(this->display, ALLEGRO_FRAMELESS, false);
 
-		height = regularHeight;
-		width = regularWidth;
+			height = regularHeight;
+			width = regularWidth;
 
-		al_resize_display(display, width, height);
-		al_acknowledge_resize(display);
+			al_resize_display(display, width, height);
+			al_acknowledge_resize(display);
+
+		}
+
 
 	}
-
-
+				
 }

@@ -1,9 +1,14 @@
 #include "AllwUI/AllegroLayout.h"
 
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_color.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_font.h>
+
 namespace Allw {
 	namespace UI {
 
-		AllegroLayout::AllegroLayout(float w, float h, ALLEGRO_COLOR color, LayoutDrawMode mode) {
+		AllegroLayout::AllegroLayout(float w, float h, Color::AllegroColor color, LayoutDrawMode mode) {
 			this->w = w;
 			this->h = w;
 			this->color = color;
@@ -17,7 +22,7 @@ namespace Allw {
 		AllegroLayout::AllegroLayout(float w, float h, std::string image, LayoutDrawMode mode) {
 			this->w = w;
 			this->h = h;
-			this->color = al_color_name("black");
+			this->color = Color::AllegroColor("black");
 			this->mode = mode;
 			this->foreignImage = false;
 			this->backgroundImage = true;
@@ -31,7 +36,7 @@ namespace Allw {
 		AllegroLayout::AllegroLayout(float w, float h, ALLEGRO_BITMAP * image, LayoutDrawMode mode) {
 			this->w = w;
 			this->h = h;
-			this->color = al_color_name("black");
+			this->color = Color::AllegroColor("black");
 			this->mode = mode;
 			this->foreignImage = true;
 			this->backgroundImage = true;
@@ -97,7 +102,7 @@ namespace Allw {
 
 
 
-		void AllegroLayout::loadBackground(ALLEGRO_COLOR color)
+		void AllegroLayout::loadBackground(Color::AllegroColor color)
 		{
 			this->color = color;
 		}
@@ -138,20 +143,14 @@ namespace Allw {
 		{
 			if (layout != nullptr) {
 
-				//ALLEGRO_DISPLAY *disp = al_get_current_display();
-				//al_set_target_bitmap(this->layout);
-
 				if (backgroundImage)
 					al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image), al_get_bitmap_height(image), 0, 0, this->w, this->h, 0);
-				//al_draw_scaled_bitmap(this->image, 0, 0, al_get_bitmap_width(image),al_get_bitmap_height(image), 0, 0, 1300, 600, 0);
 
 				else
-					al_clear_to_color(color);
+					al_clear_to_color(color.GetColor());
 
 
 				drawBoxes();
-
-				//al_set_target_backbuffer(disp);
 
 			}
 		}

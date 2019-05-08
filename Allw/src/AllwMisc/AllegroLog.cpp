@@ -1,5 +1,7 @@
 #include "AllwMisc/AllegroLog.h"
 #include <fstream>
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_native_dialog.h>
 
 namespace Allw {
 	namespace Log {

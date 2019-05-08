@@ -1,5 +1,6 @@
 #include "AllwAnimation/AllegroSprite.h"
 #include <math.h>
+#include <allegro5/allegro.h>
 
 #define PI (3.14159265359)
 

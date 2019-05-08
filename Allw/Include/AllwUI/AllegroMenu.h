@@ -4,8 +4,9 @@
 #include <stdint.h>
 #include <map>
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_native_dialog.h>
+typedef struct ALLEGRO_MENU_INFO ALLEGRO_MENU_INFO;
+typedef struct ALLEGRO_EVENT_SOURCE ALLEGRO_EVENT_SOURCE;
+typedef struct ALLEGRO_MENU ALLEGRO_MENU;
 
 namespace Allw {
 	namespace UI {

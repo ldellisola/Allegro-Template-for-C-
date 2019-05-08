@@ -25,5 +25,19 @@ namespace Allw {
 			}
 		};
 
+		class AllegroNotImplementedException : public std::exception {
+			virtual const char* what() const throw()
+			{
+				return "This is not implemented";
+			}
+		};
+
+		class AllegroColorEmptyException : public std::exception {
+			virtual const char* what() const throw()
+			{
+				return "The color was not initializated";
+			}
+		};
+
 	}
 }
