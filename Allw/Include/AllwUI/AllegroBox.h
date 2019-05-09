@@ -5,8 +5,9 @@
 
 #include "AllwBasics/AllegroColor.h"
 #include "AllwMisc/AllegroException.h"
+#include "AllwEvents/KeyboardEvent.h"
+
 typedef struct ALLEGRO_BITMAP ALLEGRO_BITMAP;
-typedef struct ALLEGRO_KEYBOARD_EVENT ALLEGRO_KEYBOARD_EVENT;
 
 
 #define DefaultID (0)
@@ -87,7 +88,7 @@ namespace Allw {
 			}
 
 			// ONLY WrittableBox : It takes a keyboard event and uses the key that was pressed. 
-			virtual void input(ALLEGRO_KEYBOARD_EVENT ev) {
+			virtual void input( Event::KeyboardEvent& ev) {
 				NotImplemented();
 			}
 

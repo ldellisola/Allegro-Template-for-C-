@@ -10,8 +10,8 @@ namespace Allw {
 
 	AllegroWindow::AllegroWindow(float w, float h, ALLEGRO_EVENT_QUEUE* evQueue, bool open, std::string name, std::string icon)
 	{
-		width = w;
-		height = h;
+		regularWidth= width = w;
+		regularHeight = height = h;
 
 		if (name.size() > 0)
 			setName(name);
