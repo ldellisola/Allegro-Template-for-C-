@@ -1,6 +1,6 @@
 #include "AllwEvents/KeyboardEvent.h"
 
-
+#include "allegro5/keyboard.h"
 
 namespace Allw {
 	namespace Event {
@@ -9,21 +9,34 @@ namespace Allw {
 
 
 
-		KeyboardEvent::KeyboardEvent(double timeStamp, int keycode, unsigned int modifier)
-			:AllegroEvent(timeStamp)
+		KeyboardEvent::KeyboardEvent(ALLEGRO_KEYBOARD_EVENT& data)
+			:AllegroEvent(data.timestamp)
 		{
-			this->keyCode = keycode;
-			this->modifier = modifier;
+			this->keyCode = data.keycode;
+			this->modifier = data.modifiers;
+			this->unicode = data.unichar;
+			this->repeat = data.repeat;
 		}
 
-		unsigned int KeyboardEvent::getModifier()
-		{
-			return modifier;
-		}
+
 
 		int KeyboardEvent::getKeyCode()
 		{
 			return keyCode;
+		}
+
+		int KeyCharEvent::getChar()
+		{
+			return unicode;
+		}
+
+		bool KeyCharEvent::isRepeated()
+		{
+			return repeat;
+		}
+		unsigned int KeyCharEvent::getModifier()
+		{
+			return modifier;
 		}
 
 	}

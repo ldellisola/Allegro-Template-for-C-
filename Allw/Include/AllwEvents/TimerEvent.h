@@ -1,7 +1,7 @@
 #pragma once
 #include "AllwEvents/AllegroEvent.h"
 
-
+typedef struct ALLEGRO_TIMER_EVENT ALLEGRO_TIMER_EVENT;
 
 
 
@@ -10,7 +10,7 @@ namespace Allw {
 
 		class TimerEvent :public AllegroEvent {
 		public:
-			TimerEvent(double timeStamp) :AllegroEvent(timeStamp){}
+			TimerEvent(ALLEGRO_TIMER_EVENT& timer);
 			EVENT_CLASS_CATEGORY(Category::Timer)
 			EVENT_CLASS_TYPE(Timer)
 		};

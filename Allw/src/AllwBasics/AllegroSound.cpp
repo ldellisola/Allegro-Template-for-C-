@@ -129,9 +129,9 @@ namespace Allw {
 			i--;
 			if (kill) {
 				sounds.erase(sounds.begin() + i);
-				al_reserve_samples(int(this->sounds.size()));
+				al_reserve_samples(--reservedSamples);
 				delete sound;
-				reservedSamples--;
+				;
 				return true;
 			}
 			return false;

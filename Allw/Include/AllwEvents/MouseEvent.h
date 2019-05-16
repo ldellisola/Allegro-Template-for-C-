@@ -2,6 +2,8 @@
 
 #include "AllwEvents/AllegroEvent.h"
 
+typedef struct ALLEGRO_MOUSE_EVENT ALLEGRO_MOUSE_EVENT;
+
 
 namespace Allw {
 	namespace Event {
@@ -21,7 +23,7 @@ namespace Allw {
 			EVENT_CLASS_CATEGORY(Category::Mouse)
 
 		protected:
-			MouseButtonEvent(double timeStamp, int x, int y, MouseButton button);
+			MouseButtonEvent(ALLEGRO_MOUSE_EVENT& mouse);
 
 			private:
 			MouseButton pressedButton = MouseButton::None;
@@ -30,21 +32,21 @@ namespace Allw {
 
 		class MouseButtonPressedEvent : public MouseButtonEvent {
 		public:
-			MouseButtonPressedEvent(double timeStamp, int x, int y, MouseButton button)
-				: MouseButtonEvent(timeStamp,x,y,button){}
+			MouseButtonPressedEvent(ALLEGRO_MOUSE_EVENT& mouse)
+				: MouseButtonEvent(mouse){}
 			EVENT_CLASS_TYPE(MouseDown)
 		};
 		
 		class MouseButtonReleasedEvent : public MouseButtonEvent {
 		public:
-			MouseButtonReleasedEvent(double timeStamp, int x, int y, MouseButton button)
-				: MouseButtonEvent(timeStamp,x,y,button){}
+			MouseButtonReleasedEvent(ALLEGRO_MOUSE_EVENT& mouse)
+				: MouseButtonEvent(mouse){}
 			EVENT_CLASS_TYPE(MouseUp)
 		};
 
 		class MouseMovedEvent : public AllegroEvent {
 		public:
-			MouseMovedEvent(double timeStamp, int x, int y);
+			MouseMovedEvent(ALLEGRO_MOUSE_EVENT &mouse);
 			int getX();
 			int getY();
 

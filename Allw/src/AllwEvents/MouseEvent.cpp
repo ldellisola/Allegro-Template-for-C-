@@ -1,16 +1,16 @@
 #include "AllwEvents/MouseEvent.h"
 
-
+#include "allegro5/allegro.h"
 
 namespace Allw {
 	namespace Event {
 
-		MouseButtonEvent::MouseButtonEvent(double timeStamp, int x, int y, MouseButton button)
-			: AllegroEvent(timeStamp)
+		MouseButtonEvent::MouseButtonEvent(ALLEGRO_MOUSE_EVENT &mouse)  
+			: AllegroEvent(mouse.timestamp)
 		{
-			this->pressedButton = button;
-			this->x = x;
-			this->y = y;
+			this->pressedButton = (MouseButton) mouse.button;
+			this->x = mouse.x;
+			this->y = mouse.y;
 		}
 
 		MouseButton MouseButtonEvent::getMouseButton()
@@ -18,11 +18,11 @@ namespace Allw {
 			return this->pressedButton;
 		}
 
-		MouseMovedEvent::MouseMovedEvent(double timeStamp, int x, int y)
-			:AllegroEvent(timeStamp)
+		MouseMovedEvent::MouseMovedEvent(ALLEGRO_MOUSE_EVENT &mouse)
+			:AllegroEvent(mouse.timestamp)
 		{
-			this->x = x;
-			this->y = y;
+			this->x = mouse.x;
+			this->y = mouse.y;
 		}
 
 		int MouseMovedEvent::getX()

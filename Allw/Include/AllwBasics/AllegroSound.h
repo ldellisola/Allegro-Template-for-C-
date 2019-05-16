@@ -75,7 +75,7 @@ namespace Allw {
 		private:
 			ALLEGRO_SAMPLE * sample = nullptr;
 			ALLEGRO_SAMPLE_ID * playID;
-			unsigned int ID = NAN;
+			unsigned int ID = (unsigned int)NAN;
 			float gain, pan, speed;
 			Mode playMode; 
 

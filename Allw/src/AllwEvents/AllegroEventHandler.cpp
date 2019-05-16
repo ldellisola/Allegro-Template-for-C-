@@ -24,12 +24,12 @@ public:
 		return al_get_next_event(eventQueue, &ev);
 
 	}
-	ALLEGRO_EVENT_TYPE getEventType() { return ev.type; }
-	ALLEGRO_DISPLAY_EVENT getDisplayEvent() { return ev.display; }
-	ALLEGRO_KEYBOARD_EVENT getKeyboardEvent() { return ev.keyboard; }
-	ALLEGRO_TIMER_EVENT getTimerEvent() { return ev.timer; }
-	ALLEGRO_MOUSE_EVENT getMouseEvent() { return ev.mouse; }
-	ALLEGRO_USER_EVENT getUserEvent() { return ev.user; }
+	ALLEGRO_EVENT_TYPE& getEventType() { return ev.type; }
+	ALLEGRO_DISPLAY_EVENT& getDisplayEvent() { return ev.display; }
+	ALLEGRO_KEYBOARD_EVENT& getKeyboardEvent() { return ev.keyboard; }
+	ALLEGRO_TIMER_EVENT& getTimerEvent() { return ev.timer; }
+	ALLEGRO_MOUSE_EVENT& getMouseEvent() { return ev.mouse; }
+	ALLEGRO_USER_EVENT& getUserEvent() { return ev.user; }
 	void registerEventSource(ALLEGRO_EVENT_SOURCE * eventSource) {
 		al_register_event_source(eventQueue, eventSource);
 		sources.push_back(eventSource);
@@ -61,7 +61,6 @@ namespace Allw {
 		AllegroEventHandler::AllegroEventHandler(ALLEGRO_EVENT_QUEUE* queue)
 		{
 			this->eventF = new AllegroEventFactory(queue);
-			//this->evnt = new AllegroEvent(0);
 		}
 
 		AllegroEventHandler::~AllegroEventHandler()
@@ -91,25 +90,27 @@ namespace Allw {
 					evnt = new WindowClosedEvent(eventF->getDisplayEvent().timestamp);
 					break;
 				case ALLEGRO_EVENT_KEY_DOWN:
-					evnt = new KeyPressedEvent(eventF->getKeyboardEvent().timestamp, eventF->getKeyboardEvent().keycode, eventF->getKeyboardEvent().modifiers);
+					evnt = new KeyPressedEvent(eventF->getKeyboardEvent());
 					break;
 				case ALLEGRO_EVENT_KEY_UP:
-					evnt = new KeyReleasedEvent(eventF->getKeyboardEvent().timestamp, eventF->getKeyboardEvent().keycode, eventF->getKeyboardEvent().modifiers);
+					evnt = new KeyReleasedEvent(eventF->getKeyboardEvent());
 					break;
+				case ALLEGRO_EVENT_KEY_CHAR:
+					evnt = new KeyCharEvent(eventF->getKeyboardEvent());
 				case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 					auto mouseDown = eventF->getMouseEvent();
-					evnt = new MouseButtonPressedEvent(mouseDown.timestamp, mouseDown.x, mouseDown.y, MouseButton(mouseDown.button));
+					evnt = new MouseButtonPressedEvent(eventF->getMouseEvent());
 					break;
 				case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 					auto mouseUp = eventF->getMouseEvent();
-					evnt = new MouseButtonReleasedEvent(mouseUp.timestamp, mouseUp.x, mouseUp.y, MouseButton(mouseUp.button));
+					evnt = new MouseButtonReleasedEvent(eventF->getMouseEvent());
 					break;
 				case ALLEGRO_EVENT_MOUSE_AXES:
 					auto mouse = eventF->getMouseEvent();
-					evnt = new MouseMovedEvent(mouse.timestamp, mouse.x, mouse.y);
+					evnt = new MouseMovedEvent(eventF->getMouseEvent());
 					break;
 				case ALLEGRO_EVENT_TIMER:
-					evnt = new TimerEvent(eventF->getTimerEvent().timestamp);
+					evnt = new TimerEvent(eventF->getTimerEvent());
 					break;
 				default:
 					eventExisted = false;

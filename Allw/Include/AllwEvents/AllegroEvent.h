@@ -19,7 +19,7 @@ namespace Allw {
 
 		enum class Type
 		{
-			KeyDown, KeyUp, 
+			KeyDown, KeyUp, KeyChar,
 			MouseDown, MouseUp, MouseMoved, 
 			WindowClosed, 
 			Timer, 
@@ -39,6 +39,8 @@ namespace Allw {
 		{
 		public:
 			AllegroEvent(double timeStamp);
+
+			virtual double getTimeStamp();
 
 			virtual Type GetEventType() const = 0;
 

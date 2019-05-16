@@ -215,7 +215,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Config.ini" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

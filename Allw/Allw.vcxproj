@@ -258,6 +258,7 @@
     <ClCompile Include="src\AllwEvents\AllegroEventHandler.cpp" />
     <ClCompile Include="src\AllwEvents\KeyboardEvent.cpp" />
     <ClCompile Include="src\AllwEvents\MouseEvent.cpp" />
+    <ClCompile Include="src\AllwEvents\TimerEvent.cpp" />
     <ClCompile Include="src\AllwEvents\WindowEvent.cpp" />
     <ClCompile Include="src\AllwInit\AllegroAddons.cpp" />
     <ClCompile Include="src\AllwInit\AllegroFactory.cpp" />

@@ -45,7 +45,7 @@ namespace Allw {
 			//		- AllegroFont * font:		Font to be loaded
 			//		- Color::AllegroColor fontColor:	color of the font.
 			AllegroWritableBox(KeyboardMode mode, float x, float y, unsigned int width, unsigned int height, Font::AllegroFont * font, Color::AllegroColor fontColor, unsigned int boxID = DefaultID)
-				:AllegroBox(x, y, width, height, boxID) {
+				:AllegroBox((unsigned int)x, (unsigned int)y, width, height, boxID) {
 				this->setBoxType(BoxType::Writable);
 				this->font = font;
 				this->fontColor = fontColor;
@@ -60,7 +60,7 @@ namespace Allw {
 			//
 			//		- AllegroWrittenBoxData& data: a structure with all the data of a box
 			AllegroWritableBox(AllegroWritableBoxData& data, unsigned int boxID = DefaultID)
-				: AllegroBox(data.x, data.y, data.width, data.height, boxID) {
+				: AllegroBox ((unsigned int)data.x, (unsigned int)data.y, data.width, data.height, boxID) {
 				this->setBoxType(BoxType::Writable);
 				this->fontColor = data.fontColor;
 				foreingFont = true;
@@ -74,7 +74,7 @@ namespace Allw {
 			std::string getText();
 
 			// It takes a keyboard event and uses the key that was pressed. 
-			void input(ALLEGRO_KEYBOARD_EVENT ev);
+			void input(Event::KeyCharEvent& ev);
 
 			// It restarts the texts that the user typed
 			void clearText();

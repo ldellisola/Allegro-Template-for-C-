@@ -11,6 +11,11 @@ namespace Allw {
 			this->timeStamp = timeStamp;
 		}
 
+		double AllegroEvent::getTimeStamp()
+		{
+			return this->timeStamp;
+		}
+
 
 
 	}

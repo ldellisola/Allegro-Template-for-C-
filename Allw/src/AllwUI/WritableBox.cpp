@@ -19,17 +19,17 @@ namespace Allw {
 			return this->text;
 		}
 
-		void AllegroWritableBox::input(ALLEGRO_KEYBOARD_EVENT ev)
+		void AllegroWritableBox::input(Event::KeyCharEvent& ev)
 		{
-			int character = ev.keycode;
+			int character = ev.getKeyCode();
 			if (timeStamp == 0) {
 				if (this->width > this->font->previewTextWidth(text)) {
 					switch (mode) {
 					case KeyboardMode::Alphabetic:
-						addLetter(character, ev.modifiers);
+						addLetter(character, ev.getModifier());
 						break;
 					case KeyboardMode::Alphanumeric:
-						addLetter(character, ev.modifiers);
+						addLetter(character, ev.getModifier());
 						addNumber(character);
 						break;
 					case KeyboardMode::Numeric:
@@ -38,10 +38,10 @@ namespace Allw {
 					}
 				}
 				deleteLetter(character);
-				timeStamp = ev.timestamp;
+				timeStamp = ev.getTimeStamp();
 				this->setUp();
 			}
-			else if (ev.timestamp - timeStamp >= KeyPressedTimeThreshold)
+			else if (ev.getTimeStamp() - timeStamp >= KeyPressedTimeThreshold)
 				timeStamp = 0;
 		}
 

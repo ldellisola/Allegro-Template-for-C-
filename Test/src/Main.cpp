@@ -1,6 +1,7 @@
 #include "AllwInit/Allw.h"
 #include "AllwBasics/AllegroWindow.h"
 #include "AllwEvents/AllegroEventHandler.h"
+#include "AllwBasics/AllegroSound.h"
 #include <iostream>
 
 
@@ -22,9 +23,9 @@ int main(void) {
 			Allw::Event::AllegroEvent& ev = eventH.ObtainEvent();
 
 			if (ev.GetCategoryFlags() == Allw::Event::Category::Keyboard && ev.GetEventType() == Allw::Event::Type::KeyDown) {
-				Allw::Event::KeyboardEvent& aa = (Allw::Event::KeyboardEvent&) ev;
+				Allw::Event::KeyCharEvent& aa = (Allw::Event::KeyCharEvent&) ev;
 
-				std::cout << (char)('a' + aa.getKeyCode()-1);
+				std::cout << (char)( aa.getChar());
 				int a = 0;
 				a++;
 			}
