@@ -24,9 +24,6 @@
     <ClInclude Include="Include\AllwAnimation\AllegroSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\AllwBasics\AllegroEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\AllwBasics\AllegroFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,15 +66,33 @@
     <ClInclude Include="Include\AllwInit\Allw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\AllwBasics\AllegroColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\AllwEvents\AllegroEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\AllwEvents\AllegroEventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\AllwEvents\KeyboardEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\AllwEvents\MouseEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\AllwEvents\WindowEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\AllwEvents\TimerEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AllwAnimation\AllegroAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AllwAnimation\AllegroSprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AllwBasics\AllegroEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AllwBasics\AllegroFont.cpp">
@@ -111,6 +126,33 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AllwInit\Allw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwInit\AllegroAddons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwInit\AllegroFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwBasics\AllegroColor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwEvents\AllegroEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwEvents\AllegroEventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwEvents\KeyboardEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwEvents\MouseEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwEvents\WindowEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AllwEvents\TimerEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -22,32 +22,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3DA104CA-8049-4E95-B4DB-55A5A1AC27AC}</ProjectGuid>
     <RootNamespace>Allw</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -141,8 +141,19 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDirectory)Include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include\</AdditionalIncludeDirectories>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -150,8 +161,19 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDirectory)Include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include\</AdditionalIncludeDirectories>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -161,12 +183,20 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDirectory)Include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -176,20 +206,33 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDirectory)Include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\AllwAnimation\AllegroAnimation.h" />
     <ClInclude Include="Include\AllwAnimation\AllegroSprite.h" />
-    <ClInclude Include="Include\AllwBasics\AllegroEvent.h" />
+    <ClInclude Include="Include\AllwEvents\AllegroEvent.h" />
     <ClInclude Include="Include\AllwBasics\AllegroFont.h" />
     <ClInclude Include="Include\AllwBasics\AllegroSound.h" />
     <ClInclude Include="Include\AllwBasics\AllegroWindow.h" />
+    <ClInclude Include="Include\AllwEvents\AllegroEventHandler.h" />
+    <ClInclude Include="Include\AllwEvents\KeyboardEvent.h" />
+    <ClInclude Include="Include\AllwEvents\MouseEvent.h" />
+    <ClInclude Include="Include\AllwEvents\TimerEvent.h" />
+    <ClInclude Include="Include\AllwEvents\WindowEvent.h" />
     <ClInclude Include="Include\AllwInit\AllegroAddons.h" />
     <ClInclude Include="Include\AllwInit\Allw.h" />
     <ClInclude Include="Include\AllwInit\AllegroFactory.h" />
@@ -201,15 +244,24 @@
     <ClInclude Include="Include\AllwUI\AllegroMenu.h" />
     <ClInclude Include="Include\AllwUI\WritableBox.h" />
     <ClInclude Include="Include\AllwUI\WrittenBox.h" />
+    <ClInclude Include="Include\AllwBasics\AllegroColor.h" />
     <ClInclude Include="src\header.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AllwAnimation\AllegroAnimation.cpp" />
     <ClCompile Include="src\AllwAnimation\AllegroSprite.cpp" />
-    <ClCompile Include="src\AllwBasics\AllegroEvent.cpp" />
+    <ClCompile Include="src\AllwBasics\AllegroColor.cpp" />
+    <ClCompile Include="src\AllwEvents\AllegroEvent.cpp" />
     <ClCompile Include="src\AllwBasics\AllegroFont.cpp" />
     <ClCompile Include="src\AllwBasics\AllegroSound.cpp" />
     <ClCompile Include="src\AllwBasics\AllegroWindow.cpp" />
+    <ClCompile Include="src\AllwEvents\AllegroEventHandler.cpp" />
+    <ClCompile Include="src\AllwEvents\KeyboardEvent.cpp" />
+    <ClCompile Include="src\AllwEvents\MouseEvent.cpp" />
+    <ClCompile Include="src\AllwEvents\TimerEvent.cpp" />
+    <ClCompile Include="src\AllwEvents\WindowEvent.cpp" />
+    <ClCompile Include="src\AllwInit\AllegroAddons.cpp" />
+    <ClCompile Include="src\AllwInit\AllegroFactory.cpp" />
     <ClCompile Include="src\AllwInit\Allw.cpp" />
     <ClCompile Include="src\AllwMisc\AllegroLog.cpp" />
     <ClCompile Include="src\AllwUI\AllegroBox.cpp" />
@@ -224,14 +276,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" />
-    <Import Project="..\packages\Allegro.5.2.4.0\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.4.0\build\native\Allegro.targets')" />
+    <Import Project="..\packages\AllegroDeps.1.10.0.0\build\native\AllegroDeps.targets" Condition="Exists('..\packages\AllegroDeps.1.10.0.0\build\native\AllegroDeps.targets')" />
+    <Import Project="..\packages\Allegro.5.2.5.2\build\native\Allegro.targets" Condition="Exists('..\packages\Allegro.5.2.5.2\build\native\Allegro.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.7.0.0\build\native\AllegroDeps.targets'))" />
-    <Error Condition="!Exists('..\packages\Allegro.5.2.4.0\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.4.0\build\native\Allegro.targets'))" />
+    <Error Condition="!Exists('..\packages\AllegroDeps.1.10.0.0\build\native\AllegroDeps.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AllegroDeps.1.10.0.0\build\native\AllegroDeps.targets'))" />
+    <Error Condition="!Exists('..\packages\Allegro.5.2.5.2\build\native\Allegro.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Allegro.5.2.5.2\build\native\Allegro.targets'))" />
   </Target>
 </Project>
