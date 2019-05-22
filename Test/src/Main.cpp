@@ -2,7 +2,9 @@
 #include "AllwBasics/AllegroWindow.h"
 #include "AllwEvents/AllegroEventHandler.h"
 #include "AllwBasics/AllegroSound.h"
+#include "AllwAnimation/AllegroSprite.h"
 #include <iostream>
+#include <math.h>
 
 
 int main(void) {
@@ -10,9 +12,30 @@ int main(void) {
 
 	Allw::Allw allegro(Allw::Init::Mode::Full,Allw::Init::NoValue, Allw::Init::NoValue,10);
 
-	Allw::AllegroWindow window(1000, 1000, allegro.getEventQueue());
+	Allw::AllegroWindow window(2000, 1000, allegro.getEventQueue());
 
 	Allw::Event::AllegroEventHandler eventH(allegro.getEventQueue());
+
+	Allw::Animation::AllegroSprite point = Allw::Animation::AllegroSprite("a.png", 2, 2);
+
+
+
+
+	for (int i = 0; i < window.getWidth(); i++) {
+
+		int x = i;
+		int y = 100 * cos( (double)(x/400.0) * 3.14157 )  + window.getHeight()/2 ;
+
+		point.draw(x, y);
+
+	}
+
+	window.update();
+
+
+
+
+
 
 
 
